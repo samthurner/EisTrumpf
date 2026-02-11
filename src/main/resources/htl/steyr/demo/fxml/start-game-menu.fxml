@@ -1,14 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
+            fx:controller="htl.steyr.demo.controller.StartGameMenuController"
             prefHeight="400.0" prefWidth="600.0">
 
+    <children>
+
+        <!-- EXIT BUTTON OBEN LINKS -->
+        <Button text="Exit"
+                fx:id="exitButton"
+                AnchorPane.topAnchor="10"
+                AnchorPane.leftAnchor="10"/>
+
+        <VBox spacing="20"
+              AnchorPane.topAnchor="50"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20"
+              AnchorPane.bottomAnchor="20">
+
+            <!-- Titel -->
+            <Label text="Spiel starten"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="40">
+
+                <!-- SPIEL HOSTEN -->
+                <VBox spacing="10">
+                    <Label text="Spiel hosten"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="80" halignment="RIGHT"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <children>
+                            <Label text="Port:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="hostPortField"
+                                       promptText="z.B.: 5000"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Button text="GO!"
+                                    fx:id="hostGoButton"
+                                    maxWidth="Infinity"
+                                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        </children>
+                    </GridPane>
+                </VBox>
+
+                <!-- VERTIKALER STRICH -->
+                <Separator orientation="VERTICAL"/>
+
+                <!-- SPIEL BEITRETEN -->
+                <VBox spacing="10">
+                    <Label text="Spiel beitreten"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="80" halignment="RIGHT"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <children>
+                            <Label text="IP Adresse:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="joinIpField"
+                                       promptText="z.B.: 192.168.0.10"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Port:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="joinPortField"
+                                       promptText="z.B.: 5000"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Button text="Beitreten"
+                                    fx:id="joinButton"
+                                    maxWidth="Infinity"
+                                    GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        </children>
+                    </GridPane>
+                </VBox>
+
+            </HBox>
+
+        </VBox>
+
+    </children>
 </AnchorPane>
