@@ -1,0 +1,136 @@
+{
+  "deck_name": "Fußballer",
+  "karten_anzahl": 16,
+  "statistiken": [
+    {
+      "name": "Pace",
+      "einheit": ""
+    },
+    {
+      "name": "Dribbling",
+      "einheit": ""
+    },
+    {
+      "name": "Verteidigung",
+      "einheit": ""
+    },
+    {
+      "name": "Schuss",
+      "einheit": ""
+    }
+  ],
+  "cards": [
+    {
+      "name": "Marcus Rashford",
+      "statistik_1": 90,
+      "statistik_2": 85,
+      "statistik_3": 60,
+      "statistik_4": 88
+    },
+    {
+      "name": "Cole Palmer",
+      "statistik_1": 82,
+      "statistik_2": 86,
+      "statistik_3": 58,
+      "statistik_4": 84
+    },
+    {
+      "name": "Cristiano Ronaldo",
+      "statistik_1": 88,
+      "statistik_2": 87,
+      "statistik_3": 65,
+      "statistik_4": 92
+    },
+    {
+      "name": "Lionel Messi",
+      "statistik_1": 85,
+      "statistik_2": 94,
+      "statistik_3": 55,
+      "statistik_4": 90
+    },
+    {
+      "name": "Victor Osimhen",
+      "statistik_1": 89,
+      "statistik_2": 80,
+      "statistik_3": 70,
+      "statistik_4": 88
+    },
+    {
+      "name": "Bryan Mbeumo",
+      "statistik_1": 87,
+      "statistik_2": 83,
+      "statistik_3": 62,
+      "statistik_4": 84
+    },
+    {
+      "name": "Bruno Fernandes",
+      "statistik_1": 75,
+      "statistik_2": 88,
+      "statistik_3": 70,
+      "statistik_4": 89
+    },
+    {
+      "name": "Virgil van Dijk",
+      "statistik_1": 70,
+      "statistik_2": 60,
+      "statistik_3": 92,
+      "statistik_4": 65
+    },
+    {
+      "name": "Leny Yoro",
+      "statistik_1": 78,
+      "statistik_2": 72,
+      "statistik_3": 80,
+      "statistik_4": 70
+    },
+    {
+      "name": "Niklas Süle",
+      "statistik_1": 68,
+      "statistik_2": 60,
+      "statistik_3": 88,
+      "statistik_4": 62
+    },
+    {
+      "name": "Antonio Rüdiger",
+      "statistik_1": 75,
+      "statistik_2": 65,
+      "statistik_3": 90,
+      "statistik_4": 70
+    },
+    {
+      "name": "Jude Bellingham",
+      "statistik_1": 82,
+      "statistik_2": 88,
+      "statistik_3": 75,
+      "statistik_4": 85
+    },
+    {
+      "name": "N'Golo Kanté",
+      "statistik_1": 78,
+      "statistik_2": 80,
+      "statistik_3": 88,
+      "statistik_4": 72
+    },
+    {
+      "name": "Kylian Mbappé",
+      "statistik_1": 96,
+      "statistik_2": 90,
+      "statistik_3": 55,
+      "statistik_4": 91
+    },
+    {
+      "name": "Vinícius Jr.",
+      "statistik_1": 94,
+      "statistik_2": 92,
+      "statistik_3": 50,
+      "statistik_4": 88
+    },
+    {
+      "name": "Raphinha",
+      "statistik_1": 89,
+      "statistik_2": 88,
+      "statistik_3": 55,
+      "statistik_4": 86
+    }
+  ]
+}

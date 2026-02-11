@@ -1,0 +1,136 @@
+{
+  "deck_name": "HTL Lehrer",
+  "karten_anzahl": 16,
+  "statistiken": [
+    {
+      "name": "Testschwierigkeit",
+      "einheit": "%"
+    },
+    {
+      "name": "Ausfallrate",
+      "einheit": "%"
+    },
+    {
+      "name": "Hausaufgabenrate",
+      "einheit": "%"
+    },
+    {
+      "name": "Überraschungstestgefahr",
+      "einheit": "%"
+    }
+  ],
+  "cards": [
+    {
+      "name": "Lindner",
+      "statistik_1": 33,
+      "statistik_2": 36,
+      "statistik_3": 71,
+      "statistik_4": 6
+    },
+    {
+      "name": "Schweiger",
+      "statistik_1": 67,
+      "statistik_2": 7,
+      "statistik_3": 32,
+      "statistik_4": 96
+    },
+    {
+      "name": "Eichler",
+      "statistik_1": 13,
+      "statistik_2": 48,
+      "statistik_3": 68,
+      "statistik_4": 2
+    },
+    {
+      "name": "Rathgeb",
+      "statistik_1": 88,
+      "statistik_2": 75,
+      "statistik_3": 23,
+      "statistik_4": 14
+    },
+    {
+      "name": "Samegmüller",
+      "statistik_1": 45,
+      "statistik_2": 9,
+      "statistik_3": 65,
+      "statistik_4": 23
+    },
+    {
+      "name": "Schneiderbauer",
+      "statistik_1": 71,
+      "statistik_2": 20,
+      "statistik_3": 26,
+      "statistik_4": 62
+    },
+    {
+      "name": "Rohrweck",
+      "statistik_1": 21,
+      "statistik_2": 33,
+      "statistik_3": 4,
+      "statistik_4": 13
+    },
+    {
+      "name": "Reisinger",
+      "statistik_1": 43,
+      "statistik_2": 72,
+      "statistik_3": 25,
+      "statistik_4": 3
+    },
+    {
+      "name": "Pusch",
+      "statistik_1": 72,
+      "statistik_2": 22,
+      "statistik_3": 14,
+      "statistik_4": 12
+    },
+    {
+      "name": "Raberger",
+      "statistik_1": 35,
+      "statistik_2": 17,
+      "statistik_3": 21,
+      "statistik_4": 41
+    },
+    {
+      "name": "Hornbachner",
+      "statistik_1": 84,
+      "statistik_2": 26,
+      "statistik_3": 12,
+      "statistik_4": 12
+    },
+    {
+      "name": "Lovasz",
+      "statistik_1": 45,
+      "statistik_2": 74,
+      "statistik_3": 58,
+      "statistik_4": 69
+    },
+    {
+      "name": "Pracherstorfer",
+      "statistik_1": 58,
+      "statistik_2": 23,
+      "statistik_3": 20,
+      "statistik_4": 71
+    },
+    {
+      "name": "Catel",
+      "statistik_1": 74,
+      "statistik_2": 18,
+      "statistik_3": 6,
+      "statistik_4": 21
+    },
+    {
+      "name": "Rammer",
+      "statistik_1": 50,
+      "statistik_2": 12,
+      "statistik_3": 0,
+      "statistik_4": 85
+    },
+    {
+      "name": "Hammerl",
+      "statistik_1": 33,
+      "statistik_2": 24,
+      "statistik_3": 1,
+      "statistik_4": 1
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "deck_name": "Autos",
+  "karten_anzahl": 16,
+  "statistiken": [
+    {
+      "name": "PS",
+      "einheit": "PS"
+    },
+    {
+      "name": "Höchstgeschwindigkeit",
+      "einheit": "km/h"
+    },
+    {
+      "name": "Gewicht",
+      "einheit": "kg"
+    },
+    {
+      "name": "Hubraum",
+      "einheit": "ccm"
+    }
+  ],
+  "cards": [
+    {
+      "name": "Golf 8 GTI",
+      "statistik_1": 245,
+      "statistik_2": 250,
+      "statistik_3": 1450,
+      "statistik_4": 1984
+    },
+    {
+      "name": "BMW M5",
+      "statistik_1": 600,
+      "statistik_2": 305,
+      "statistik_3": 1850,
+      "statistik_4": 4395
+    },
+    {
+      "name": "Mercedes E63s AMG",
+      "statistik_1": 612,
+      "statistik_2": 300,
+      "statistik_3": 1900,
+      "statistik_4": 3982
+    },
+    {
+      "name": "Porsche 911 GT3",
+      "statistik_1": 510,
+      "statistik_2": 318,
+      "statistik_3": 1435,
+      "statistik_4": 3996
+    },
+    {
+      "name": "Tesla Model S Plaid",
+      "statistik_1": 1020,
+      "statistik_2": 322,
+      "statistik_3": 2160,
+      "statistik_4": 0
+    },
+    {
+      "name": "Mustang GT",
+      "statistik_1": 450,
+      "statistik_2": 250,
+      "statistik_3": 1700,
+      "statistik_4": 5038
+    },
+    {
+      "name": "Nissan Skyline GT-R",
+      "statistik_1": 280,
+      "statistik_2": 250,
+      "statistik_3": 1540,
+      "statistik_4": 2568
+    },
+    {
+      "name": "Dodge Hellcat",
+      "statistik_1": 717,
+      "statistik_2": 327,
+      "statistik_3": 2000,
+      "statistik_4": 6166
+    },
+    {
+      "name": "Audi RS6",
+      "statistik_1": 600,
+      "statistik_2": 305,
+      "statistik_3": 2050,
+      "statistik_4": 3996
+    },
+    {
+      "name": "Skoda Octavia VRS",
+      "statistik_1": 245,
+      "statistik_2": 250,
+      "statistik_3": 1500,
+      "statistik_4": 1984
+    },
+    {
+      "name": "Fiat Punto",
+      "statistik_1": 75,
+      "statistik_2": 165,
+      "statistik_3": 1100,
+      "statistik_4": 1242
+    },
+    {
+      "name": "Seat Ibiza",
+      "statistik_1": 110,
+      "statistik_2": 195,
+      "statistik_3": 1150,
+      "statistik_4": 999
+    },
+    {
+      "name": "Fiat Multipla",
+      "statistik_1": 103,
+      "statistik_2": 180,
+      "statistik_3": 1350,
+      "statistik_4": 1596
+    },
+    {
+      "name": "Lamborghini Huracán",
+      "statistik_1": 640,
+      "statistik_2": 325,
+      "statistik_3": 1422,
+      "statistik_4": 5204
+    },
+    {
+      "name": "Hyundai i30N",
+      "statistik_1": 280,
+      "statistik_2": 250,
+      "statistik_3": 1430,
+      "statistik_4": 1998
+    },
+    {
+      "name": "Toyota Supra MK5",
+      "statistik_1": 340,
+      "statistik_2": 250,
+      "statistik_3": 1520,
+      "statistik_4": 2998
+    }
+  ]
+}

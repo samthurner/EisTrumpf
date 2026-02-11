@@ -1,0 +1,136 @@
+{
+  "deck_name": "Tiere",
+  "karten_anzahl": 16,
+  "statistiken": [
+    {
+      "name": "Gewicht",
+      "einheit": "kg"
+    },
+    {
+      "name": "Größe",
+      "einheit": "cm"
+    },
+    {
+      "name": "Lebenserwartung",
+      "einheit": "Jahre"
+    },
+    {
+      "name": "Geschwindigkeit",
+      "einheit": "km/h"
+    }
+  ],
+  "cards": [
+    {
+      "name": "Affe",
+      "statistik_1": 35,
+      "statistik_2": 90,
+      "statistik_3": 25,
+      "statistik_4": 40
+    },
+    {
+      "name": "Wal",
+      "statistik_1": 150000,
+      "statistik_2": 2500,
+      "statistik_3": 80,
+      "statistik_4": 50
+    },
+    {
+      "name": "Löwe",
+      "statistik_1": 190,
+      "statistik_2": 120,
+      "statistik_3": 15,
+      "statistik_4": 80
+    },
+    {
+      "name": "Ziege",
+      "statistik_1": 60,
+      "statistik_2": 90,
+      "statistik_3": 18,
+      "statistik_4": 15
+    },
+    {
+      "name": "Hund",
+      "statistik_1": 30,
+      "statistik_2": 70,
+      "statistik_3": 13,
+      "statistik_4": 45
+    },
+    {
+      "name": "Katze",
+      "statistik_1": 5,
+      "statistik_2": 40,
+      "statistik_3": 15,
+      "statistik_4": 48
+    },
+    {
+      "name": "Leopard",
+      "statistik_1": 70,
+      "statistik_2": 90,
+      "statistik_3": 17,
+      "statistik_4": 58
+    },
+    {
+      "name": "Tiger",
+      "statistik_1": 220,
+      "statistik_2": 110,
+      "statistik_3": 20,
+      "statistik_4": 65
+    },
+    {
+      "name": "Schildkröte",
+      "statistik_1": 200,
+      "statistik_2": 120,
+      "statistik_3": 100,
+      "statistik_4": 1
+    },
+    {
+      "name": "Schnecke",
+      "statistik_1": 0.02,
+      "statistik_2": 5,
+      "statistik_3": 5,
+      "statistik_4": 0.05
+    },
+    {
+      "name": "Schlange",
+      "statistik_1": 15,
+      "statistik_2": 200,
+      "statistik_3": 20,
+      "statistik_4": 20
+    },
+    {
+      "name": "Schwein",
+      "statistik_1": 150,
+      "statistik_2": 100,
+      "statistik_3": 15,
+      "statistik_4": 17
+    },
+    {
+      "name": "Erdmännchen",
+      "statistik_1": 1,
+      "statistik_2": 30,
+      "statistik_3": 12,
+      "statistik_4": 32
+    },
+    {
+      "name": "Komodowaran",
+      "statistik_1": 70,
+      "statistik_2": 250,
+      "statistik_3": 30,
+      "statistik_4": 20
+    },
+    {
+      "name": "Giraffe",
+      "statistik_1": 1200,
+      "statistik_2": 550,
+      "statistik_3": 25,
+      "statistik_4": 60
+    },
+    {
+      "name": "Nilpferd",
+      "statistik_1": 1500,
+      "statistik_2": 150,
+      "statistik_3": 45,
+      "statistik_4": 30
+    }
+  ]
+}
