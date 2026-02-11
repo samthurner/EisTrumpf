@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.MenuController">
+    <top>
+        <HBox spacing="20">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Label text="Willkommen, " />
+            <Label fx:id="usernameLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" text="Username" />
+         <VBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="227.0" HBox.hgrow="ALWAYS">
+            <children>
+                  <Button fx:id="btnSpielBeenden" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" onAction="#onEndGameBtnClicked" style="-fx-font-size: 12;" text="Spiel Beenden" />
+            </children>
+         </VBox>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Button fx:id="btnSpieled" onAction="#onSpielenBtnClicked" prefHeight="40" prefWidth="200" text="Spielen!" />
+            <Button fx:id="btnKarenDecks" onAction="#onKartenDecksBtnClicked" prefHeight="40" prefWidth="200" text="Karten Decks" />
+            <Button fx:id="btnStatistik" onAction="#onStatsBtnClicked" prefHeight="40" prefWidth="200" text="Statistiken" />
+        </VBox>
+    </center>
+    <bottom>
+        <HBox spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <ImageView fx:id="imgVolume" fitHeight="30" fitWidth="30" pickOnBounds="true" />
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
+            <children>
+               <Label text="made by Milicevic, Schmidberger, Seiler &amp; Thurner" />
+            </children></HBox>
+            <ImageView fx:id="imgSettings" fitHeight="30" fitWidth="30" pickOnBounds="true" />
+        </HBox>
+    </bottom>
+</BorderPane>
