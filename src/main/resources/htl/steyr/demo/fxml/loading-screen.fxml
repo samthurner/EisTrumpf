@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
+            fx:controller="htl.steyr.demo.controller.LoadingScreenController"
             prefHeight="400.0" prefWidth="600.0">
 
+    <children>
+
+
+        <Button fx:id="exitButton"
+                text="X"
+                AnchorPane.topAnchor="10"
+                AnchorPane.rightAnchor="10"/>
+
+        <VBox spacing="25"
+              alignment="TOP_CENTER"
+              AnchorPane.topAnchor="40"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20">
+
+            <ImageView fx:id="logoImage"
+                       fitWidth="200"
+                       preserveRatio="true">
+                <image>
+                    <Image />
+                </image>
+            </ImageView>
+
+            <ProgressIndicator fx:id="loadingCircle"
+                               progress="-1"
+                               prefWidth="80" prefHeight="80"/>
+
+            <Separator fx:id="redLine"
+                       prefWidth="300"/>
+
+            <Label fx:id="loadingText"
+                   text="Lade..."/>
+
+        </VBox>
+
+    </children>
 </AnchorPane>
