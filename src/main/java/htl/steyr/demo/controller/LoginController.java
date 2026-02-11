@@ -1,5 +1,6 @@
 package htl.steyr.demo.controller;
 
+import htl.steyr.demo.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -23,6 +24,7 @@ public class LoginController {
             alert.setHeaderText("Bitte geben Sie einen Benutzernamen ein.");
             alert.showAndWait();
         }else{
+            ViewSwitcher.switchTo("menu");
             System.out.println("Spielername: " + username);
         }
 
