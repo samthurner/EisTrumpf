@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        ViewSwitcher.setStage(stage);
+
         Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/login.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("EisTrumpf");

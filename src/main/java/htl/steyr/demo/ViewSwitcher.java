@@ -16,8 +16,8 @@ public class ViewSwitcher {
 
     public static void switchTo(String fxmlFile) {
         try {
-            String fxmlFilePath = "/fxml/" + fxmlFile + ".fxml";
-            Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFile));
+            String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
+            Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
