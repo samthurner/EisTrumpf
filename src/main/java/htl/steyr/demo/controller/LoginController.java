@@ -1,10 +1,13 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.userdata.UserData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+
+import java.sql.SQLOutput;
 
 public class LoginController {
 
@@ -13,6 +16,7 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
+    public UserData userData;
 
     @FXML
     private void onLoginClicked() {
@@ -25,7 +29,15 @@ public class LoginController {
             alert.showAndWait();
         }else{
             ViewSwitcher.switchTo("menu");
+            userData = new UserData(username);
+            userData.writeToJson();
             System.out.println("Spielername: " + username);
+            System.out.println(userData.getUsername());
+            System.out.println(userData.getWinstreak());
+            System.out.println(userData.getHighest_winstreak());
+            System.out.println(userData.getGames_won());
+            System.out.println(userData.getGames_lost());
+            System.out.println(userData.getPlaytime());
         }
 
     }

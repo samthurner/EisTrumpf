@@ -16,7 +16,7 @@ public class UserData {
     private int games_lost;
     private int playtime;
 
-    UserData(String username) {
+    public UserData(String username) {
         setUsername(username);
         loadFromJson(username);
     }
