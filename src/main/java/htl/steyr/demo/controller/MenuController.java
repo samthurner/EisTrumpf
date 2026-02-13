@@ -29,4 +29,8 @@ public class MenuController {
     public void onStatsBtnClicked(ActionEvent actionEvent) {
         //in die stats-screen.fxml switchen
     }
+
+    public void onEndGameBtnClicked(ActionEvent actionEvent) {
+        ViewSwitcher.getStage().close();
+    }
 }
