@@ -14,6 +14,10 @@ public class ViewSwitcher {
         ViewSwitcher.stage = stage;
     }
 
+    public static Stage getStage() {
+        return ViewSwitcher.stage;
+    }
+
     public static void switchTo(String fxmlFile) {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
