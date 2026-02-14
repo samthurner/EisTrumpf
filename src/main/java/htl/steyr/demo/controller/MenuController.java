@@ -33,4 +33,17 @@ public class MenuController {
     public void onEndGameBtnClicked(ActionEvent actionEvent) {
         ViewSwitcher.getStage().close();
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Timeline waitForUserData = new Timeline(
+                new KeyFrame(Duration.millis(100), e -> {
+                    if (UserSession.getUserData() != null) {
+                        usernameLabel.setText(UserSession.getUserData().getUsername());
+                    }
+                })
+        );
+        waitForUserData.playFromStart();
+    }
+
 }
