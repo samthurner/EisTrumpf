@@ -1,11 +1,25 @@
 package htl.steyr.demo.controller;
 
+import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.userdata.UserData;
+import htl.steyr.demo.userdata.UserSession;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
-public class MenuController {
+import java.net.URL;
+import java.sql.SQLOutput;
+import java.util.ResourceBundle;
+
+public class MenuController implements Initializable {
+
     public Label usernameLabel;
     public Button btnSpielBeenden;
     public Button btnSpieled;
@@ -14,20 +28,16 @@ public class MenuController {
     public ImageView imgVolume;
     public ImageView imgSettings;
 
-    public void onEndGameBtnClicked(ActionEvent actionEvent) {
-        //das Spiel schließen
-    }
-
     public void onSpielenBtnClicked(ActionEvent actionEvent) {
-        //in die start-game-menu.fxml switchen
+        ViewSwitcher.switchTo("start-game-menu");
     }
 
     public void onKartenDecksBtnClicked(ActionEvent actionEvent) {
-        //in die deck-explorer-screen.fxml switchen
+        ViewSwitcher.switchTo("deck-explorer-screen");
     }
 
     public void onStatsBtnClicked(ActionEvent actionEvent) {
-        //in die stats-screen.fxml switchen
+        ViewSwitcher.switchTo("stats-screen");
     }
 
     public void onEndGameBtnClicked(ActionEvent actionEvent) {
