@@ -11,26 +11,25 @@
 
     <children>
 
-        <!-- EXIT BUTTON OBEN LINKS -->
         <Button text="Exit"
                 fx:id="exitButton"
                 AnchorPane.topAnchor="10"
                 AnchorPane.leftAnchor="10"/>
 
         <VBox spacing="20"
-              AnchorPane.topAnchor="50"
-              AnchorPane.leftAnchor="20"
-              AnchorPane.rightAnchor="20"
-              AnchorPane.bottomAnchor="20">
+              alignment="CENTER"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0">
 
-            <!-- Titel -->
+
             <Label text="Spiel starten"
                    style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-            <HBox spacing="40">
+            <HBox spacing="40" alignment="CENTER">
 
-                <!-- SPIEL HOSTEN -->
-                <VBox spacing="10">
+                <VBox spacing="10" fx:id="leftBox">
                     <Label text="Spiel hosten"
                            style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
@@ -54,11 +53,7 @@
                     </GridPane>
                 </VBox>
 
-                <!-- VERTIKALER STRICH -->
-                <Separator orientation="VERTICAL"/>
-
-                <!-- SPIEL BEITRETEN -->
-                <VBox spacing="10">
+                <VBox spacing="10" fx:id="rightBox">
                     <Label text="Spiel beitreten"
                            style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 

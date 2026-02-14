@@ -15,7 +15,7 @@
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <Label text="Willkommen, " />
-            <Label fx:id="usernameLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" text="Username" />
+            <Label fx:id="usernameLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" />
          <VBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="227.0" HBox.hgrow="ALWAYS">
             <children>
                   <Button fx:id="btnSpielBeenden" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" onAction="#onEndGameBtnClicked" style="-fx-font-size: 12;" text="Spiel Beenden" />

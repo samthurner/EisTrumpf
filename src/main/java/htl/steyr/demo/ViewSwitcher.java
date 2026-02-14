@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class ViewSwitcher {
@@ -14,11 +15,17 @@ public class ViewSwitcher {
         ViewSwitcher.stage = stage;
     }
 
+    public static Stage getStage() {
+        return ViewSwitcher.stage;
+    }
+
     public static void switchTo(String fxmlFile) {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
             Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
             stage.setScene(new Scene(root));
+
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
