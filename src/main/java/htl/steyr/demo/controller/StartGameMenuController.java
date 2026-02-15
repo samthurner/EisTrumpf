@@ -14,11 +14,14 @@ public class StartGameMenuController {
     public Button exitButton;
 
     public void onJoinButtonClicked(ActionEvent actionEvent) {
+
     }
 
     public void onHostButtonClicked(ActionEvent actionEvent) {
+
     }
 
     public void onExitButtonClicked(ActionEvent actionEvent) {
+
     }
 }
