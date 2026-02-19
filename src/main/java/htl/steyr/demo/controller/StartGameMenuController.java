@@ -53,6 +53,14 @@ public class StartGameMenuController {
 
     }
 
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
+
+
     public void onExitButtonClicked(ActionEvent actionEvent) {
 
     }
