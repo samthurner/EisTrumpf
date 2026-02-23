@@ -1,5 +1,8 @@
 package htl.steyr.demo.network;
 
+import htl.steyr.demo.ViewSwitcher;
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,6 +26,7 @@ public class GameServer {
 
         acceptThread = new Thread(() -> {
             try {
+                Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
                 Socket socket = serverSocket.accept();
                 System.out.println("Client verbunden!");
 

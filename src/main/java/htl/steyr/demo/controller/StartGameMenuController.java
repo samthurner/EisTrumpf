@@ -29,7 +29,6 @@ public class StartGameMenuController {
         try {
             client.connect();
             UserSession.setClient(client);
-            ViewSwitcher.switchTo("loading-screen");
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Fehler", "Verbindung fehlgeschlagen.");
         }
@@ -86,6 +85,6 @@ public class StartGameMenuController {
 
 
     public void onExitButtonClicked(ActionEvent actionEvent) {
-
+        ViewSwitcher.switchTo("start-game-menu");
     }
 }

@@ -1,5 +1,8 @@
 package htl.steyr.demo.network;
 
+import htl.steyr.demo.ViewSwitcher;
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -21,7 +24,10 @@ public class GameClient {
         connection = new SocketConnection(socket);
         connection.startListening();
 
-        connection.send("Hallo vom Client!");
+        Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
+
+        connection.send("test");
+
     }
 
     public void send(String msg) {

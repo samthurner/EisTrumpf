@@ -28,9 +28,6 @@ public class LoadingScreenController implements Initializable {
     private final String[] texts = {
     };
 
-    public void initialize() {
-    }
-
     private String randomText() {
         return "";
     }
