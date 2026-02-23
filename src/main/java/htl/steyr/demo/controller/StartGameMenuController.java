@@ -1,10 +1,15 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.network.GameClient;
+import htl.steyr.demo.network.GameServer;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class StartGameMenuController {
 
@@ -16,7 +21,18 @@ public class StartGameMenuController {
     public Button exitButton;
 
     public void onJoinButtonClicked(ActionEvent actionEvent) {
+        String ip = joinIpField.getText();
+        int port = Integer.parseInt(joinPortField.getText());
 
+        GameClient client = new GameClient(ip, port);
+
+        try {
+            client.connect();
+            UserSession.setClient(client);
+            ViewSwitcher.switchTo("loading-screen");
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Verbindung fehlgeschlagen.");
+        }
     }
 
     public void onHostButtonClicked(ActionEvent actionEvent) {
@@ -46,6 +62,15 @@ public class StartGameMenuController {
 
             showAlert(Alert.AlertType.INFORMATION, "Wähle einen anderen Port", text);
             return;
+        }
+
+        GameServer server = new GameServer(port);
+        try {
+            server.start();
+            UserSession.setHost(server);
+            ViewSwitcher.switchTo("loading-screen");
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Server konnte nicht gestartet werden.");
         }
 
         ViewSwitcher.switchTo("loading-screen");

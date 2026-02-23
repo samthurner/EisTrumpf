@@ -1,15 +1,15 @@
 package htl.steyr.demo.userdata;
 
-import java.net.ServerSocket;
-import java.net.Socket;
+import htl.steyr.demo.network.GameClient;
+import htl.steyr.demo.network.GameServer;
 
 public class UserSession {
 
     private static UserData userData;
 
     private static boolean isHost;
-    private static ServerSocket serverSocket;
-    private static Socket socket;
+    private static GameServer gameServer;
+    private static GameClient gameClient;
 
     public static void setUserData(UserData data) {
         userData = data;
@@ -19,22 +19,34 @@ public class UserSession {
         return userData;
     }
 
-    public static void setIsHost(boolean isHost) {
-        UserSession.isHost = isHost;
+    public static void setHost(GameServer server) {
+        isHost = true;
+        gameServer = server;
+        gameClient = null;
+    }
+
+    public static void setClient(GameClient client) {
+        isHost = false;
+        gameClient = client;
+        gameServer = null;
     }
 
     public static boolean isHost() {
         return isHost;
     }
 
-    public static void setServerSocket(ServerSocket serverSocket) {
-        UserSession.serverSocket = serverSocket;
+    public static GameServer getGameServer() {
+        return gameServer;
     }
 
-    public static ServerSocket getServerSocket() {
-        return serverSocket;
+    public static GameClient getGameClient() {
+        return gameClient;
     }
-    public static void setSocket(Socket socket) {
-        UserSession.socket = socket;
+
+    public static void clear() {
+        userData = null;
+        gameServer = null;
+        gameClient = null;
+        isHost = false;
     }
 }

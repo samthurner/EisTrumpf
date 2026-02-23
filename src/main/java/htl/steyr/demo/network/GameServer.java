@@ -46,6 +46,7 @@ public class GameServer {
     }
 
     public void stop() throws IOException {
+        System.out.println("Server wird gestoppt!");
         running = false;
         if (opponent != null) {
             opponent.close();

@@ -1,5 +1,7 @@
 package htl.steyr.demo.controller;
 
+import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +9,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -32,7 +35,9 @@ public class LoadingScreenController implements Initializable {
         return "";
     }
 
-    public void onExit() {
+    public void onExit() throws IOException {
+        UserSession.getGameServer().stop();
+        ViewSwitcher.switchTo("start-game-menu");
     }
 
     @Override
