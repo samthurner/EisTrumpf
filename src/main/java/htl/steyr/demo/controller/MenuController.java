@@ -1,12 +1,9 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
-import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {

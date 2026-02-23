@@ -49,6 +49,7 @@ public class StartGameMenuController {
         }
 
         ViewSwitcher.switchTo("loading-screen");
+
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
