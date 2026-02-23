@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -27,6 +28,7 @@ public class MenuController implements Initializable {
     public Button btnStatistik;
     public ImageView imgVolume;
     public ImageView imgSettings;
+    public Slider volumeSlider;
 
     public void onSpielenBtnClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("start-game-menu");
@@ -56,4 +58,11 @@ public class MenuController implements Initializable {
         waitForUserData.playFromStart();
     }
 
+    public void toggleSliderButton(ActionEvent actionEvent) {
+        if (volumeSlider.isVisible()) {
+            volumeSlider.setVisible(false);
+        }else {
+            volumeSlider.setVisible(true);
+        }
+    }
 }
