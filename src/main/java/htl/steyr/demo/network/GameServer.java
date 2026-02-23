@@ -26,8 +26,9 @@ public class GameServer {
 
         acceptThread = new Thread(() -> {
             try {
-                Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
                 Socket socket = serverSocket.accept();
+                Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
+
                 System.out.println("Client verbunden!");
 
                 opponent = new SocketConnection(socket);

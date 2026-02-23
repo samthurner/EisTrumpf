@@ -85,6 +85,6 @@ public class StartGameMenuController {
 
 
     public void onExitButtonClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo("start-game-menu");
+        ViewSwitcher.switchTo("menu");
     }
 }

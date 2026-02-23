@@ -1,6 +1,7 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.network.AddressGetter;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,8 +41,8 @@ public class LoadingScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ipAdressLabel.setText("Deine IP Adresse: " + Inet4Address.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
+            ipAdressLabel.setText("Deine IP Adresse: " + AddressGetter.getIPAddress());
+        } catch (Exception e) {
             ipAdressLabel.setText("Deine IP Adresse konnte nicht gefunden werden.");
         }
     }

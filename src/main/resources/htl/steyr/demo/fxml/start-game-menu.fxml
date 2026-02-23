@@ -16,7 +16,7 @@
 
         <Button fx:id="exitButton" onAction="#onExitButtonClicked" text="Exit" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
 
-        <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" layoutY="38.0" prefHeight="362.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
 
 
             <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Spiel starten" />
