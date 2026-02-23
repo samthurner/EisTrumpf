@@ -3,6 +3,8 @@ module htl.steyr.demo {
     requires javafx.fxml;
     requires com.google.gson;
     requires java.sql;
+    requires javafx.graphics;
+    requires javafx.base;
 
     opens htl.steyr.demo to javafx.fxml;
     opens htl.steyr.demo.fxml to javafx.fxml;

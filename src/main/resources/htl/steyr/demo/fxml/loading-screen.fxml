@@ -1,48 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="htl.steyr.demo.controller.LoadingScreenController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.LoadingScreenController">
 
     <children>
 
 
-        <Button fx:id="exitButton"
-                text="X"
-                AnchorPane.topAnchor="10"
-                AnchorPane.rightAnchor="10"/>
+        <Button fx:id="exitButton" onAction="#onExit" text="X" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10" />
 
-        <VBox spacing="25"
-              alignment="TOP_CENTER"
-              AnchorPane.topAnchor="40"
-              AnchorPane.leftAnchor="20"
-              AnchorPane.rightAnchor="20">
+        <VBox alignment="TOP_CENTER" spacing="25" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="40">
 
-            <ImageView fx:id="logoImage"
-                       fitWidth="200"
-                       preserveRatio="true">
-                <image>
-                    <Image />
-                </image>
+            <ImageView fx:id="logoImage" fitWidth="200" preserveRatio="true">
             </ImageView>
 
-            <ProgressIndicator fx:id="loadingCircle"
-                               progress="-1"
-                               prefWidth="80" prefHeight="80"/>
+            <ProgressIndicator fx:id="loadingCircle" prefHeight="80" prefWidth="80" progress="-1" />
 
-            <Separator fx:id="redLine"
-                       prefWidth="300"/>
+            <Separator fx:id="redLine" prefWidth="300" />
 
-            <Label fx:id="loadingText"
-                   text="Lade..."/>
+            <Label fx:id="loadingText" text="Warte auf Mitspieler..." />
 
         </VBox>
+      <Label fx:id="ipAdressLabel" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
 
     </children>
 </AnchorPane>
