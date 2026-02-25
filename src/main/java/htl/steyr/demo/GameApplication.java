@@ -17,6 +17,7 @@ public class GameApplication extends Application {
         music.playSong();
 
         Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/login.fxml"));
+
         stage.setScene(new Scene(root));
         stage.setTitle("EisTrumpf");
         stage.show();

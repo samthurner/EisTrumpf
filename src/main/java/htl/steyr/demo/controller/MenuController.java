@@ -1,6 +1,7 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.music.Music;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.Animation;
@@ -48,6 +49,7 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         Timeline waitForUserData = new Timeline(
                 new KeyFrame(Duration.millis(100), e -> {
                     if (UserSession.getUserData() != null) {
@@ -55,13 +57,29 @@ public class MenuController implements Initializable {
                     }
                 })
         );
+
+        volumeSlider.setMin(0);
+        volumeSlider.setMax(100);
+
+        // Slider auf aktuelle Lautstärke setzen
+        volumeSlider.setValue(Music.getVolume() * 100);
+
+        // Listener für Lautstärke
+        volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            double volume = newVal.doubleValue() / 100.0;
+            Music.setVolume(volume);
+        });
+
+
+
         waitForUserData.playFromStart();
+
     }
 
     public void toggleSliderButton(ActionEvent actionEvent) {
         if (volumeSlider.isVisible()) {
             volumeSlider.setVisible(false);
-        }else {
+        } else {
             volumeSlider.setVisible(true);
         }
     }
