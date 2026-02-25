@@ -4,6 +4,7 @@ import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.Deck;
 import htl.steyr.demo.cards.DeckLoader;
 import htl.steyr.demo.cards.PlayingCard;
+import htl.steyr.demo.gameTimer.GameTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
@@ -28,6 +29,8 @@ public class GameScreenController implements Initializable {
     public Button stat2Button;
     public Button stat3Button;
     public Button stat4Button;
+    public Label gameTimeLabel;
+    public GameTimer gameTimer;
 
     private Deck deck;
     private PlayingCard currentCard;
@@ -46,6 +49,9 @@ public class GameScreenController implements Initializable {
                     }
                 })
         );
+
+        gameTimer = new GameTimer(gameTimeLabel);
+        gameTimer.start();
 
         waitForDeck.setCycleCount(Timeline.INDEFINITE);
         waitForDeck.play();
