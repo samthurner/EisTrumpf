@@ -28,6 +28,7 @@ public class GameScreenController implements Initializable {
     public Button stat2Button;
     public Button stat3Button;
     public Button stat4Button;
+    public Label gameTimeLabel;
 
     private Deck deck;
     private PlayingCard currentCard;
