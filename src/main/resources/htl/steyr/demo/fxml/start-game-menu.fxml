@@ -1,84 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="htl.steyr.demo.controller.StartGameMenuController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.StartGameMenuController">
 
     <children>
 
-        <Button text="Exit"
-                fx:id="exitButton"
-                AnchorPane.topAnchor="10"
-                AnchorPane.leftAnchor="10"/>
+        <Button fx:id="exitButton" onAction="#onExitButtonClicked" text="Exit" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
 
-        <VBox spacing="20"
-              alignment="CENTER"
-              AnchorPane.topAnchor="0"
-              AnchorPane.leftAnchor="0"
-              AnchorPane.rightAnchor="0"
-              AnchorPane.bottomAnchor="0">
+        <VBox alignment="CENTER" layoutY="38.0" prefHeight="362.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
 
 
-            <Label text="Spiel starten"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Spiel starten" />
 
-            <HBox spacing="40" alignment="CENTER">
+            <HBox alignment="CENTER" spacing="40">
 
-                <VBox spacing="10" fx:id="leftBox">
-                    <Label text="Spiel hosten"
-                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <VBox fx:id="leftBox" spacing="10">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Spiel hosten" />
 
                     <GridPane hgap="10" vgap="10">
                         <columnConstraints>
-                            <ColumnConstraints minWidth="80" halignment="RIGHT"/>
-                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints halignment="RIGHT" minWidth="80" />
+                            <ColumnConstraints hgrow="ALWAYS" />
                         </columnConstraints>
 
                         <children>
-                            <Label text="Port:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <TextField fx:id="hostPortField"
-                                       promptText="z.B.: 5000"
-                                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Port:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="hostPortField" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Button text="GO!"
-                                    fx:id="hostGoButton"
-                                    maxWidth="Infinity"
-                                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Button fx:id="hostGoButton" maxWidth="Infinity" onAction="#onHostButtonClicked" text="Hosten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
                     </GridPane>
                 </VBox>
 
-                <VBox spacing="10" fx:id="rightBox">
-                    <Label text="Spiel beitreten"
-                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <VBox fx:id="rightBox" spacing="10">
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Spiel beitreten" />
 
                     <GridPane hgap="10" vgap="10">
                         <columnConstraints>
-                            <ColumnConstraints minWidth="80" halignment="RIGHT"/>
-                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints halignment="RIGHT" minWidth="80" />
+                            <ColumnConstraints hgrow="ALWAYS" />
                         </columnConstraints>
 
                         <children>
-                            <Label text="IP Adresse:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <TextField fx:id="joinIpField"
-                                       promptText="z.B.: 192.168.0.10"
-                                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="IP Adresse:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="joinIpField" promptText="z.B.: 192.168.0.10" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Port:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <TextField fx:id="joinPortField"
-                                       promptText="z.B.: 5000"
-                                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Port:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="joinPortField" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Button text="Beitreten"
-                                    fx:id="joinButton"
-                                    maxWidth="Infinity"
-                                    GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            <Button fx:id="joinButton" maxWidth="Infinity" onAction="#onJoinButtonClicked" text="Beitreten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         </children>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
                     </GridPane>
                 </VBox>
 

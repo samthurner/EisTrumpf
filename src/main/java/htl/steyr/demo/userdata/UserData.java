@@ -15,6 +15,8 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
+    private String name;
+
 
     public UserData(String username) {
         setUsername(username);
@@ -113,4 +115,19 @@ public class UserData {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public void resetStats() {
+        setWinstreak(0);
+        setHighest_winstreak(0);
+        setGames_won(0);
+        setGames_lost(0);
+    }
+
 }
