@@ -30,4 +30,22 @@ public class ViewSwitcher {
             e.printStackTrace();
         }
     }
+
+    public static void addToScene(String fxmlFile) {
+        try {
+            String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
+            Parent newRoot = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
+
+            Parent currentRoot = stage.getScene().getRoot();
+
+            if (currentRoot instanceof javafx.scene.layout.Pane pane) {
+                pane.getChildren().add(newRoot);
+            } else {
+                System.out.println("Fehler");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
