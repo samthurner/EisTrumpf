@@ -33,12 +33,23 @@ public class GameTimer {
                         seconds = 0;
                         minutes++;
                     }
+                    writeTimeInLabel();
                 })
+
         );
 
         //Timer zählt unendlich hoch
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+
+    public void writeTimeInLabel() {
+
+        if (seconds < 10){
+            timeLabel.setText("Spieldauer: " + minutes + ":0" + seconds);
+        }else {
+            timeLabel.setText("Spieldauer: " + minutes + ":" + seconds);
+        }
     }
 
 }

@@ -53,6 +53,6 @@
         </GridPane>
 
     </VBox>
-   <Label fx:id="gameTimeLabel" layoutX="421.0" layoutY="24.0" prefHeight="18.0" prefWidth="165.0" text="Label" AnchorPane.bottomAnchor="357.6" AnchorPane.leftAnchor="420.79999999999995" AnchorPane.rightAnchor="13.400000000000006" AnchorPane.topAnchor="24.0" />
+   <Label fx:id="gameTimeLabel" alignment="CENTER_RIGHT" layoutX="480.8" layoutY="24.0" prefHeight="18.0" prefWidth="105.0" AnchorPane.bottomAnchor="358.0" AnchorPane.leftAnchor="481.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="24.0" />
 
 </AnchorPane>
