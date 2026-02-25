@@ -1,6 +1,7 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.music.Music;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -76,4 +77,11 @@ public class MenuController implements Initializable {
     }
 
 
+    public void toggleSliderButton(ActionEvent actionEvent) {
+        if (volumeSlider.isVisible()) {
+            volumeSlider.setVisible(false);
+        }else {
+            volumeSlider.setVisible(true);
+        }
+    }
 }

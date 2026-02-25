@@ -43,7 +43,7 @@ public class UserSession {
         userData.setUsername(newName);
         userData.writeToJson();
     }
-}
+
     public static void setHost(GameServer server) {
         isHost = true;
         gameServer = server;
@@ -75,3 +75,4 @@ public class UserSession {
         isHost = false;
     }
 }
+
