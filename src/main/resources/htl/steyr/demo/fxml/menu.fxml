@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <BorderPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.MenuController">
     <top>
         <HBox spacing="20">
@@ -46,7 +47,13 @@
             <children>
                <Label text="made by Milicevic, Schmidberger, Seiler &amp; Thurner" />
             </children></HBox>
-            <ImageView fx:id="imgSettings" fitHeight="30" fitWidth="30" pickOnBounds="true" />
+            <ImageView fx:id="imgSettings" fitHeight="30" fitWidth="30" pickOnBounds="true"
+                       onMouseClicked="#onSettingsBtnClicked">
+                <image>
+                    <Image url="@/image/Zahnrad.png"/>
+                </image>
+            </ImageView>
+
         </HBox>
     </bottom>
 </BorderPane>
