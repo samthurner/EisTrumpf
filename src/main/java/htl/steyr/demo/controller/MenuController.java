@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -40,6 +41,9 @@ public class MenuController implements Initializable {
         ViewSwitcher.switchTo("stats-screen");
     }
 
+    public void onSettingsBtnClicked(MouseEvent mouseEvent) {ViewSwitcher.switchTo("settings-pane");
+    }
+
     public void onEndGameBtnClicked(ActionEvent actionEvent) {
         ViewSwitcher.getStage().close();
     }
@@ -55,5 +59,6 @@ public class MenuController implements Initializable {
         );
         waitForUserData.playFromStart();
     }
+
 
 }
