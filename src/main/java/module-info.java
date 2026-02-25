@@ -5,6 +5,7 @@ module htl.steyr.demo {
     requires java.sql;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.media;
 
     opens htl.steyr.demo to javafx.fxml;
     opens htl.steyr.demo.fxml to javafx.fxml;
