@@ -19,6 +19,31 @@ public class UserSession {
         return userData;
     }
 
+    private boolean darkMode;
+
+    public void setDarkMode(boolean darkMode) {
+        this.darkMode = darkMode;
+    }
+
+    public boolean isDarkMode() {
+        return darkMode;
+    }
+
+    private static UserSession instance;
+
+
+    public static UserSession getInstance() {
+        if (instance == null) {
+            instance = new UserSession();
+        }
+        return instance;
+    }
+
+    public void setUsername(String newName) {
+        userData.setUsername(newName);
+        userData.writeToJson();
+    }
+}
     public static void setHost(GameServer server) {
         isHost = true;
         gameServer = server;
