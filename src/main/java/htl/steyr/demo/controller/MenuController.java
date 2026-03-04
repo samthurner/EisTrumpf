@@ -29,7 +29,7 @@ public class MenuController implements Initializable {
     public Slider volumeSlider;
 
     public void onSpielenBtnClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo("start-game-menu");
+        ViewSwitcher.switchTo("game-screen");
     }
 
     public void onKartenDecksBtnClicked(ActionEvent actionEvent) {

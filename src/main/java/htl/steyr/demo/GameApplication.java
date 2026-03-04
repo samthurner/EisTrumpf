@@ -16,10 +16,11 @@ public class GameApplication extends Application {
         Music music = new Music();
         music.playSong();
 
-        Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/game-screen.fxml"));
 
         stage.setScene(new Scene(root));
         stage.setTitle("EisTrumpf");
+
         stage.show();
     }
 
