@@ -10,6 +10,9 @@ import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -31,6 +34,8 @@ public class GameScreenController implements Initializable {
     public Button stat4Button;
     public Label gameTimeLabel;
     public GameTimer gameTimer;
+    public Pane imagePlaceholder;
+    public ImageView cardImage;
 
     private Deck deck;
     private PlayingCard currentCard;
@@ -52,6 +57,7 @@ public class GameScreenController implements Initializable {
 
         gameTimer = new GameTimer(gameTimeLabel);
         gameTimer.start();
+        cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
 
         waitForDeck.setCycleCount(Timeline.INDEFINITE);
         waitForDeck.play();
