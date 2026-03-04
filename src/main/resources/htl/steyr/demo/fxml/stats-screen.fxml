@@ -7,14 +7,15 @@
 
     <Label style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Statistiken" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="40" />
 
-    <Label fx:id="gamesPlayedLabel" style="-fx-font-size: 13px;" text="gespielte Spiele:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="110" />
+    <Label fx:id="gamesPlayedLabel" prefHeight="19.0" prefWidth="270.0" style="-fx-font-size: 13px;" text="gespielte Spiele:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="110" />
 
-    <Label fx:id="gamesWonLabel" style="-fx-font-size: 13px;" text="gewonnene Spiele:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="150" />
+    <Label fx:id="gamesWonLabel" prefHeight="19.0" prefWidth="270.0" style="-fx-font-size: 13px;" text="gewonnene Spiele:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="150" />
 
-    <Label fx:id="winrateLabel" style="-fx-font-size: 13px;" text="Win-Rate:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="190" />
+    <Label fx:id="winrateLabel" prefHeight="19.0" prefWidth="270.0" style="-fx-font-size: 13px;" text="Win-Rate:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="190" />
 
-    <Label fx:id="winStreakLabel" style="-fx-font-size: 13px;" text="Längste Winstreak:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="230" />
+    <Label fx:id="winStreakLabel" prefHeight="19.0" prefWidth="270.0" style="-fx-font-size: 13px;" text="Längste Winstreak:" AnchorPane.leftAnchor="60" AnchorPane.topAnchor="230" />
 
     <Button fx:id="okButton" layoutX="548.0" layoutY="356.0" onAction="#onOkClicked" prefHeight="0.0" prefWidth="38.0" style="-fx-font-size: 13px;" text="OK" AnchorPane.bottomAnchor="14.666666666666686" AnchorPane.rightAnchor="14.0" />
+   <Label fx:id="gameTimeStatLabel" layoutX="60.0" layoutY="267.0" prefHeight="18.0" prefWidth="269.0" text="Spielzeit:" />
 
 </AnchorPane>
