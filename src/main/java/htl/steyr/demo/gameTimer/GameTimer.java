@@ -9,8 +9,7 @@ public class GameTimer {
 
     public Label timeLabel;
     Timeline timeline;
-    public int seconds;
-    public int minutes;
+    private int elapsedSeconds = 0;
 
     public GameTimer(Label timeLabel) {
         this.timeLabel = timeLabel;
@@ -19,23 +18,12 @@ public class GameTimer {
 
     //Methode um den Timer zu starten
     public void start() {
-
-        seconds = 0;
-        minutes = 0;
-
         //nach jeder Sekunde wird die Sekunde hochgezählt
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
-                    seconds++;
-
-                    //wenn es 60 Sekunden sind, dann wird Sekunde wieder auf 0 gesetzt und Minute um 1 erhöht
-                    if (seconds == 60) {
-                        seconds = 0;
-                        minutes++;
-                    }
-                    writeTimeInLabel();
+                    elapsedSeconds++;
+                    timeLabel.setText(formatToHHMMSS(elapsedSeconds));
                 })
-
         );
 
         //Timer zählt unendlich hoch
@@ -43,13 +31,21 @@ public class GameTimer {
         timeline.play();
     }
 
-    public void writeTimeInLabel() {
-
-        if (seconds < 10){
-            timeLabel.setText("Spieldauer: " + minutes + ":0" + seconds);
-        }else {
-            timeLabel.setText("Spieldauer: " + minutes + ":" + seconds);
+    public void stop() {
+        if  (timeline != null) {
+            timeline.stop();
         }
     }
 
+    public static String formatToHHMMSS(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public int getElapsedSeconds() {
+        return elapsedSeconds;
+    }
 }

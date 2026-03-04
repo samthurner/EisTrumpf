@@ -5,6 +5,9 @@ import htl.steyr.demo.cards.Deck;
 import htl.steyr.demo.cards.DeckLoader;
 import htl.steyr.demo.cards.PlayingCard;
 import htl.steyr.demo.gameTimer.GameTimer;
+import htl.steyr.demo.userdata.Statistik;
+import htl.steyr.demo.userdata.UserData;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
@@ -34,9 +37,18 @@ public class GameScreenController implements Initializable {
 
     private Deck deck;
     private PlayingCard currentCard;
+    private Statistik statistik;
+    private UserData userData;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        userData = UserSession.getUserData();
+
+        gameTimer = new GameTimer(gameTimeLabel);
+        gameTimer.start();
+
+        statistik = new Statistik(userData, gameTimer);
 
         Timeline waitForDeck = new Timeline(
                 new KeyFrame(Duration.millis(100), e -> {
@@ -81,6 +93,9 @@ public class GameScreenController implements Initializable {
     }
 
     public void onAufgebenClicked(javafx.event.ActionEvent actionEvent) {
+        gameTimer.stop();
+        statistik.gameTimeStat();
+        userData.writeToJson();
         ViewSwitcher.switchTo("menu");
     }
 

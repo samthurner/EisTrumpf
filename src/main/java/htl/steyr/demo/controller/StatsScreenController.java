@@ -1,6 +1,8 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.gameTimer.GameTimer;
+import htl.steyr.demo.userdata.Statistik;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
@@ -21,9 +23,12 @@ public class StatsScreenController implements Initializable {
     public Label winrateLabel;
     public Label winStreakLabel;
     public Button okButton;
+    public Label gameTimeStatLabel;
+    public UserData userData;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        userData = UserSession.getUserData();
 
         Timeline waitForUserData = new Timeline(
                 new KeyFrame(Duration.millis(100), e -> {
@@ -46,6 +51,7 @@ public class StatsScreenController implements Initializable {
                     gamesWonLabel.setText("gewonnene Spiele: " + user.getGames_won());
                     winrateLabel.setText("Win-Rate: " + String.format("%.1f%%", winrate));
                     winStreakLabel.setText("Längste Winstreak: " + user.getHighest_winstreak());
+                    gameTimeStatLabel.setText("Gesamtspielzeit: " + GameTimer.formatToHHMMSS(user.getPlaytime()));
                 })
         );
 
