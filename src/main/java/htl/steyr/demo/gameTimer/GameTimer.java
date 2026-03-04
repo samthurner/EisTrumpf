@@ -43,6 +43,12 @@ public class GameTimer {
         timeline.play();
     }
 
+    public void stop() {
+        if  (timeline != null) {
+            timeline.stop();
+        }
+    }
+
     public void writeTimeInLabel() {
 
         if (seconds < 10){
@@ -51,5 +57,4 @@ public class GameTimer {
             timeLabel.setText("Spieldauer: " + minutes + ":" + seconds);
         }
     }
-
 }
