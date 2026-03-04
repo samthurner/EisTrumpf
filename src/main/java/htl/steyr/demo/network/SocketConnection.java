@@ -37,6 +37,7 @@ public class SocketConnection {
             try {
                 String msg;
                 while ((msg = in.readLine()) != null) {
+                    handleMessage(msg);
                     System.out.println("Empfangen: " + msg);
                 }
             } catch (IOException e) {
@@ -48,5 +49,11 @@ public class SocketConnection {
 
     public void close() throws IOException {
         socket.close();
+    }
+
+    private void handleMessage(Object obj) {
+
+        System.out.println("Nachricht empfangen: " + obj);
+        //hier muss später die logik hin, um zu erkennen ob es ein Spielzug oder ein kartendeck oder so ist
     }
 }
