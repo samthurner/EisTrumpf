@@ -9,27 +9,19 @@ import javafx.scene.control.ToggleButton;
 
 public class SettingsController {
 
-
     @FXML
     private ToggleButton changeTheme;
-
 
     @FXML
     public void onThemechange(ActionEvent actionEvent) {
         boolean dark = changeTheme.isSelected();
-
         UserSession.getInstance().setDarkMode(dark);
-
         var scene = changeTheme.getScene();
         scene.getStylesheets().clear();
-
         if (dark) {
-            scene.getStylesheets().add(getClass().getResource("/htl/steyr/demo/style/dark.css").toExternalForm());
-        } else {
-            scene.getStylesheets().add(getClass().getResource("/htl/steyr/demo/style/light.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/darkmode.css").toExternalForm());
         }
     }
-
 
     @FXML
     public void onChangeNameClicked(ActionEvent actionEvent) {
@@ -41,7 +33,6 @@ public class SettingsController {
         UserData user = UserSession.getInstance().getUserData();
         user.resetStats();
         user.writeToJson();
-
         System.out.println("Stats wurden zurückgesetzt.");
     }
 
@@ -49,6 +40,4 @@ public class SettingsController {
     public void onBackClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");
     }
-
-
 }

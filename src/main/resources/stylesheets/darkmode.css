@@ -1,0 +1,19 @@
+.root {
+    -fx-base: #222;
+    -fx-background-color: #222;
+    -fx-text-fill: white;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #444;
+    -fx-text-fill: white;
+}
+
+.toggle-button {
+    -fx-background-color: #444;
+    -fx-text-fill: white;
+}
