@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class UserData {
     private String username;
@@ -15,7 +19,6 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
-    private String name;
 
 
     public UserData(String username) {
@@ -25,27 +28,30 @@ public class UserData {
 
     public void loadFromJson(String username) {
         try {
-            File file = new File(username + ".json");
+            File directory = new File("Json");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            File file = new File(directory, username + ".json");
 
             if (!file.exists()) {
-
-                setWinstreak(0);
-                setHighest_winstreak(0);
-                setGames_won(0);
-                setGames_lost(0);
+                resetStats();
                 setPlaytime(0);
-            } else {
-                Gson g = new Gson();
-                FileReader reader = new FileReader(file);
+                writeToJson();
+                return;
+            }
 
-                UserData loaded = g.fromJson(reader, UserData.class);
-                reader.close();
+            Gson gson = new Gson();
 
-                setWinstreak(loaded.getWinstreak());
-                setHighest_winstreak(loaded.getHighest_winstreak());
-                setGames_won(loaded.getGames_won());
-                setGames_lost(loaded.getGames_lost());
-                setPlaytime(loaded.getPlaytime());
+            try (FileReader reader = new FileReader(file)) {
+                UserData loaded = gson.fromJson(reader, UserData.class);
+
+                this.winstreak = loaded.winstreak;
+                this.highest_winstreak = loaded.highest_winstreak;
+                this.games_won = loaded.games_won;
+                this.games_lost = loaded.games_lost;
+                this.playtime = loaded.playtime;
             }
 
         } catch (Exception e) {
@@ -54,16 +60,24 @@ public class UserData {
     }
 
     public void writeToJson() {
-        String json = new GsonBuilder().setPrettyPrinting().create().toJson(this);
         try {
-            File file = new File(getUsername() + ".json");
+            File directory = new File("Json");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
 
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.close();
+            File file = new File(directory, username + ".json");
+
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
+
+            try (FileWriter writer = new FileWriter(file)) {
+                gson.toJson(this, writer);
+            }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -117,17 +131,12 @@ public class UserData {
     }
 
 
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
     public void resetStats() {
         setWinstreak(0);
         setHighest_winstreak(0);
         setGames_won(0);
         setGames_lost(0);
+        setPlaytime(0);
     }
 
 }

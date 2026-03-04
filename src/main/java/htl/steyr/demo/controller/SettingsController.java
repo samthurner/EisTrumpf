@@ -38,8 +38,9 @@ public class SettingsController {
 
     @FXML
     public void onResetStatsClicked(ActionEvent actionEvent) {
-        UserData data = UserSession.getInstance().getUserData();
-        data.resetStats();
+        UserData user = UserSession.getInstance().getUserData();
+        user.resetStats();
+        user.writeToJson();
 
         System.out.println("Stats wurden zurückgesetzt.");
     }

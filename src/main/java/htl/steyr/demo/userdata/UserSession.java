@@ -44,6 +44,7 @@ public class UserSession {
         userData.writeToJson();
     }
 
+
     public static void setHost(GameServer server) {
         isHost = true;
         gameServer = server;
@@ -70,9 +71,10 @@ public class UserSession {
 
     public static void clear() {
         userData = null;
+
+
         gameServer = null;
         gameClient = null;
         isHost = false;
     }
 }
-
