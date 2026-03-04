@@ -1,5 +1,6 @@
 package htl.steyr.demo;
 
+import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,9 +24,20 @@ public class ViewSwitcher {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
             Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
-            stage.setScene(new Scene(root));
 
-            
+            Scene scene = new Scene(root);
+
+            // THEME GLOBAL LADEN
+            scene.getStylesheets().clear();
+            if (UserSession.getInstance().isDarkMode()) {
+                scene.getStylesheets().add(
+                        ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()
+                );
+            }
+
+            stage.setScene(scene);
+            stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
