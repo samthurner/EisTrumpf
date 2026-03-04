@@ -31,4 +31,8 @@ public class Deck {
     public List<PlayingCard> getCards() {
         return cards;
     }
+
+    public void setCards(List<PlayingCard> cards) {
+        this.cards = cards;
+    }
 }

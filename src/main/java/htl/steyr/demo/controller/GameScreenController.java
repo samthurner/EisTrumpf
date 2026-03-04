@@ -103,7 +103,7 @@ public class GameScreenController implements Initializable {
     private void sendStatChoice(int statIndex, double value) {
         System.out.println("Spieler hat Stat " + statIndex + " gewählt mit Wert: " + value);
 
-        // HIER später Online-Logik einbauen
+        // HIERs später Online-Logik einbauen
         // z.B. Server.sendStatChoice(statIndex, value);
     }
 }
