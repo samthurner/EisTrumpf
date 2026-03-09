@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
+
+    <Label fx:id="turnLabel" alignment="CENTER" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20" />
 
     <!-- Obere Leiste -->
     <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20" />
-
-    <Label fx:id="turnLabel" alignment="CENTER" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20" />
 
     <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" />
 
@@ -20,12 +25,7 @@
         <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Titel:" />
         <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <ImageView fx:id="cardImage"
-                   preserveRatio="true"
-                   fitWidth="350"
-                   fitHeight="400"
-                   VBox.vgrow="ALWAYS"
-                   style="-fx-border-color: red; -fx-border-width: 2;" />
+        <ImageView fx:id="cardImage" fitHeight="400" fitWidth="350" preserveRatio="true" style="-fx-border-color: red; -fx-border-width: 2;" VBox.vgrow="ALWAYS" />
 
 
 

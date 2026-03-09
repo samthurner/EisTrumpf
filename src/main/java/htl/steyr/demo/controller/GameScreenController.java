@@ -101,7 +101,6 @@ public class GameScreenController implements Initializable {
     public void onAufgebenClicked(javafx.event.ActionEvent actionEvent) {
         gameTimer.stop();
         statistik.gameTimeStat();
-        userData.writeToJson();
         ViewSwitcher.switchTo("menu");
     }
 

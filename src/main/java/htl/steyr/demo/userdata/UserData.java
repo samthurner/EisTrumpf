@@ -37,7 +37,6 @@ public class UserData {
 
             if (!file.exists()) {
                 resetStats();
-                setPlaytime(0);
                 writeToJson();
                 return;
             }
