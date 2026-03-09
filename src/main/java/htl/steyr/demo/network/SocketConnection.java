@@ -63,7 +63,8 @@ public class SocketConnection {
 
             javafx.application.Platform.runLater(() -> {
                 htl.steyr.demo.ViewSwitcher.switchTo("game-screen");
-            });        }
+            });
+        }
 
 
 
