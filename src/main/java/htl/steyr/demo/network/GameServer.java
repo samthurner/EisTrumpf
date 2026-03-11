@@ -43,9 +43,11 @@ public class GameServer {
                 System.out.println("Client verbunden!");
 
                 Deck deckObj = DeckReader.loadDeck("/htl/steyr/demo/carddecks/auto_deck.json");
+
+                CardManager.shuffleDeck(deckObj);
+
                 deck = deckObj.getCards();
 
-                Collections.shuffle(deck);
 
 
                 for(int i = 0; i < 1; i++){
