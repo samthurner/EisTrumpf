@@ -16,6 +16,7 @@ public class SocketConnection {
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
+    GameClient gameClient;
 
     public SocketConnection(Socket socket) throws IOException {
         this.socket = socket;
@@ -25,7 +26,7 @@ public class SocketConnection {
     }
 
     // Verschickt elemente als Json objekt
-    public void sendMessage(Object obj) {
+    public void sendCard(Object obj) {
         String Json = gson.toJson(obj);
         out.println(Json);
     }
@@ -40,6 +41,11 @@ public class SocketConnection {
                 String msg;
                 while ((msg = in.readLine()) != null) {
                     handleMessage(msg);
+
+                    if (gameClient != null) {
+                        gameClient.receivingMsg(msg);
+                    }
+
                     System.out.println("Empfangen: " + msg);
                 }
             } catch (IOException e) {
@@ -54,12 +60,12 @@ public class SocketConnection {
     }
 
     private void handleMessage(String msg) {
-        if(msg.startsWith("{") && msg.contains("deck_name")) {
+        if (msg.startsWith("{") && msg.contains("deck_name")) {
             Gson gson = new Gson();
             Deck receivedDeck = gson.fromJson(msg, Deck.class);
 
             DeckLoader.setLoadedDeck(receivedDeck);
-            System.out.println("Deck empfangen" +  receivedDeck.getDeckName());
+            System.out.println("Deck empfangen" + receivedDeck.getDeckName());
 
             javafx.application.Platform.runLater(() -> {
                 htl.steyr.demo.ViewSwitcher.switchTo("game-screen");
@@ -67,8 +73,11 @@ public class SocketConnection {
         }
 
 
-
         System.out.println("Nachricht empfangen: ");
         //hier muss später die logik hin, um zu erkennen ob es ein Spielzug oder ein kartendeck oder so ist
+    }
+
+    public void setGameClient(GameClient client) {
+        this.gameClient = client;
     }
 }
