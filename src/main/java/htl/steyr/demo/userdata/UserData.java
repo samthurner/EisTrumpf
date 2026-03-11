@@ -19,7 +19,7 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
-
+    private boolean darkmode;
 
     public UserData(String username) {
         setUsername(username);
@@ -51,6 +51,7 @@ public class UserData {
                 this.games_won = loaded.games_won;
                 this.games_lost = loaded.games_lost;
                 this.playtime = loaded.playtime;
+                this.darkmode = loaded.darkmode;
             }
 
         } catch (Exception e) {
@@ -67,9 +68,7 @@ public class UserData {
 
             File file = new File(directory, username + ".json");
 
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
             try (FileWriter writer = new FileWriter(file)) {
                 gson.toJson(this, writer);
@@ -80,6 +79,14 @@ public class UserData {
         }
     }
 
+    public void resetStats() {
+        setWinstreak(0);
+        setHighest_winstreak(0);
+        setGames_won(0);
+        setGames_lost(0);
+        setPlaytime(0);
+        setDarkmode(false);
+    }
 
     public int getPlaytime() {
         return playtime;
@@ -129,13 +136,12 @@ public class UserData {
         this.username = username;
     }
 
+    public boolean isDarkmode() {
+        return darkmode;
+    }
 
-    public void resetStats() {
-        setWinstreak(0);
-        setHighest_winstreak(0);
-        setGames_won(0);
-        setGames_lost(0);
-        setPlaytime(0);
+    public void setDarkmode(boolean darkmode) {
+        this.darkmode = darkmode;
     }
 
 }

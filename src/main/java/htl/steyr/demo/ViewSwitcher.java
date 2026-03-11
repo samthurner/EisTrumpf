@@ -28,16 +28,9 @@ public class ViewSwitcher {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
             Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
-
             Scene scene = new Scene(root);
 
-            // THEME GLOBAL LADEN
-            scene.getStylesheets().clear();
-            if (UserSession.getInstance().isDarkMode()) {
-                scene.getStylesheets().add(
-                        ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()
-                );
-            }
+            applyTheme(scene);
 
 //            stage.setFullScreen(true);
 //            stage.setFullScreenExitHint("");
@@ -58,6 +51,18 @@ public class ViewSwitcher {
         }
     }
 
+    // Hilfsmethode, damit ich den Code nicht doppelt schreiben muss
+    private static void applyTheme(Scene scene) {
+        if (scene == null) return;
+
+        scene.getStylesheets().clear();
+        // Wir prüfen, ob ein User da ist UND ob er Darkmode will
+        if (UserSession.getUserData() != null && UserSession.getInstance().isDarkMode()) {
+            String cssPath = ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm();
+            scene.getStylesheets().add(cssPath);
+        }
+    }
+
     public static void addToScene(String fxmlFile) {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
@@ -67,6 +72,8 @@ public class ViewSwitcher {
 
             if (currentRoot instanceof javafx.scene.layout.Pane pane) {
                 pane.getChildren().add(newRoot);
+
+                applyTheme(stage.getScene());
             } else {
                 System.out.println("Fehler");
             }

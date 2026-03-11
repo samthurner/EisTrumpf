@@ -12,14 +12,22 @@ public class SettingsController {
     @FXML
     private ToggleButton changeTheme;
 
+    public void Initialize() {
+        boolean isDark = UserSession.getInstance().isDarkMode();
+        changeTheme.setSelected(isDark);
+    }
     @FXML
     public void onThemechange(ActionEvent actionEvent) {
         boolean dark = changeTheme.isSelected();
+
         UserSession.getInstance().setDarkMode(dark);
+
         var scene = changeTheme.getScene();
-        scene.getStylesheets().clear();
-        if (dark) {
-            scene.getStylesheets().add(getClass().getResource("/stylesheets/darkmode.css").toExternalForm());
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            if (dark){
+                scene.getStylesheets().add(getClass().getResource("/stylesheets/darkmode.css").toExternalForm());
+            }
         }
     }
 
@@ -33,6 +41,7 @@ public class SettingsController {
         UserData user = UserSession.getInstance().getUserData();
         user.resetStats();
         user.writeToJson();
+        changeTheme.setSelected(user.isDarkmode());
         System.out.println("Stats wurden zurückgesetzt.");
     }
 
