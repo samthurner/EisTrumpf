@@ -34,7 +34,7 @@
 
                         <children>
                             <Label text="Port:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                            <TextField fx:id="hostPortField" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField fx:id="hostPortField" onAction="#onHostButtonClicked" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                             <Button fx:id="hostGoButton" maxWidth="Infinity" onAction="#onHostButtonClicked" text="Hosten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
@@ -56,10 +56,10 @@
 
                         <children>
                             <Label text="IP Adresse:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                            <TextField fx:id="joinIpField" promptText="z.B.: 192.168.0.10" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField fx:id="joinIpField" onAction="#enterOnIPLabel" promptText="z.B.: 192.168.0.10" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                             <Label text="Port:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                            <TextField fx:id="joinPortField" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <TextField fx:id="joinPortField" onAction="#onJoinButtonClicked" promptText="z.B.: 5000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                             <Button fx:id="joinButton" maxWidth="Infinity" onAction="#onJoinButtonClicked" text="Beitreten" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         </children>
