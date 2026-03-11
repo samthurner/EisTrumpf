@@ -1,11 +1,17 @@
 package htl.steyr.demo.network;
 
+import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.cards.Deck;
+import htl.steyr.demo.cards.DeckLoader;
+import htl.steyr.demo.cards.DeckReader;
+import htl.steyr.demo.cards.PlayingCard;
 import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 
 public class GameServer {
 
@@ -14,6 +20,7 @@ public class GameServer {
     private ServerSocket serverSocket;
     private SocketConnection opponent;
     private Thread acceptThread;
+    private List<PlayingCard> deck;
 
     public GameServer(int port) {
         this.port = port;
@@ -30,6 +37,12 @@ public class GameServer {
                 Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
 
                 System.out.println("Client verbunden!");
+
+                Deck deckObj = DeckReader.loadDeck("src/resources/htl/steyr/demo/carddecks/auto_decks");
+
+                deck = deckObj.getCards();
+
+                Collections.shuffle(deck);
 
                 opponent = new SocketConnection(socket);
                 opponent.startListening();
@@ -59,5 +72,21 @@ public class GameServer {
         if (serverSocket != null) {
             serverSocket.close();
         }
+    }
+
+    private PlayingCard drawRandomCard(){
+        int randomCardIndex = new Random().nextInt(deck.size());
+
+        return deck.remove(randomCardIndex);
+    }
+
+    private void sendRandomCardToClient(){
+        Gson gson = new Gson();
+
+        PlayingCard card = drawRandomCard();
+
+        String json  = gson.toJson(card);
+
+        send("Card:" + json);
     }
 }
