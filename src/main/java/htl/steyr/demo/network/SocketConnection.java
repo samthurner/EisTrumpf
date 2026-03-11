@@ -1,8 +1,6 @@
 package htl.steyr.demo.network;
 
 import com.google.gson.Gson;
-import htl.steyr.demo.cards.Deck;
-import htl.steyr.demo.cards.DeckLoader;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 
