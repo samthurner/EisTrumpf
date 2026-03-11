@@ -3,6 +3,8 @@ package htl.steyr.demo.network;
 import com.google.gson.Gson;
 import htl.steyr.demo.cards.Deck;
 import htl.steyr.demo.cards.DeckLoader;
+import htl.steyr.demo.userdata.UserData;
+import htl.steyr.demo.userdata.UserSession;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -16,12 +18,14 @@ public class SocketConnection {
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
+    private UserData userData;
 
     public SocketConnection(Socket socket) throws IOException {
         this.socket = socket;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
         this.gson = new Gson();
+        userData = UserSession.getUserData();
     }
 
     // Verschickt elemente als Json objekt
@@ -54,21 +58,33 @@ public class SocketConnection {
     }
 
     private void handleMessage(String msg) {
-        if(msg.startsWith("{") && msg.contains("deck_name")) {
-            Gson gson = new Gson();
-            Deck receivedDeck = gson.fromJson(msg, Deck.class);
+        String prefix = msg.split(";")[0];
 
-            DeckLoader.setLoadedDeck(receivedDeck);
-            System.out.println("Deck empfangen" +  receivedDeck.getDeckName());
-
-            javafx.application.Platform.runLater(() -> {
-                htl.steyr.demo.ViewSwitcher.switchTo("game-screen");
-            });
+        switch (prefix) {
+            case "your_turn":
+                break;
+            case "card_request":
+                break;
+            case "get_cards":
+                break;
+            case "play_stat":
+                break;
+            case "set_username":
+                break;
+            case "send_card":
+                break;
+            case "game_result":
+                break;
+            case "compare_result":
+                break;
+            case "game_over":
+                break;
+            case "user_left":
+                break;
+            case "im_here":
+                break;
         }
 
-
-
-        System.out.println("Nachricht empfangen: ");
         //hier muss später die logik hin, um zu erkennen ob es ein Spielzug oder ein kartendeck oder so ist
     }
 }
