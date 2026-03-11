@@ -2,10 +2,7 @@ package htl.steyr.demo.network;
 
 import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
-import htl.steyr.demo.cards.Deck;
-import htl.steyr.demo.cards.DeckLoader;
-import htl.steyr.demo.cards.DeckReader;
-import htl.steyr.demo.cards.PlayingCard;
+import htl.steyr.demo.cards.*;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -22,6 +19,10 @@ public class GameServer {
     private Thread acceptThread;
     private List<PlayingCard> deck;
 
+    private List<PlayingCard> hostHand = new ArrayList<>();
+    private List<PlayingCard> clientHand = new ArrayList<>();
+
+
     public GameServer(int port) {
         this.port = port;
     }
@@ -34,20 +35,24 @@ public class GameServer {
         acceptThread = new Thread(() -> {
             try {
                 Socket socket = serverSocket.accept();
+                opponent = new SocketConnection(socket);
+                opponent.startListening();
+
                 Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
 
                 System.out.println("Client verbunden!");
 
-                Deck deckObj = DeckReader.loadDeck("src/resources/htl/steyr/demo/carddecks/auto_decks");
-
+                Deck deckObj = DeckReader.loadDeck("/htl/steyr/demo/carddecks/auto_deck.json");
                 deck = deckObj.getCards();
 
                 Collections.shuffle(deck);
 
-                opponent = new SocketConnection(socket);
-                opponent.startListening();
 
-                opponent.send("Testnachricht vom Server");
+                for(int i = 0; i < 1; i++){
+                    hostHand.add(deck.remove(0));
+                }
+
+                sendCardToClient();
 
             } catch (IOException e) {
                 if (running) e.printStackTrace();
@@ -74,19 +79,17 @@ public class GameServer {
         }
     }
 
-    private PlayingCard drawRandomCard(){
-        int randomCardIndex = new Random().nextInt(deck.size());
+    private void sendCardToClient(){
 
-        return deck.remove(randomCardIndex);
-    }
+        if(deck == null || deck.isEmpty()){
+            return;
+        }
 
-    private void sendRandomCardToClient(){
-        Gson gson = new Gson();
+        PlayingCard card = deck.remove(0);
 
-        PlayingCard card = drawRandomCard();
+        clientHand.add(card);
 
-        String json  = gson.toJson(card);
-
-        send("Card:" + json);
+        opponent.send("send_card;" + new Gson().toJson(card));
+        System.out.println("Sende Karte: " + card.getName());
     }
 }

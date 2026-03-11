@@ -12,6 +12,7 @@ module htl.steyr.demo {
     opens htl.steyr.demo.controller to javafx.fxml;
 
     opens htl.steyr.demo.userdata to com.google.gson;
+    opens htl.steyr.demo.cards to com.google.gson;
 
     opens image;
 
