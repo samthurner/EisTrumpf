@@ -2,10 +2,14 @@ package htl.steyr.demo;
 
 import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class ViewSwitcher {
@@ -35,7 +39,18 @@ public class ViewSwitcher {
                 );
             }
 
+//            stage.setFullScreen(true);
+//            stage.setFullScreenExitHint("");
             stage.setScene(scene);
+
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+
+            stage.setResizable(false);
             stage.show();
 
         } catch (IOException e) {
