@@ -12,7 +12,7 @@
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Einstellungen" />
+    <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Einstellungen" styleClass="Label-darkmode" />
 
     <ToggleButton fx:id="changeTheme" onAction="#onThemechange" text="Light / Dark" />
 

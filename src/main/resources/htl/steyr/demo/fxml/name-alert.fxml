@@ -12,7 +12,7 @@
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <Label style="-fx-font-size: 18;" text="Neuer Name:" />
+    <Label style="-fx-font-size: 18;" text="Neuer Name:" styleClass="Label-darkmode"/>
 
     <TextField fx:id="nameField" promptText="Name eingeben" />
 

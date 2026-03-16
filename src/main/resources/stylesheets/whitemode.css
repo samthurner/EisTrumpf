@@ -1,0 +1,55 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #e9f1fa, #b7d4ff, #4a81e6);
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #0f1a33;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to right, #5f8dff, #4a78e6);
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 6 16;
+    -fx-font-size: 13px;
+
+    -fx-effect: dropshadow(gaussian, rgba(60,90,200,0.35), 10, 0.25, 0, 0);
+    -fx-opacity: 0.95;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #6d9aff, #5886f0);
+    -fx-effect: dropshadow(gaussian, rgba(80,110,220,0.45), 12, 0.3, 0, 0);
+    -fx-translate-y: -1;
+    -fx-opacity: 1;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(to right, #4a78e6, #3a63c4);
+    -fx-translate-y: 1;
+    -fx-opacity: 0.9;
+}
+
+.toggle-button {
+    -fx-background-color: linear-gradient(to right, #5f8dff, #4a78e6);
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 6 16;
+    -fx-font-size: 13px;
+
+    -fx-effect: dropshadow(gaussian, rgba(60,90,200,0.35), 10, 0.25, 0, 0);
+    -fx-opacity: 0.95;
+    -fx-cursor: hand;
+}
+
+.toggle-button:hover {
+    -fx-background-color: linear-gradient(to right, #6d9aff, #5886f0);
+    -fx-effect: dropshadow(gaussian, rgba(80,110,220,0.45), 12, 0.3, 0, 0);
+    -fx-translate-y: -1;
+    -fx-opacity: 1;
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(to right, #5f8dff, #4a78e6);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(60,90,200,0.4), 10, 0.25, 0, 0);
+}
