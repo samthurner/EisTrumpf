@@ -28,6 +28,12 @@ public class SettingsController {
             if (dark){
                 scene.getStylesheets().add(getClass().getResource("/stylesheets/darkmode.css").toExternalForm());
             }
+        scene.getStylesheets().clear();
+        if (dark) {
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/darkmode.css").toExternalForm());
+        } else{
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/whitemode.css").toExternalForm());
+
         }
     }
 

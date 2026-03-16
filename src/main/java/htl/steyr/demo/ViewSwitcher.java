@@ -32,6 +32,17 @@ public class ViewSwitcher {
             Scene scene = new Scene(root);
 
             applyTheme(scene);
+            // THEME GLOBAL LADEN
+            scene.getStylesheets().clear();
+            if (UserSession.getInstance().isDarkMode()) {
+                scene.getStylesheets().add(
+                        ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()
+                );
+            }else {
+                scene.getStylesheets().add(
+                        ViewSwitcher.class.getResource("/stylesheets/whitemode.css").toExternalForm()
+                );
+            }
 
             //stage.setFullScreen(true);
             //stage.setFullScreenExitHint("");

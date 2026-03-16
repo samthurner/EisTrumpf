@@ -20,17 +20,17 @@
     <Label fx:id="winnerLabel"
            text="Gewinner: Spieler"
            style="-fx-font-size: 50px; -fx-font-weight: bold;"
-           styleClass="winner-text"/>
+           styleClass="Label-darkmode"/>
 
     <Label fx:id="infoLabel"
            text="Du hast gewonnen!"
            style="-fx-font-size: 30px;"
-           styleClass="info-text"/>
+           styleClass="Label-darkmode"/>
 
     <Button fx:id="backToMenuButton"
             text="Zurück zum Menü"
             onAction="#onBackToMenuClicked"
             style="-fx-font-size: 20px; -fx-padding: 10 30;"
-            styleClass="menu-button"/>
+            styleClass="Label-darkmode"/>
 
 </VBox>

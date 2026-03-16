@@ -1,11 +1,14 @@
 package htl.steyr.demo.network;
 
+import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.cards.*;
 import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 
 public class GameServer {
 
@@ -14,6 +17,11 @@ public class GameServer {
     private ServerSocket serverSocket;
     private SocketConnection opponent;
     private Thread acceptThread;
+    private List<PlayingCard> deck;
+
+    private List<PlayingCard> hostHand = new ArrayList<>();
+    private List<PlayingCard> clientHand = new ArrayList<>();
+
 
     public GameServer(int port) {
         this.port = port;
@@ -27,14 +35,24 @@ public class GameServer {
         acceptThread = new Thread(() -> {
             try {
                 Socket socket = serverSocket.accept();
+                opponent = new SocketConnection(socket);
+                opponent.startListening();
+
                 Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
 
                 System.out.println("Client verbunden!");
 
-                opponent = new SocketConnection(socket);
-                opponent.startListening();
+                Deck deckObj = DeckReader.loadDeck("/htl/steyr/demo/carddecks/auto_deck.json");
+                deck = deckObj.getCards();
 
-                opponent.send("Testnachricht vom Server");
+                Collections.shuffle(deck);
+
+
+                for(int i = 0; i < 1; i++){
+                    hostHand.add(deck.remove(0));
+                }
+
+                sendCardToClient();
 
             } catch (IOException e) {
                 if (running) e.printStackTrace();
@@ -59,5 +77,19 @@ public class GameServer {
         if (serverSocket != null) {
             serverSocket.close();
         }
+    }
+
+    private void sendCardToClient(){
+
+        if(deck == null || deck.isEmpty()){
+            return;
+        }
+
+        PlayingCard card = deck.remove(0);
+
+        clientHand.add(card);
+
+        opponent.send("send_card;" + new Gson().toJson(card));
+        System.out.println("Sende Karte: " + card.getName());
     }
 }
