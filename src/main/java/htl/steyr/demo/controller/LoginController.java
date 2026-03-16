@@ -29,10 +29,10 @@ public class LoginController {
             alert.setHeaderText("Bitte geben Sie einen Benutzernamen ein.");
             alert.showAndWait();
         }else{
-            ViewSwitcher.switchTo("menu");
             userData = new UserData(username);
             userData.writeToJson();
             UserSession.setUserData(userData);
+            ViewSwitcher.switchTo("menu");
 
 //            System.out.println("Spielername: " + username);
 //            System.out.println(userData.getUsername());

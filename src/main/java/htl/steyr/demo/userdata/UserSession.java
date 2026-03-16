@@ -11,6 +11,7 @@ public class UserSession {
     private static GameServer gameServer;
     private static GameClient gameClient;
 
+
     public static void setUserData(UserData data) {
         userData = data;
     }
@@ -22,11 +23,14 @@ public class UserSession {
     private boolean darkMode;
 
     public void setDarkMode(boolean darkMode) {
-        this.darkMode = darkMode;
+        if (userData != null) {
+            userData.setDarkmode(darkMode);
+            userData.writeToJson();
+        }
     }
 
     public boolean isDarkMode() {
-        return darkMode;
+        return userData != null && userData.isDarkmode();
     }
 
     private static UserSession instance;
