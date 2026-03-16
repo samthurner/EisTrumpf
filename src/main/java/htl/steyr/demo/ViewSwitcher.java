@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -32,8 +33,8 @@ public class ViewSwitcher {
 
             applyTheme(scene);
 
-//            stage.setFullScreen(true);
-//            stage.setFullScreenExitHint("");
+            //stage.setFullScreen(true);
+            //stage.setFullScreenExitHint("");
             stage.setScene(scene);
 
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
@@ -56,10 +57,16 @@ public class ViewSwitcher {
         if (scene == null) return;
 
         scene.getStylesheets().clear();
+
         // Wir prüfen, ob ein User da ist UND ob er Darkmode will
         if (UserSession.getUserData() != null && UserSession.getInstance().isDarkMode()) {
-            String cssPath = ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm();
-            scene.getStylesheets().add(cssPath);
+            try {
+                String cssPath = ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm();
+                scene.getStylesheets().add(cssPath);
+            }catch (NullPointerException e){
+                System.out.println("CSS-Datei nicht gefunden!");
+            }
+
         }
     }
 
@@ -68,17 +75,18 @@ public class ViewSwitcher {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
             Parent newRoot = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
 
-            Parent currentRoot = stage.getScene().getRoot();
+            // Wir holen das aktuelle Layout und sagen Java: "Das ist ein Pane" (einfaches Casting)
+            // Ein Pane ist einfach ein Behälter für andere Elemente.
+            Pane currentPane = (Pane) stage.getScene().getRoot();
 
-            if (currentRoot instanceof javafx.scene.layout.Pane pane) {
-                pane.getChildren().add(newRoot);
+            // Neues Element hinzufügen
+            currentPane.getChildren().add(newRoot);
 
-                applyTheme(stage.getScene());
-            } else {
-                System.out.println("Fehler");
-            }
+            // Theme aktualisieren, damit auch das neue Element dunkel ist
+            applyTheme(stage.getScene());
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println("Fehler beim Hinzufügen zur Scene. Checke das Layout!");
             e.printStackTrace();
         }
     }
