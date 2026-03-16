@@ -37,6 +37,10 @@ public class ViewSwitcher {
                 scene.getStylesheets().add(
                         ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()
                 );
+            }else {
+                scene.getStylesheets().add(
+                        ViewSwitcher.class.getResource("/stylesheets/whitemode.css").toExternalForm()
+                );
             }
 
 //            stage.setFullScreen(true);

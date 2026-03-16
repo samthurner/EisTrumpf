@@ -11,25 +11,25 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
 
-    <Label fx:id="turnLabel" alignment="CENTER" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20" />
+    <Label fx:id="turnLabel" alignment="CENTER" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20" styleClass="Label-darkmode"/>
 
-    <!-- Obere Leiste -->
+
     <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20" />
 
-    <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" />
+    <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" styleClass="Label-darkmode" />
 
-    <!-- Karte zentriert -->
+
     <VBox fx:id="cardBox" alignment="TOP_CENTER" maxWidth="300" prefWidth="300" spacing="60" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="60.0">
 
-        <!-- Titel -->
-        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Titel:" />
-        <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <ImageView fx:id="cardImage" fitHeight="400" fitWidth="350" preserveRatio="true" style="-fx-border-color: red; -fx-border-width: 2;" VBox.vgrow="ALWAYS" />
+        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Titel:" styleClass="Label-darkmode" />
+        <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="Label-darkmode" />
+
+        <ImageView fx:id="cardImage" fitHeight="400" fitWidth="350" preserveRatio="true" style="-fx-border-color: red; -fx-border-width: 2;" VBox.vgrow="ALWAYS"  />
 
 
 
-        <!-- Stats -->
+
         <GridPane alignment="CENTER" hgap="10" vgap="10">
 
             <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -53,7 +53,7 @@
 
     </VBox>
 
-    <!-- Cards Counter -->
-    <Label fx:id="cardsLeftLabel" style="-fx-font-size: 18px;" text="Cards: 0" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" />
+
+    <Label fx:id="cardsLeftLabel" style="-fx-font-size: 18px;" text="Cards: 0" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" styleClass="Label-darkmode" />
 
 </AnchorPane>

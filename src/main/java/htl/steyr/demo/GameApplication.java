@@ -20,8 +20,13 @@ public class GameApplication extends Application {
         music.playSong();
 
         Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/login.fxml"));
+        Scene scene = new Scene(root);
 
-        stage.setScene(new Scene(root));
+        scene.getStylesheets().add(
+                getClass().getResource("/stylesheets/whitemode.css").toExternalForm()
+        );
+
+        stage.setScene(scene);
         stage.setTitle("EisTrumpf");
         stage.initStyle(StageStyle.UNDECORATED);
 

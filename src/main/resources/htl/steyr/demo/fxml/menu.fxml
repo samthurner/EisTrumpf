@@ -4,20 +4,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.image.Image?>
-<BorderPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.MenuController">
+<BorderPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.MenuController">
     <top>
         <HBox spacing="20">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Willkommen, " />
-            <Label fx:id="usernameLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" />
+            <Label styleClass="Label-darkmode" text="Willkommen, " />
+            <Label fx:id="usernameLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" styleClass="Label-darkmode" />
          <VBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="227.0" HBox.hgrow="ALWAYS">
             <children>
                   <Button fx:id="btnSpielBeenden" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" onAction="#onEndGameBtnClicked" style="-fx-font-size: 12;" text="Spiel Beenden" />
@@ -40,17 +40,15 @@
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-         <Button mnemonicParsing="false" onAction="#toggleSliderButton" prefHeight="26.0" prefWidth="122.0" text="📢" />
+         <Button mnemonicParsing="false" onAction="#toggleSliderButton" prefHeight="26.0" prefWidth="169.0" text="📢" />
          <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="78.0" visible="false" />
-            <ImageView fx:id="imgVolume" fitHeight="30" fitWidth="30" pickOnBounds="true" />
             <HBox alignment="CENTER" prefHeight="0.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
             <children>
-               <Label text="made by Milicevic, Schmidberger, Seiler &amp; Thurner" />
+               <Label styleClass="Label-darkmode" text="made by Milicevic, Schmidberger, Seiler &amp; Thurner" />
             </children></HBox>
-            <ImageView fx:id="imgSettings" fitHeight="30" fitWidth="30" pickOnBounds="true"
-                       onMouseClicked="#onSettingsBtnClicked">
+            <ImageView fx:id="imgSettings" fitHeight="30" fitWidth="30" onMouseClicked="#onSettingsBtnClicked" pickOnBounds="true">
                 <image>
-                    <Image url="@/image/Zahnrad.png"/>
+                    <Image url="@/image/Zahnrad.png" />
                 </image>
             </ImageView>
 

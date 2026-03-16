@@ -1,19 +1,103 @@
 .root {
-    -fx-base: #222;
-    -fx-background-color: #222;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(
+            to right,
+            #07101c,
+            #0b1b2d,
+            #0f2740,
+            #123355
+    );
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #dcecff;
 }
 
-.label {
-    -fx-text-fill: white;
+.panel, .card {
+    -fx-background-color: linear-gradient(
+            to right,
+            rgba(25, 50, 85, 0.55),
+            rgba(35, 70, 110, 0.50),
+            rgba(20, 40, 70, 0.55)
+    );
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 20, 0.35, 0, 4);
+    -fx-text-fill: #dcecff;
 }
 
 .button {
-    -fx-background-color: #444;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(
+            to right,
+            #8ac2ff,
+            #5fa9ff,
+            #3f8df0,
+            #2c74d1
+    );
+    -fx-text-fill: #f4f9ff;
+    -fx-background-radius: 8;
+    -fx-padding: 6 16;
+    -fx-font-size: 13px;
+    -fx-effect: dropshadow(gaussian, rgba(90,150,255,0.35), 10, 0.25, 0, 0);
+    -fx-opacity: 0.97;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(
+            to right,
+            #a8d4ff,
+            #8ac2ff,
+            #5fa9ff,
+            #3f8df0
+    );
+    -fx-effect: dropshadow(gaussian, rgba(130,180,255,0.45), 12, 0.3, 0, 0);
+    -fx-translate-y: -1;
+    -fx-opacity: 1;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(
+            to right,
+            #3f8df0,
+            #2c74d1,
+            #1f5cad,
+            #174a8a
+    );
+    -fx-translate-y: 1;
+    -fx-opacity: 0.9;
 }
 
 .toggle-button {
-    -fx-background-color: #444;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(
+            to right,
+            #1f4f8a,
+            #163a66,
+            #0e2747
+    );
+    -fx-text-fill: #dcecff;
+    -fx-background-radius: 8;
+    -fx-padding: 6 16;
+}
+
+.toggle-button:hover {
+    -fx-background-color: linear-gradient(
+            to right,
+            #2a6bb8,
+            #1f4f8a,
+            #163a66
+    );
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(
+            to right,
+            #b8dcff,
+            #8ac2ff,
+            #5fa9ff,
+            #3f8df0
+    );
+    -fx-text-fill: #f4f9ff;
+    -fx-effect: dropshadow(gaussian, rgba(90,150,255,0.5), 12, 0.3, 0, 0);
+}
+
+.Label-darkmode {
+    -fx-text-fill: #dcecff;
 }
