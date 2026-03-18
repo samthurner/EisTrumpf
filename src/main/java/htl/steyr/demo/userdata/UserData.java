@@ -19,11 +19,13 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
+    private String selectedDeck;
 
 
     public UserData(String username) {
         setUsername(username);
         loadFromJson(username);
+        writeToJson();
     }
 
     public void loadFromJson(String username) {
@@ -87,6 +89,7 @@ public class UserData {
 
     public void setPlaytime(int playtime) {
         this.playtime = playtime;
+        writeToJson();
     }
 
     public int getGames_lost() {
@@ -95,6 +98,7 @@ public class UserData {
 
     public void setGames_lost(int games_lost) {
         this.games_lost = games_lost;
+        writeToJson();
     }
 
     public int getGames_won() {
@@ -103,6 +107,7 @@ public class UserData {
 
     public void setGames_won(int games_won) {
         this.games_won = games_won;
+        writeToJson();
     }
 
     public int getHighest_winstreak() {
@@ -111,6 +116,7 @@ public class UserData {
 
     public void setHighest_winstreak(int highest_winstreak) {
         this.highest_winstreak = highest_winstreak;
+        writeToJson();
     }
 
     public int getWinstreak() {
@@ -127,6 +133,7 @@ public class UserData {
 
     public void setUsername(String username) {
         this.username = username;
+        writeToJson();
     }
 
 
@@ -138,4 +145,13 @@ public class UserData {
         setPlaytime(0);
     }
 
+
+    public String getSelectedDeck() {
+        return selectedDeck;
+    }
+
+    public void setSelectedDeck(String selectedDeck) {
+        this.selectedDeck = selectedDeck;
+        writeToJson();
+    }
 }
