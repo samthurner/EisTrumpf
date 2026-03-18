@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.CardDeckManagerController">
+
+    <VBox maxHeight="700" maxWidth="1100" spacing="15.0">
+
+        <BorderPane VBox.vgrow="ALWAYS">
+
+            <top>
+                <HBox spacing="10" style="-fx-padding: 10;">
+                    <Button fx:id="backButton" onAction="#onBackClicked" text="&lt;" />
+
+                    <Label text="DeckManager">
+                        <font>
+                            <Font name="System Bold" size="22" />
+                        </font>
+                    </Label>
+                </HBox>
+            </top>
+
+            <center>
+                <HBox spacing="20" style="-fx-padding: 20;">
+
+                    <VBox maxWidth="Infinity" spacing="10" HBox.hgrow="ALWAYS">
+
+                        <Label text="Decks:" />
+
+                        <ListView fx:id="deckListView" VBox.vgrow="ALWAYS" />
+
+                        <Label text="Ausgewähltes Deck:" />
+
+                        <Label fx:id="selectedDeckLabel" text="Keins ausgewählt" />
+                    </VBox>
+
+                    <Separator orientation="VERTICAL" />
+
+                    <VBox maxWidth="Infinity" spacing="10" HBox.hgrow="ALWAYS">
+
+                        <Label text="Kartendeck hinzufügen:" />
+
+                        <TextArea fx:id="jsonTextArea" promptText="Füge hier den Klartext deiner Jsondatei ein..." wrapText="true" VBox.vgrow="ALWAYS" />
+
+                        <Button fx:id="addDeckButton" onAction="#onAddDeckClicked" prefWidth="120" text="+ Add" />
+                    </VBox>
+
+                </HBox>
+            </center>
+
+        </BorderPane>
+
+    </VBox>
+
+</StackPane>
