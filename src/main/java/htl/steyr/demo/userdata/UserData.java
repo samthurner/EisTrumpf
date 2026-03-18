@@ -7,10 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 public class UserData {
     private String username;
@@ -25,7 +21,6 @@ public class UserData {
     public UserData(String username) {
         setUsername(username);
         loadFromJson(username);
-        writeToJson();
     }
 
     public void loadFromJson(String username) {
@@ -53,6 +48,7 @@ public class UserData {
                 this.games_won = loaded.games_won;
                 this.games_lost = loaded.games_lost;
                 this.playtime = loaded.playtime;
+                this.selectedDeck = loaded.selectedDeck;
             }
 
         } catch (Exception e) {
@@ -133,7 +129,6 @@ public class UserData {
 
     public void setUsername(String username) {
         this.username = username;
-        writeToJson();
     }
 
 

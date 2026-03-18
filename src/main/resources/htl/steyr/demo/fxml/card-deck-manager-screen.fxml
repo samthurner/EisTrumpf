@@ -36,7 +36,7 @@
 
                         <Label text="Decks:" />
 
-                        <ListView fx:id="deckListView" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="deckListView" onMouseClicked="#onDeckViewClicked" VBox.vgrow="ALWAYS" />
 
                         <Label text="Ausgewähltes Deck:" />
 
