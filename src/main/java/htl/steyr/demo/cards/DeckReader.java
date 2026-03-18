@@ -39,7 +39,7 @@ public class DeckReader {
 
     public static Deck loadJsonDeck(String deck) {
         try {
-
+            //
             JsonObject json = new JsonParser().parse(deck).getAsJsonObject();
             String deckName = json.get("deck_name").getAsString();
             int kartenAnzahl = json.get("karten_anzahl").getAsInt();
