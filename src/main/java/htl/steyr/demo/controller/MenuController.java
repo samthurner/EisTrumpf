@@ -33,7 +33,7 @@ public class MenuController implements Initializable {
     }
 
     public void onKartenDecksBtnClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo("deck-explorer-screen");
+        ViewSwitcher.switchTo("card-deck-manager-screen");
     }
 
     public void onStatsBtnClicked(ActionEvent actionEvent) {

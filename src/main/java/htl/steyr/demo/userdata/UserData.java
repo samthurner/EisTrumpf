@@ -7,10 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 public class UserData {
     private String username;
@@ -19,6 +15,7 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
+    private String selectedDeck;
     private boolean darkmode;
 
 
@@ -29,7 +26,7 @@ public class UserData {
 
     public void loadFromJson(String username) {
         try {
-            File directory = new File("Json");
+            File directory = new File("json/user");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -52,6 +49,7 @@ public class UserData {
                 this.games_won = loaded.games_won;
                 this.games_lost = loaded.games_lost;
                 this.playtime = loaded.playtime;
+                this.selectedDeck = loaded.selectedDeck;
                 this.darkmode = loaded.darkmode;
             }
 
@@ -62,7 +60,7 @@ public class UserData {
 
     public void writeToJson() {
         try {
-            File directory = new File("Json");
+            File directory = new File("json/user");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -89,6 +87,7 @@ public class UserData {
 
     public void setPlaytime(int playtime) {
         this.playtime = playtime;
+        writeToJson();
     }
 
     public int getGames_lost() {
@@ -97,6 +96,7 @@ public class UserData {
 
     public void setGames_lost(int games_lost) {
         this.games_lost = games_lost;
+        writeToJson();
     }
 
     public int getGames_won() {
@@ -105,6 +105,7 @@ public class UserData {
 
     public void setGames_won(int games_won) {
         this.games_won = games_won;
+        writeToJson();
     }
 
     public int getHighest_winstreak() {
@@ -113,6 +114,7 @@ public class UserData {
 
     public void setHighest_winstreak(int highest_winstreak) {
         this.highest_winstreak = highest_winstreak;
+        writeToJson();
     }
 
     public int getWinstreak() {
@@ -145,4 +147,13 @@ public class UserData {
         this.setDarkmode(false);
     }
 
+
+    public String getSelectedDeck() {
+        return selectedDeck;
+    }
+
+    public void setSelectedDeck(String selectedDeck) {
+        this.selectedDeck = selectedDeck;
+        writeToJson();
+    }
 }
