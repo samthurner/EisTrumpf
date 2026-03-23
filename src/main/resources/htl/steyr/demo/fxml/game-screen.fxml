@@ -8,51 +8,44 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="htl.steyr.demo.controller.GameScreenController">
 
-    <!-- HEADER -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15;">
-            <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben" />
+            <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben"/>
 
-            <Region HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" />
+            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!"/>
 
-            <Region HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" />
+            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00"/>
         </HBox>
     </top>
 
 
-    <!-- CENTER AREA -->
     <center>
         <HBox alignment="CENTER" spacing="40" style="-fx-padding: 20;">
-
-            <!-- CARD FRAME -->
-            <VBox alignment="TOP_CENTER" prefHeight="491" prefWidth="285" spacing="15" style="-fx-background-color: #f2f2f2;                          -fx-padding: 15;                          -fx-background-radius: 10;                          -fx-border-radius: 10;                          -fx-border-color: #333;                          -fx-border-width: 2;">
-
-                <!-- CARD TITLE -->
-                <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-
-                <!-- CARD IMAGE -->
-                <ImageView fx:id="cardImage" fitHeight="250" preserveRatio="true" style="-fx-border-color: #999;                                   -fx-border-width: 1;                                   -fx-background-color: white;                                   -fx-padding: 5;" />
-
-                <!-- STATS -->
+            <VBox alignment="TOP_CENTER" prefHeight="491" prefWidth="285" spacing="15"
+                  style="-fx-background-color: #f2f2f2;                          -fx-padding: 15;                          -fx-background-radius: 10;                          -fx-border-radius: 10;                          -fx-border-color: #333;                          -fx-border-width: 2;">
+                <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <ImageView fx:id="cardImage" fitHeight="250" preserveRatio="true"
+                           style="-fx-border-color: #999;                                   -fx-border-width: 1;                                   -fx-background-color: white;                                   -fx-padding: 5;"/>
                 <VBox alignment="CENTER_LEFT" spacing="8">
-                    <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1" />
-                    <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2" />
-                    <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3" />
-                    <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4" />
+                    <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1"/>
+                    <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2"/>
+                    <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3"/>
+                    <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4"/>
                 </VBox>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-      
-                      <!-- CARDS LABEL GANZ UNTEN -->
-                      <Label fx:id="cardsLeftLabel" alignment="BOTTOM_CENTER" style="-fx-font-size: 14px; -fx-opacity: 0.8;" text="Cards: 0" />
-               </children>
-            </VBox>
+                <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+
+                        <Label fx:id="cardsLeftLabel" alignment="BOTTOM_CENTER"
+                               style="-fx-font-size: 14px; -fx-opacity: 0.8;" text="Cards: 0"/>
+                    </children>
+                </VBox>
 
             </VBox>
 
