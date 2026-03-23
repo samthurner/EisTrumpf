@@ -19,6 +19,7 @@ public class UserData {
     private int games_won;
     private int games_lost;
     private int playtime;
+    private boolean darkmode;
 
 
     public UserData(String username) {
@@ -51,6 +52,7 @@ public class UserData {
                 this.games_won = loaded.games_won;
                 this.games_lost = loaded.games_lost;
                 this.playtime = loaded.playtime;
+                this.darkmode = loaded.darkmode;
             }
 
         } catch (Exception e) {
@@ -129,6 +131,10 @@ public class UserData {
         this.username = username;
     }
 
+    public boolean isDarkmode() { return darkmode; }
+
+    public void setDarkmode(boolean darkmode) { this.darkmode = darkmode; }
+
 
     public void resetStats() {
         setWinstreak(0);
@@ -136,6 +142,7 @@ public class UserData {
         setGames_won(0);
         setGames_lost(0);
         setPlaytime(0);
+        this.setDarkmode(false);
     }
 
 }
