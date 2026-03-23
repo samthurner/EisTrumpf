@@ -3,57 +3,60 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="htl.steyr.demo.controller.GameScreenController">
 
-    <Label fx:id="turnLabel" alignment="CENTER" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20" styleClass="Label-darkmode"/>
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15;">
+            <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben" />
 
+            <Region HBox.hgrow="ALWAYS" />
 
-    <Button fx:id="exitbtn" onAction="#onAufgebenClicked" text="Aufgeben" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20" />
+            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" />
 
-    <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" styleClass="Label-darkmode" />
+            <Region HBox.hgrow="ALWAYS" />
 
-
-    <VBox fx:id="cardBox" alignment="TOP_CENTER" maxWidth="300" prefWidth="300" spacing="60" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="60.0">
-
-
-        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Titel:" styleClass="Label-darkmode" />
-        <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="Label-darkmode" />
-
-        <ImageView fx:id="cardImage" fitHeight="400" fitWidth="350" preserveRatio="true" style="-fx-border-color: red; -fx-border-width: 2;" VBox.vgrow="ALWAYS"  />
-
+            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" />
+        </HBox>
+    </top>
 
 
+    <!-- CENTER AREA -->
+    <center>
+        <HBox alignment="CENTER" spacing="40" style="-fx-padding: 20;">
 
-        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <!-- CARD FRAME -->
+            <VBox alignment="TOP_CENTER" prefHeight="491" prefWidth="285" spacing="15" style="-fx-background-color: #f2f2f2;                          -fx-padding: 15;                          -fx-background-radius: 10;                          -fx-border-radius: 10;                          -fx-border-color: #333;                          -fx-border-width: 2;">
 
-            <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <!-- CARD TITLE -->
+                <Label fx:id="cardNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-            <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <!-- CARD IMAGE -->
+                <ImageView fx:id="cardImage" fitHeight="250" preserveRatio="true" style="-fx-border-color: #999;                                   -fx-border-width: 1;                                   -fx-background-color: white;                                   -fx-padding: 5;" />
 
-            <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <!-- STATS -->
+                <VBox alignment="CENTER_LEFT" spacing="8">
+                    <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1" />
+                    <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2" />
+                    <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3" />
+                    <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4" />
+                </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+      
+                      <!-- CARDS LABEL GANZ UNTEN -->
+                      <Label fx:id="cardsLeftLabel" alignment="BOTTOM_CENTER" style="-fx-font-size: 14px; -fx-opacity: 0.8;" text="Cards: 0" />
+               </children>
+            </VBox>
 
-            <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </VBox>
 
-            <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-            </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
+        </HBox>
+    </center>
 
-        </GridPane>
-
-    </VBox>
-
-
-    <Label fx:id="cardsLeftLabel" style="-fx-font-size: 18px;" text="Cards: 0" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" styleClass="Label-darkmode" />
-
-</AnchorPane>
+</BorderPane>
