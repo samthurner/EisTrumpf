@@ -25,7 +25,7 @@ public class UserData {
 
     public void loadFromJson(String username) {
         try {
-            File directory = new File("Json");
+            File directory = new File("json/user");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -58,7 +58,7 @@ public class UserData {
 
     public void writeToJson() {
         try {
-            File directory = new File("Json");
+            File directory = new File("json/user");
             if (!directory.exists()) {
                 directory.mkdirs();
             }

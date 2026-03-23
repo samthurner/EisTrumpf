@@ -7,10 +7,7 @@ import htl.steyr.demo.cards.DeckReader;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
@@ -26,6 +23,8 @@ public class CardDeckManagerController implements Initializable {
     public Label selectedDeckLabel;
     public ListView<String> deckListView;
     public Button backButton;
+    public URL stdFolderUrl = getClass().getResource("/htl/steyr/demo/carddecks");
+    public File userDecksFolder = new File("Json/decks");
 
     private final Gson gson = new Gson();
     private final Map<String, String> deckNameToFile = new HashMap<>();
@@ -33,16 +32,15 @@ public class CardDeckManagerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        URL folderUrl = getClass().getResource("/htl/steyr/demo/carddecks");
 
-        if (folderUrl == null) {
+        if (stdFolderUrl == null) {
             System.out.println("Deck Ordner nicht gefunden.");
             return;
         }
 
         File folder;
         try {
-            folder = new File(folderUrl.toURI());
+            folder = new File(stdFolderUrl.toURI());
         } catch (Exception e) {
             System.out.println("Fehler beim Laden des Deck-Ordners.");
             e.printStackTrace();
@@ -70,6 +68,28 @@ public class CardDeckManagerController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+        File[] userDecks = userDecksFolder.listFiles();
+        if (userDecks == null) return;
+
+        for (File userDeck : userDecks) {
+            if (!userDeck.getName().endsWith(".json")) continue;
+
+            try {
+                String json = Files.readString(userDeck.toPath());
+                Deck deck = DeckReader.loadJsonDeck(json);
+
+                if (deck != null) {
+                    deckNameToFile.put(deck.getDeckName(), userDeck.getName());
+                    deckListView.getItems().add(deck.getDeckName());
+                }
+            } catch (Exception e) {
+                System.out.println("Fehler beim Laden: " + userDeck.getName());
+                e.printStackTrace();
+            }
+        }
+
+
 
         String currentFile = UserSession.getUserData().getSelectedDeck();
         if (currentFile != null && !currentFile.isEmpty()) {
@@ -100,7 +120,62 @@ public class CardDeckManagerController implements Initializable {
     }
 
     public void onAddDeckClicked(ActionEvent actionEvent) {
-        // @ToDo Logik
+        if (!jsonTextArea.getText().isEmpty()) {
+            String userDeckString = jsonTextArea.getText();
+
+            Deck deck = DeckReader.loadJsonDeck(userDeckString);
+            if (deck != null) {
+                if (deck != null) {
+                    try {
+                        String fileName = deck.getDeckName().replaceAll("\\s+", "_").toLowerCase() + "_deck.json";
+
+
+                        File directory = new File("json/decks");
+
+                        if(Files.notExists(directory.toPath())) {
+                            Files.createDirectory(directory.toPath());
+                        }
+
+                        File newDeckFile = new File(directory, fileName);
+
+                        Files.writeString(newDeckFile.toPath(), userDeckString);
+
+                        if (!deckNameToFile.containsKey(deck.getDeckName())) {
+                            deckNameToFile.put(deck.getDeckName(), fileName);
+                            deckListView.getItems().add(deck.getDeckName());
+                        }
+
+                        jsonTextArea.clear();
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Erfolg!");
+                        alert.setHeaderText("Deck wurde erfolgreich hinzugefügt.");
+                        alert.setContentText("Das Deck \"" + deck.getDeckName() + "\" ist jetzt verfügbar.");
+                        alert.showAndWait();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Fehler beim Speichern");
+                        alert.setHeaderText("Das Deck konnte nicht gespeichert werden.");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Fehler.");
+                    alert.setHeaderText("Die Jsondatei zu deinem Deck funktioniert nicht.");
+                    alert.setContentText("In der ReadMe auf GitHub ist eine genauere Erklärung, wie eine Jsondatei für ein Deck aussehen muss.");
+                    alert.showAndWait();
+                }
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Fehler: Textarea ist leer!");
+                alert.setHeaderText("Füge bitte ein Json-Deck in das Textfeld ein.");
+                alert.showAndWait();
+            }
+
+        }
     }
 
     public void onBackClicked(ActionEvent actionEvent) {
