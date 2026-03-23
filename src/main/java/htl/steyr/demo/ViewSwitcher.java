@@ -33,6 +33,7 @@ public class ViewSwitcher {
 
             // THEME GLOBAL LADEN
             scene.getStylesheets().clear();
+
             if (UserSession.getInstance().isDarkMode()) {
                 scene.getStylesheets().add(
                         ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()

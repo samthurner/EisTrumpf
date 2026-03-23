@@ -15,7 +15,14 @@ public class SettingsController {
     @FXML
     public void onThemechange(ActionEvent actionEvent) {
         boolean dark = changeTheme.isSelected();
+
         UserSession.getInstance().setDarkMode(dark);
+        UserData user = UserSession.getUserData();
+        if (user != null) {
+            user.setDarkmode(dark);
+            user.writeToJson();
+        }
+
         var scene = changeTheme.getScene();
         scene.getStylesheets().clear();
         if (dark) {
@@ -42,5 +49,13 @@ public class SettingsController {
     @FXML
     public void onBackClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");
+    }
+
+    @FXML
+    public void initialize() {
+        // Schalter auf den gespeicherten Wert setzen
+        if (UserSession.getUserData() != null) {
+            changeTheme.setSelected(UserSession.getUserData().isDarkmode());
+        }
     }
 }
