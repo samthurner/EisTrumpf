@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,8 @@ public class DeckReader {
 
     public static Deck loadDeck(String path) {
         try {
-            FileReader reader = new FileReader(path);
+            InputStream stream = DeckReader.class.getResourceAsStream(path);
+            InputStreamReader reader = new InputStreamReader(stream);
             JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
 
             String deckName = json.get("deck_name").getAsString();

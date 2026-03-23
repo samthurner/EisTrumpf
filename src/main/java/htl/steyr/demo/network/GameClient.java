@@ -1,6 +1,8 @@
 package htl.steyr.demo.network;
 
+import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.cards.PlayingCard;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -22,12 +24,24 @@ public class GameClient {
         System.out.println("Mit Server verbunden!");
 
         connection = new SocketConnection(socket);
+        connection.setGameClient(this);
         connection.startListening();
 
         Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
+    }
 
-        connection.send("test");
+    public void receivingMsg(String msg) {
+        if (msg.startsWith("send_card;")){
+            String json = msg.substring("send_card;".length());
 
+            Gson gson = new Gson();
+
+            PlayingCard card = gson.fromJson(json, PlayingCard.class);
+
+            GameSession.addCard(card);
+
+            System.out.println("Karte erhalten: " + card.getName());
+        }
     }
 
     public void send(String msg) {

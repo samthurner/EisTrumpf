@@ -87,4 +87,8 @@ public class StartGameMenuController {
     public void onExitButtonClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");
     }
+
+    public void enterOnIPLabel(ActionEvent actionEvent) {
+        joinPortField.requestFocus();
+    }
 }

@@ -24,10 +24,10 @@
 
             <Separator fx:id="redLine" prefWidth="300" />
 
-            <Label fx:id="loadingText" text="Warte auf Mitspieler..." />
+            <Label fx:id="loadingText" text="Warte auf Mitspieler..." styleClass="Label-darkmode"/>
 
         </VBox>
-      <Label fx:id="ipAdressLabel" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="ipAdressLabel" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" styleClass="Label-darkmode" />
 
     </children>
 </AnchorPane>
