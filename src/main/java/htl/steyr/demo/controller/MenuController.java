@@ -1,6 +1,7 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.audio.ButtonSoundManager;
 import htl.steyr.demo.music.Music;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
@@ -13,7 +14,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
+import htl.steyr.demo.audio.SoundUtil;
+import javafx.scene.Parent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,6 +29,8 @@ public class MenuController implements Initializable {
     public ImageView imgVolume;
     public ImageView imgSettings;
     public Slider volumeSlider;
+    public Button prevSongButton;
+    public Button nextSongButton;
 
     public void onSpielenBtnClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("start-game-menu");
@@ -40,7 +44,9 @@ public class MenuController implements Initializable {
         ViewSwitcher.switchTo("stats-screen");
     }
 
-    public void onSettingsBtnClicked(MouseEvent mouseEvent) {ViewSwitcher.switchTo("settings-pane");
+    public void onSettingsBtnClicked(MouseEvent mouseEvent) {
+        ButtonSoundManager.getInstance().playClick();
+        ViewSwitcher.switchTo("settings-pane");
     }
 
     public void onEndGameBtnClicked(ActionEvent actionEvent) {
@@ -49,6 +55,19 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        volumeSlider.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                SoundUtil.applyButtonSound(newScene.getRoot());
+            }
+        });
+
+        Timeline initialSoundCheck = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+            if (volumeSlider.getScene() != null) {
+                SoundUtil.applyButtonSound(volumeSlider.getScene().getRoot());
+            }
+        }));
+        initialSoundCheck.play();
+
 
         Timeline waitForUserData = new Timeline(
                 new KeyFrame(Duration.millis(100), e -> {
@@ -61,6 +80,7 @@ public class MenuController implements Initializable {
         volumeSlider.setMin(0);
         volumeSlider.setMax(100);
 
+        htl.steyr.demo.music.Music.startMusic();
         // Slider auf aktuelle Lautstärke setzen
         volumeSlider.setValue(Music.getVolume() * 100);
 
@@ -70,6 +90,9 @@ public class MenuController implements Initializable {
             Music.setVolume(volume);
         });
 
+        boolean visible = Music.isControlsVisible();
+        prevSongButton.setVisible(visible);
+        nextSongButton.setVisible(visible);
 
 
         waitForUserData.playFromStart();
@@ -80,8 +103,20 @@ public class MenuController implements Initializable {
     public void toggleSliderButton(ActionEvent actionEvent) {
         if (volumeSlider.isVisible()) {
             volumeSlider.setVisible(false);
+            prevSongButton.setVisible(false);
+            nextSongButton.setVisible(false);
         }else {
             volumeSlider.setVisible(true);
+            prevSongButton.setVisible(true);
+            nextSongButton.setVisible(true);
         }
+    }
+
+    public void onNextSong(ActionEvent e) {
+        Music.playNextRandom();
+    }
+
+    public void onPrevSong(ActionEvent e) {
+        Music.playPrevious();
     }
 }

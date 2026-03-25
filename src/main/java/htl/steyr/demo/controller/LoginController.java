@@ -1,6 +1,7 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
+import htl.steyr.demo.audio.ButtonSoundManager;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ public class LoginController {
 
     @FXML
     private void onLoginClicked() {
+        ButtonSoundManager.getInstance().playClick();
         String username = usernameField.getText().trim();
 
         if (username.isEmpty()) {
@@ -32,6 +34,7 @@ public class LoginController {
             userData = new UserData(username);
             UserSession.setUserData(userData);
             UserSession.getInstance().setDarkMode(userData.isDarkmode());
+
             ViewSwitcher.switchTo("menu");
 
 //            System.out.println("Spielername: " + username);
