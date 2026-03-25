@@ -75,7 +75,7 @@ public class GameScreenController implements Initializable {
         waitForDeck.play();
     }
 
-    private void updateCard() {
+    public void updateCard() {
         if (deck.getCards().isEmpty()) {
             cardNameLabel.setText("Keine Karten mehr");
             stat1Button.setText("");
