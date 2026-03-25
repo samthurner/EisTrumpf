@@ -16,8 +16,7 @@ public class GameApplication extends Application {
     public void start(Stage stage) throws Exception {
         ViewSwitcher.setStage(stage);
 
-        Music music = new Music();
-        music.playSong();
+        Music.playSong(0);
 
         Parent root = FXMLLoader.load(getClass().getResource("/htl/steyr/demo/fxml/login.fxml"));
         Scene scene = new Scene(root);

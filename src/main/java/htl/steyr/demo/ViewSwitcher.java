@@ -1,5 +1,6 @@
 package htl.steyr.demo;
 
+import htl.steyr.demo.audio.SoundUtil;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -30,7 +31,7 @@ public class ViewSwitcher {
             Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
 
             Scene scene = new Scene(root);
-
+            htl.steyr.demo.audio.SoundUtil.applyButtonSound(root);
             // THEME GLOBAL LADEN
             scene.getStylesheets().clear();
 
@@ -38,25 +39,25 @@ public class ViewSwitcher {
                 scene.getStylesheets().add(
                         ViewSwitcher.class.getResource("/stylesheets/darkmode.css").toExternalForm()
                 );
-            }else {
+            } else {
                 scene.getStylesheets().add(
                         ViewSwitcher.class.getResource("/stylesheets/whitemode.css").toExternalForm()
                 );
             }
 
-//            stage.setFullScreen(true);
-//            stage.setFullScreenExitHint("");
+            // stage.setFullScreen(true);
+            // stage.setFullScreenExitHint("");
             stage.setScene(scene);
+            stage.show();
 
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-
             stage.setX(bounds.getMinX());
             stage.setY(bounds.getMinY());
             stage.setWidth(bounds.getWidth());
             stage.setHeight(bounds.getHeight());
 
             stage.setResizable(false);
-            stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,6 +73,7 @@ public class ViewSwitcher {
 
             if (currentRoot instanceof javafx.scene.layout.Pane pane) {
                 pane.getChildren().add(newRoot);
+                SoundUtil.applyButtonSound(newRoot);
             } else {
                 System.out.println("Fehler");
             }

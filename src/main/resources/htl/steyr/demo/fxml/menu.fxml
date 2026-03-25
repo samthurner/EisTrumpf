@@ -42,6 +42,8 @@
             </padding>
          <Button mnemonicParsing="false" onAction="#toggleSliderButton" prefHeight="26.0" prefWidth="169.0" text="📢" />
          <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="78.0" visible="false" />
+            <Button fx:id="prevSongButton" text="⏮" onAction="#onPrevSong"/>
+            <Button fx:id="nextSongButton" text="⏭" onAction="#onNextSong"/>
             <HBox alignment="CENTER" prefHeight="0.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
             <children>
                <Label styleClass="Label-darkmode" text="made by Milicevic, Schmidberger, Seiler &amp; Thurner" />
