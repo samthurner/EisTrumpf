@@ -39,13 +39,21 @@ Eine **Vorlage**, wie ein so ein **Kartendeck** aussehen soll gibt es auch im Re
 
 ---
 ## Technologien
+
 **Java** 
+
 `Für die Logik des Spiels`
+
 **JavaFX & FXML** 
+
 `Für die UI/UX`
+
 **Gson & Json** 
+
 `Für das speichern und Laden der Kartendecks und Nutzerdaten`
-**CSS** 
+
+**CSS**
+
 `Design `
 
 ---
