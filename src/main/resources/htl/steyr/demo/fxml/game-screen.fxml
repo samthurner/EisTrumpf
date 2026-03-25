@@ -17,11 +17,11 @@
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!"/>
+            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" styleClass="Label-darkmode"/>
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00"/>
+            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" styleClass="Label-darkmode"/>
         </HBox>
     </top>
 

@@ -12,11 +12,17 @@
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <Label style="-fx-font-size: 18;" text="Neuer Name:" styleClass="Label-darkmode"/>
+    <Label style="-fx-font-size: 18;" styleClass="Label-darkmode" text="Neuer Name:" />
 
-    <TextField fx:id="nameField" promptText="Name eingeben" />
+    <TextField fx:id="nameField" alignment="CENTER" promptText="Name eingeben"
+               prefWidth="120"
+               maxWidth="120"/>
 
-    <Button onAction="#onOkayClicked" text="Okay" />
-    <Button onAction="#onCancelClicked" text="Abbrechen" />
+    <Button onAction="#onOkayClicked" text="Okay"
+            prefWidth="120"
+            maxWidth="120"/>
+    <Button onAction="#onCancelClicked" text="Abbrechen"
+            prefWidth="120"
+            maxWidth="120"/>
 
 </VBox>
