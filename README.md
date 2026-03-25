@@ -59,5 +59,7 @@ Eine **Vorlage**, wie ein so ein **Kartendeck** aussehen soll gibt es auch im Re
 
 ---
 ![Logo der HTL Steyr](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_h579B_mXbe1JuYwooZStEuySqG-9cMsy5A&s)
+
+
 Dies ist ein Schulprojekt der **HTL Steyr**.
 > @htlsteyr
