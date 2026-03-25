@@ -1,13 +1,11 @@
 .root {
-    -fx-background-color: linear-gradient(
-            to right,
-            #07101c,
-            #0b1b2d,
-            #0f2740,
-            #123355
-    );
+    -fx-background-image: url("/image/darkmodehintergrund.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-text-fill: #dcecff;
+    -fx-text-fill: #0f1a33;
 }
 
 .panel, .card {
@@ -19,7 +17,7 @@
     );
     -fx-background-radius: 16;
     -fx-padding: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 20, 0.35, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 20, 0.35, 0, 4);
     -fx-text-fill: #dcecff;
 }
 
@@ -35,7 +33,7 @@
     -fx-background-radius: 8;
     -fx-padding: 6 16;
     -fx-font-size: 13px;
-    -fx-effect: dropshadow(gaussian, rgba(90,150,255,0.35), 10, 0.25, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(90, 150, 255, 0.35), 10, 0.25, 0, 0);
     -fx-opacity: 0.97;
     -fx-cursor: hand;
 }
@@ -48,7 +46,7 @@
             #5fa9ff,
             #3f8df0
     );
-    -fx-effect: dropshadow(gaussian, rgba(130,180,255,0.45), 12, 0.3, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(130, 180, 255, 0.45), 12, 0.3, 0, 0);
     -fx-translate-y: -1;
     -fx-opacity: 1;
 }
@@ -95,9 +93,47 @@
             #3f8df0
     );
     -fx-text-fill: #f4f9ff;
-    -fx-effect: dropshadow(gaussian, rgba(90,150,255,0.5), 12, 0.3, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(90, 150, 255, 0.5), 12, 0.3, 0, 0);
 }
 
 .Label-darkmode {
-    -fx-text-fill: #dcecff;
+    -fx-text-fill: white;
 }
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.list-cell {
+    -fx-background-color: #FFFFFF33;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-insets: 0;
+}
+
+
+.list-cell:hover {
+    -fx-background-color: #FFFFFF33  ;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #FFFFFF33;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: #FFFFFF33;
+}
+

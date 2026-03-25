@@ -21,7 +21,7 @@
                 <HBox spacing="10" style="-fx-padding: 10;">
                     <Button fx:id="backButton" onAction="#onBackClicked" text="&lt;" />
 
-                    <Label text="DeckManager">
+                    <Label text="DeckManager" styleClass="Label-darkmode">
                         <font>
                             <Font name="System Bold" size="22" />
                         </font>
@@ -34,20 +34,20 @@
 
                     <VBox maxWidth="Infinity" spacing="10" HBox.hgrow="ALWAYS">
 
-                        <Label text="Decks:" />
+                        <Label text="Decks:" styleClass="Label-darkmode" />
 
                         <ListView fx:id="deckListView" onMouseClicked="#onDeckViewClicked" VBox.vgrow="ALWAYS" />
 
-                        <Label text="Ausgewähltes Deck:" />
+                        <Label text="Ausgewähltes Deck:" styleClass="Label-darkmode" />
 
-                        <Label fx:id="selectedDeckLabel" text="Keins ausgewählt" />
+                        <Label fx:id="selectedDeckLabel" text="Keins ausgewählt" styleClass="Label-darkmode" />
                     </VBox>
 
                     <Separator orientation="VERTICAL" />
 
                     <VBox maxWidth="Infinity" spacing="10" HBox.hgrow="ALWAYS">
 
-                        <Label text="Kartendeck hinzufügen:" />
+                        <Label text="Kartendeck hinzufügen:" styleClass="Label-darkmode" />
 
                         <TextArea fx:id="jsonTextArea" promptText="Füge hier den Klartext deiner Jsondatei ein..." wrapText="true" VBox.vgrow="ALWAYS" />
 

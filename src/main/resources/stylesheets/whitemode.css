@@ -1,8 +1,13 @@
 .root {
-    -fx-background-color: linear-gradient(to bottom right, #e9f1fa, #b7d4ff, #4a81e6);
+    -fx-background-image: url("/image/whitmodehintergrund.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-text-fill: #0f1a33;
 }
+
 
 .button {
     -fx-background-color: linear-gradient(to right, #5f8dff, #4a78e6);
