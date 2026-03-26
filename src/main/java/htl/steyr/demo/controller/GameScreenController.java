@@ -10,6 +10,7 @@ import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +24,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameScreenController implements Initializable {
+
+    private static GameScreenController instance;
+
+    public static GameScreenController getInstance() {
+        return instance;
+    }
 
     public Button exitbtn;
     public Label cardsLeftLabel;
@@ -41,12 +48,15 @@ public class GameScreenController implements Initializable {
     public ImageView cardImage;
 
     private Deck deck;
-    private PlayingCard currentCard;
+    private PlayingCard currentCard; // Bug 4: wird jetzt in updateCard() korrekt gesetzt
     private Statistik statistik;
     private UserData userData;
 
+    private Timeline waitForDeck;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        instance = this;
 
         userData = UserSession.getUserData();
 
@@ -55,47 +65,37 @@ public class GameScreenController implements Initializable {
 
         statistik = new Statistik(userData, gameTimer);
 
-        Timeline waitForDeck = new Timeline(
-                new KeyFrame(Duration.millis(100), e -> {
+        cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
 
+        waitForDeck = new Timeline(
+                new KeyFrame(Duration.millis(100), e -> {
                     if (deck == null) {
                         deck = DeckLoader.getLoadedDeck();
                         if (deck == null) return;
 
-                        updateCard();
+                        updateCard(null, 8);
+                        waitForDeck.stop();
                     }
                 })
         );
-
-        gameTimer = new GameTimer(gameTimeLabel);
-        gameTimer.start();
-        cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
-
         waitForDeck.setCycleCount(Timeline.INDEFINITE);
         waitForDeck.play();
     }
 
-    public void updateCard() {
-        if (deck.getCards().isEmpty()) {
-            cardNameLabel.setText("Keine Karten mehr");
-            stat1Button.setText("");
-            stat2Button.setText("");
-            stat3Button.setText("");
-            stat4Button.setText("");
-            cardsLeftLabel.setText("Cards: 0");
-            return;
-        }
 
-        currentCard = deck.getCards().get(0);
+    public void updateCard(PlayingCard card, int cards) {
+        Platform.runLater(() -> {
+            if (card != null) {
+                currentCard = card;
 
-        cardNameLabel.setText(currentCard.getName());
-
-        stat1Button.setText(deck.getStatNames().get(0) + ": " + currentCard.getStat1());
-        stat2Button.setText(deck.getStatNames().get(1) + ": " + currentCard.getStat2());
-        stat3Button.setText(deck.getStatNames().get(2) + ": " + currentCard.getStat3());
-        stat4Button.setText(deck.getStatNames().get(3) + ": " + currentCard.getStat4());
-
-        cardsLeftLabel.setText("Cards: " + deck.getCards().size());
+                cardNameLabel.setText(card.getName());
+                stat1Button.setText(String.valueOf(card.getStat1()));
+                stat2Button.setText(String.valueOf(card.getStat2()));
+                stat3Button.setText(String.valueOf(card.getStat3()));
+                stat4Button.setText(String.valueOf(card.getStat4()));
+                cardsLeftLabel.setText("Cards: " + cards);
+            }
+        });
     }
 
     public void onAufgebenClicked(javafx.event.ActionEvent actionEvent) {
@@ -105,25 +105,26 @@ public class GameScreenController implements Initializable {
     }
 
     public void onStat1Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
         sendStatChoice(1, currentCard.getStat1());
     }
 
     public void onStat2Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
         sendStatChoice(2, currentCard.getStat2());
     }
 
     public void onStat3Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
         sendStatChoice(3, currentCard.getStat3());
     }
 
     public void onStat4Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
         sendStatChoice(4, currentCard.getStat4());
     }
 
     private void sendStatChoice(int statIndex, double value) {
         System.out.println("Spieler hat Stat " + statIndex + " gewählt mit Wert: " + value);
-
-        // HIERs später Online-Logik einbauen
-        // z.B. Server.sendStatChoice(statIndex, value);
     }
 }

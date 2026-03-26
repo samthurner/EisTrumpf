@@ -22,7 +22,6 @@ public class GameServer {
     private List<PlayingCard> hostHand = new ArrayList<>();
     private List<PlayingCard> clientHand = new ArrayList<>();
 
-
     public GameServer(int port) {
         this.port = port;
     }
@@ -46,12 +45,9 @@ public class GameServer {
                 deck = deckObj.getCards();
 
                 Collections.shuffle(deck);
+                hostHand.add(deck.remove(0));
 
-
-                for(int i = 0; i < 1; i++){
-                    hostHand.add(deck.remove(0));
-                }
-
+                sendCardToClient();
                 sendCardToClient();
 
             } catch (IOException e) {
@@ -79,17 +75,19 @@ public class GameServer {
         }
     }
 
-    private void sendCardToClient(){
-
-        if(deck == null || deck.isEmpty()){
+    private void sendCardToClient() {
+        if (deck == null || deck.isEmpty()) {
             return;
         }
 
         PlayingCard card = deck.remove(0);
-
         clientHand.add(card);
 
         opponent.send("send_card;" + new Gson().toJson(card));
         System.out.println("Sende Karte: " + card.getName());
+
+        // Bug 3 Fix: cardsLeft nach jeder gesendeten Karte mitschicken
+        opponent.send("send_cards_left;" + deck.size());
+        System.out.println("Verbleibende Karten: " + deck.size());
     }
 }
