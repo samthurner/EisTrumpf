@@ -99,4 +99,20 @@ public class GameServer {
         opponent.send("send_cards_left;" + deck.size());
         System.out.println("Verbleibende Karten: " + deck.size());
     }
+
+    public void initGame() {
+        hostHand.clear();
+        clientHand.clear();
+
+        Collections.shuffle(deck);
+
+        int size = deck.size();
+        for (int i = 0; i < size; i++) {
+            if(i % 2 == 0){
+                clientHand.add(deck.remove(0));
+            }else{
+                hostHand.add(deck.remove(0));
+            }
+        }
+    }
 }
