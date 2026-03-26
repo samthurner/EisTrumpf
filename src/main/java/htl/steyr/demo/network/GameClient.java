@@ -15,6 +15,8 @@ public class GameClient {
     private int port;
     private SocketConnection connection;
     GameScreenController controller;
+    PlayingCard card;
+    int cardsLeft = 8;
 
     public GameClient(String ip, int port) {
         this.ip = ip;
@@ -29,25 +31,46 @@ public class GameClient {
         connection.setGameClient(this);
         connection.startListening();
 
-        Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
+        Platform.runLater(() -> {
+            ViewSwitcher.switchTo("game-screen");
+            controller = GameScreenController.getInstance();
+        });
     }
 
     public void receivingMsg(String msg) {
+        if (controller == null) {
+            controller = GameScreenController.getInstance();
+        }
+
         if (msg.startsWith("send_card;")) {
             String json = msg.substring("send_card;".length());
 
             Gson gson = new Gson();
-
-            PlayingCard card = gson.fromJson(json, PlayingCard.class);
-
+            card = gson.fromJson(json, PlayingCard.class);
             GameSession.addCard(card);
 
             System.out.println("Karte erhalten: " + card.getName() + " | Stats: "
-                    + "Stat1: " + card.getStat1() + ", " + "Stat2: " + card.getStat2() + ", " + "Stat3: " + card.getStat3() + ", " + "Stat4: " + card.getStat4());
+                    + "Stat1: " + card.getStat1() + ", "
+                    + "Stat2: " + card.getStat2() + ", "
+                    + "Stat3: " + card.getStat3() + ", "
+                    + "Stat4: " + card.getStat4());
 
             if (controller != null) {
-                Platform.runLater(() -> controller.updateCard());
+                final PlayingCard finalCard = card;
+                final int finalCardsLeft = cardsLeft;
+                Platform.runLater(() -> controller.updateCard(finalCard));
             }
+
+        } else if (msg.startsWith("send_cards_left;")) {
+            cardsLeft = Integer.parseInt(msg.replace("send_cards_left;", ""));
+
+            if (controller != null && card != null) {
+                final PlayingCard finalCard = card;
+                final int finalCardsLeft = cardsLeft;
+                Platform.runLater(() -> controller.updateCardLabel( finalCardsLeft));
+            }
+        } else if (msg.startsWith("your_turn")){
+                Platform.runLater(() -> controller.yourTurn());
         }
     }
 

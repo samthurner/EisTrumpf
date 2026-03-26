@@ -25,7 +25,6 @@ public class SocketConnection {
         this.gson = new Gson();
     }
 
-    // Verschickt elemente als Json objekt
     public void sendCard(Object obj) {
         String Json = gson.toJson(obj);
         out.println(Json);
@@ -74,7 +73,6 @@ public class SocketConnection {
 
 
         System.out.println("Nachricht empfangen: ");
-        //hier muss später die logik hin, um zu erkennen ob es ein Spielzug oder ein kartendeck oder so ist
     }
 
     public void setGameClient(GameClient client) {

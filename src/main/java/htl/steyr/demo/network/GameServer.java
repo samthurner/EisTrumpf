@@ -3,6 +3,7 @@ package htl.steyr.demo.network;
 import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.*;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -21,7 +22,6 @@ public class GameServer {
 
     private List<PlayingCard> hostHand = new ArrayList<>();
     private List<PlayingCard> clientHand = new ArrayList<>();
-
 
     public GameServer(int port) {
         this.port = port;
@@ -46,13 +46,10 @@ public class GameServer {
                 deck = deckObj.getCards();
 
                 Collections.shuffle(deck);
-
-
-                for(int i = 0; i < 1; i++){
-                    hostHand.add(deck.remove(0));
-                }
+                hostHand.add(deck.remove(0));
 
                 sendCardToClient();
+                sendYourTurn();
 
             } catch (IOException e) {
                 if (running) e.printStackTrace();
@@ -62,6 +59,14 @@ public class GameServer {
         acceptThread.start();
     }
 
+    public void sendCardsLeft(){
+
+    }
+
+    public void sendYourTurn() {
+        send("your_turn;");
+
+    }
     public void send(String msg) {
         if (opponent != null) {
             opponent.send(msg);
@@ -79,17 +84,19 @@ public class GameServer {
         }
     }
 
-    private void sendCardToClient(){
-
-        if(deck == null || deck.isEmpty()){
+    private void sendCardToClient() {
+        if (deck == null || deck.isEmpty()) {
             return;
         }
 
         PlayingCard card = deck.remove(0);
-
         clientHand.add(card);
 
         opponent.send("send_card;" + new Gson().toJson(card));
         System.out.println("Sende Karte: " + card.getName());
+
+        // Bug 3 Fix: cardsLeft nach jeder gesendeten Karte mitschicken
+        opponent.send("send_cards_left;" + deck.size());
+        System.out.println("Verbleibende Karten: " + deck.size());
     }
 }
