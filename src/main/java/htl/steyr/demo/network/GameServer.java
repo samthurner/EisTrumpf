@@ -3,6 +3,7 @@ package htl.steyr.demo.network;
 import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.*;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class GameServer {
                 hostHand.add(deck.remove(0));
 
                 sendCardToClient();
-                sendCardToClient();
+                sendYourTurn();
 
             } catch (IOException e) {
                 if (running) e.printStackTrace();
@@ -58,6 +59,14 @@ public class GameServer {
         acceptThread.start();
     }
 
+    public void sendCardsLeft(){
+
+    }
+
+    public void sendYourTurn() {
+        send("your_turn;");
+
+    }
     public void send(String msg) {
         if (opponent != null) {
             opponent.send(msg);

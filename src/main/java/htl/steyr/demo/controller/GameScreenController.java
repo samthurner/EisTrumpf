@@ -73,7 +73,7 @@ public class GameScreenController implements Initializable {
                         deck = DeckLoader.getLoadedDeck();
                         if (deck == null) return;
 
-                        updateCard(null, 8);
+                        updateCard(null);
                         waitForDeck.stop();
                     }
                 })
@@ -83,7 +83,7 @@ public class GameScreenController implements Initializable {
     }
 
 
-    public void updateCard(PlayingCard card, int cards) {
+    public void updateCard(PlayingCard card) {
         Platform.runLater(() -> {
             if (card != null) {
                 currentCard = card;
@@ -93,8 +93,16 @@ public class GameScreenController implements Initializable {
                 stat2Button.setText(String.valueOf(card.getStat2()));
                 stat3Button.setText(String.valueOf(card.getStat3()));
                 stat4Button.setText(String.valueOf(card.getStat4()));
-                cardsLeftLabel.setText("Cards: " + cards);
             }
+        });
+    }
+    public void updateCardLabel(int cards){
+        cardsLeftLabel.setText("Cards: " + cards);
+    }
+
+    public void yourTurn() {
+        Platform.runLater(() -> {
+            turnLabel.setText("Du bist am Zug");
         });
     }
 

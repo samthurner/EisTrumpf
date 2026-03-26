@@ -58,7 +58,7 @@ public class GameClient {
             if (controller != null) {
                 final PlayingCard finalCard = card;
                 final int finalCardsLeft = cardsLeft;
-                Platform.runLater(() -> controller.updateCard(finalCard, finalCardsLeft));
+                Platform.runLater(() -> controller.updateCard(finalCard));
             }
 
         } else if (msg.startsWith("send_cards_left;")) {
@@ -67,8 +67,10 @@ public class GameClient {
             if (controller != null && card != null) {
                 final PlayingCard finalCard = card;
                 final int finalCardsLeft = cardsLeft;
-                Platform.runLater(() -> controller.updateCard(finalCard, finalCardsLeft));
+                Platform.runLater(() -> controller.updateCardLabel( finalCardsLeft));
             }
+        } else if (msg.startsWith("your_turn")){
+                Platform.runLater(() -> controller.yourTurn());
         }
     }
 
