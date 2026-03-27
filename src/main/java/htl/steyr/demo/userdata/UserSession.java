@@ -10,6 +10,7 @@ public class UserSession {
     private static boolean isHost;
     private static GameServer gameServer;
     private static GameClient gameClient;
+    private static boolean isClient = false;
 
     public static void setUserData(UserData data) {
         userData = data;
@@ -20,6 +21,15 @@ public class UserSession {
     }
 
     private boolean darkMode;
+
+
+    public static void setIsClient(boolean isClient) {
+        UserSession.isClient = isClient;
+    }
+
+    public static boolean isClient() {
+        return isClient;
+    }
 
     public void setDarkMode(boolean darkMode) {
         this.darkMode = darkMode;

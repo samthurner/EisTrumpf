@@ -5,6 +5,8 @@ import htl.steyr.demo.cards.Deck;
 import htl.steyr.demo.cards.DeckLoader;
 import htl.steyr.demo.cards.PlayingCard;
 import htl.steyr.demo.gameTimer.GameTimer;
+import htl.steyr.demo.network.GameClient;
+import htl.steyr.demo.network.GameServer;
 import htl.steyr.demo.userdata.Statistik;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
@@ -21,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameScreenController implements Initializable {
@@ -47,12 +50,14 @@ public class GameScreenController implements Initializable {
     public Pane imagePlaceholder;
     public ImageView cardImage;
 
-    private Deck deck;
     private PlayingCard currentCard;
     private Statistik statistik;
     private UserData userData;
+    private GameClient gameClient;
+    private GameServer gameServer;
 
     private Timeline waitForDeck;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,35 +73,24 @@ public class GameScreenController implements Initializable {
         turnLabel.setText("Dein gegner ist dran");
 
         cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
+        if(UserSession.isClient()){
+            gameClient = GameClient.getInstance();
+        }else{
+            gameServer = GameServer.getInstance();
+        }
 
-        waitForDeck = new Timeline(
-                new KeyFrame(Duration.millis(100), e -> {
-                    if (deck == null) {
-                        deck = DeckLoader.getLoadedDeck();
-                        if (deck == null) return;
-
-                        updateCard(null);
-                        waitForDeck.stop();
-                    }
-                })
-        );
-        waitForDeck.setCycleCount(Timeline.INDEFINITE);
-        waitForDeck.play();
     }
 
 
-    public void updateCard(PlayingCard card) {
-        Platform.runLater(() -> {
-            if (card != null) {
-                currentCard = card;
-
-                cardNameLabel.setText(card.getName());
-                stat1Button.setText(String.valueOf(card.getStat1()));
-                stat2Button.setText(String.valueOf(card.getStat2()));
-                stat3Button.setText(String.valueOf(card.getStat3()));
-                stat4Button.setText(String.valueOf(card.getStat4()));
-            }
-        });
+    public void updateCard(PlayingCard card, String[] units) {
+        if (card != null) {
+            currentCard = card;
+            cardNameLabel.setText(card.getName());
+            stat1Button.setText(units[1] + ": " + card.getStat1());
+            stat2Button.setText(units[2] + ": " + card.getStat2());
+            stat3Button.setText(units[3] + ": " + card.getStat3());
+            stat4Button.setText(units[4] + ": " + card.getStat4());
+        }
     }
     public void updateCardLabel(int cards){
         cardsLeftLabel.setText("Cards: " + cards);
@@ -134,7 +128,10 @@ public class GameScreenController implements Initializable {
         sendStatChoice(4, currentCard.getStat4());
     }
 
-    private void sendStatChoice(int statIndex, double value) {
+    private void sendStatChoice(int statIndex, int value) {
         System.out.println("Spieler hat Stat " + statIndex + " gewählt mit Wert: " + value);
+        if(gameServer == null && gameClient != null){
+            gameClient.playStat(statIndex);
+        }
     }
 }

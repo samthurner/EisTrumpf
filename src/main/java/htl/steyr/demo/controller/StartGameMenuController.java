@@ -67,7 +67,6 @@ public class StartGameMenuController {
         try {
             server.start();
             UserSession.setHost(server);
-            ViewSwitcher.switchTo("loading-screen");
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Fehler", "Server konnte nicht gestartet werden.");
         }

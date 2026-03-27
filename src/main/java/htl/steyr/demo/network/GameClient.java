@@ -4,10 +4,13 @@ import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.PlayingCard;
 import htl.steyr.demo.controller.GameScreenController;
+import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameClient {
 
@@ -18,10 +21,14 @@ public class GameClient {
     PlayingCard card;
     int cardsLeft = 8;
     private static boolean gameResult = false;
+    private static GameClient instance;
+    String[] units = new String[5];
+
 
     public GameClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
+        instance = this;
     }
 
     public static boolean isGameResult() {
@@ -42,7 +49,6 @@ public class GameClient {
 
         Platform.runLater(() -> {
             ViewSwitcher.switchTo("game-screen");
-            controller = GameScreenController.getInstance();
         });
     }
 
@@ -66,8 +72,7 @@ public class GameClient {
 
             if (controller != null) {
                 final PlayingCard finalCard = card;
-                final int finalCardsLeft = cardsLeft;
-                Platform.runLater(() -> controller.updateCard(finalCard));
+                Platform.runLater(() -> controller.updateCard(finalCard, units));
             }
 
         } else if (msg.startsWith("send_cards_left;")) {
@@ -81,12 +86,21 @@ public class GameClient {
         } else if (msg.startsWith("your_turn;")) {
             Platform.runLater(() -> controller.yourTurn());
         } else if (msg.startsWith("game_result;")) {
-            if(msg.replace("game_result;", "").equals("loser")) {
+            if (msg.replace("game_result;", "").equals("loser")) {
                 setGameResult(false);
-            }else if (msg.replace("game_result;","").equals("winner")){
+            } else if (msg.replace("game_result;", "").equals("winner")) {
                 setGameResult(true);
             }
             ViewSwitcher.switchTo("end-screen");
+        } else if (msg.startsWith("unit;")) {
+            String[] parts = msg.split(";");
+
+            int index = Integer.parseInt(parts[1]);
+            String unit = parts[2];
+
+            units[index] = unit;
+        } else if(msg.startsWith("start;")) {
+            UserSession.setIsClient(true);
         }
     }
 
@@ -95,6 +109,9 @@ public class GameClient {
             connection.send(msg);
         }
     }
+    public void playStat(int index){
+        send("play_stat;" + index);
+    }
 
     public void disconnect() throws IOException {
         if (connection != null) connection.close();
@@ -102,5 +119,9 @@ public class GameClient {
 
     public void setController(GameScreenController controller) {
         this.controller = controller;
+    }
+
+    public static GameClient getInstance() {
+        return instance;
     }
 }

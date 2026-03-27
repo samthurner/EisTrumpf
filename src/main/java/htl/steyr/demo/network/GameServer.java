@@ -3,6 +3,7 @@ package htl.steyr.demo.network;
 import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.*;
+import htl.steyr.demo.controller.GameScreenController;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
@@ -23,12 +24,23 @@ public class GameServer {
     private SocketConnection opponent;
     private Thread acceptThread;
     private List<PlayingCard> deck;
+    private List<String> units;
+    private String[] unitsArray;
+    private static GameServer instance;
 
     private List<PlayingCard> hostHand = new ArrayList<>();
     private List<PlayingCard> clientHand = new ArrayList<>();
+    private PlayingCard clientCurrentCard;
+    private PlayingCard hostCurrentCard;
+
+    private GameScreenController gameScreenController;
 
     public GameServer(int port) {
         this.port = port;
+    }
+
+    public static GameServer getInstance() {
+        return instance;
     }
 
     public void start() throws IOException {
@@ -47,12 +59,13 @@ public class GameServer {
                 System.out.println("Client verbunden!");
 
                 String deckName = UserSession.getUserData().getSelectedDeck();
+
                 Deck deckObj = null;
 
-                Path userPath = Paths.get("Json/user/" + deckName);
-                if(Files.exists(userPath)){
+                Path userPath = Paths.get("json/user/" + deckName);
+                if (Files.exists(userPath)) {
                     deckObj = DeckReader.loadDeck(Files.newInputStream(userPath));
-                }else {
+                } else {
                     InputStream is = getClass().getResourceAsStream(
                             "/htl/steyr/demo/carddecks/" + deckName
                     );
@@ -63,15 +76,28 @@ public class GameServer {
 
                     deckObj = DeckReader.loadDeck(is);
                 }
+                instance = this;
+
+                send("start;");
 
                 deck = deckObj.getCards();
 
+                units = deckObj.getStatNames();
+                unitsArray = new String[5];
+                for (int i = 0; i < units.size(); i++) {
+                    unitsArray[i + 1] = units.get(i);
+                }
+                sendUnits();
+
                 initGame();
+
+                Thread.sleep(300);
+                gameScreenController = GameScreenController.getInstance();
 
                 sendCardToClient();
                 sendYourTurn();
 
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 if (running) e.printStackTrace();
             }
         });
@@ -79,14 +105,22 @@ public class GameServer {
         acceptThread.start();
     }
 
-    public void sendCardsLeft(){
+    public void sendUnits(){
+        for (int i = 0; i < units.size(); i++) {
+            send("unit;" + (i + 1) + ";" + units.get(i));
+        }
+    }
 
+    public void sendCardsLeft() {
+
+        send("send_cards_left;" + clientHand.size());
+        System.out.println("Verbleibende Karten des Clients: " + clientHand.size());
     }
 
     public void sendYourTurn() {
         send("your_turn;");
-
     }
+
     public void send(String msg) {
         if (opponent != null) {
             opponent.send(msg);
@@ -110,13 +144,24 @@ public class GameServer {
             return;
         }
 
-        PlayingCard card = clientHand.getFirst();
+        if (!hostHand.isEmpty()) {
+            hostCurrentCard = hostHand.removeFirst();
+        }
+
+        PlayingCard card = clientHand.removeFirst();
+        clientCurrentCard = card;
 
         opponent.send("send_card;" + new Gson().toJson(card));
         System.out.println("Sende Karte: " + card.getName());
+        sendCardsLeft();
+        updateOwnCards(hostCurrentCard);
+        Platform.runLater(() -> gameScreenController.updateCardLabel(hostHand.size()));
+    }
 
-        opponent.send("send_cards_left;" + clientHand.size());
-        System.out.println("Verbleibende Karten des Clients: " + clientHand.size());
+    public void updateOwnCards(PlayingCard card) {
+        Platform.runLater(() -> {
+            gameScreenController.updateCard(card, unitsArray);
+        });
     }
 
     public void initGame() {
@@ -127,9 +172,9 @@ public class GameServer {
 
         int size = deck.size();
         for (int i = 0; i < size; i++) {
-            if(i % 2 == 0){
+            if (i % 2 == 0) {
                 clientHand.add(deck.remove(0));
-            }else{
+            } else {
                 hostHand.add(deck.remove(0));
             }
         }

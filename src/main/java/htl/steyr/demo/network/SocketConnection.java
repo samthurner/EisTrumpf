@@ -1,8 +1,6 @@
 package htl.steyr.demo.network;
 
 import com.google.gson.Gson;
-import htl.steyr.demo.cards.Deck;
-import htl.steyr.demo.cards.DeckLoader;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -59,20 +57,7 @@ public class SocketConnection {
     }
 
     private void handleMessage(String msg) {
-        if (msg.startsWith("{") && msg.contains("deck_name")) {
-            Gson gson = new Gson();
-            Deck receivedDeck = gson.fromJson(msg, Deck.class);
-
-            DeckLoader.setLoadedDeck(receivedDeck);
-            System.out.println("Deck empfangen" + receivedDeck.getDeckName());
-
-            javafx.application.Platform.runLater(() -> {
-                htl.steyr.demo.ViewSwitcher.switchTo("game-screen");
-            });
-        }
-
-
-        System.out.println("Nachricht empfangen: ");
+        System.out.println("Nachricht empfangen: " + msg);
     }
 
     public void setGameClient(GameClient client) {
