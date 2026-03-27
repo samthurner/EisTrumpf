@@ -48,7 +48,7 @@ public class GameScreenController implements Initializable {
     public ImageView cardImage;
 
     private Deck deck;
-    private PlayingCard currentCard; // Bug 4: wird jetzt in updateCard() korrekt gesetzt
+    private PlayingCard currentCard;
     private Statistik statistik;
     private UserData userData;
 
@@ -64,6 +64,8 @@ public class GameScreenController implements Initializable {
         gameTimer.start();
 
         statistik = new Statistik(userData, gameTimer);
+
+        turnLabel.setText("Dein gegner ist dran");
 
         cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
 

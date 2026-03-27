@@ -17,10 +17,19 @@ public class GameClient {
     GameScreenController controller;
     PlayingCard card;
     int cardsLeft = 8;
+    private static boolean gameResult = false;
 
     public GameClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
+    }
+
+    public static boolean isGameResult() {
+        return gameResult;
+    }
+
+    public static void setGameResult(boolean gameResult) {
+        GameClient.gameResult = gameResult;
     }
 
     public void connect() throws IOException {
@@ -67,10 +76,17 @@ public class GameClient {
             if (controller != null && card != null) {
                 final PlayingCard finalCard = card;
                 final int finalCardsLeft = cardsLeft;
-                Platform.runLater(() -> controller.updateCardLabel( finalCardsLeft));
+                Platform.runLater(() -> controller.updateCardLabel(finalCardsLeft));
             }
-        } else if (msg.startsWith("your_turn")){
-                Platform.runLater(() -> controller.yourTurn());
+        } else if (msg.startsWith("your_turn;")) {
+            Platform.runLater(() -> controller.yourTurn());
+        } else if (msg.startsWith("game_result;")) {
+            if(msg.replace("game_result;", "").equals("loser")) {
+                setGameResult(false);
+            }else if (msg.replace("game_result;","").equals("winner")){
+                setGameResult(true);
+            }
+            ViewSwitcher.switchTo("end-screen");
         }
     }
 

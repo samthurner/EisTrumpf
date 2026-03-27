@@ -7,8 +7,12 @@ import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class GameServer {
@@ -42,11 +46,27 @@ public class GameServer {
 
                 System.out.println("Client verbunden!");
 
-                Deck deckObj = DeckReader.loadDeck("/htl/steyr/demo/carddecks/auto_deck.json");
+                String deckName = UserSession.getUserData().getSelectedDeck();
+                Deck deckObj = null;
+
+                Path userPath = Paths.get("Json/user/" + deckName);
+                if(Files.exists(userPath)){
+                    deckObj = DeckReader.loadDeck(Files.newInputStream(userPath));
+                }else {
+                    InputStream is = getClass().getResourceAsStream(
+                            "/htl/steyr/demo/carddecks/" + deckName
+                    );
+
+                    if (is == null) {
+                        throw new RuntimeException("Deck nicht gefunden: " + deckName);
+                    }
+
+                    deckObj = DeckReader.loadDeck(is);
+                }
+
                 deck = deckObj.getCards();
 
-                Collections.shuffle(deck);
-                hostHand.add(deck.remove(0));
+                initGame();
 
                 sendCardToClient();
                 sendYourTurn();
@@ -85,19 +105,18 @@ public class GameServer {
     }
 
     private void sendCardToClient() {
-        if (deck == null || deck.isEmpty()) {
+        if (clientHand == null || clientHand.isEmpty()) {
+            send("game_result;loser");
             return;
         }
 
-        PlayingCard card = deck.remove(0);
-        clientHand.add(card);
+        PlayingCard card = clientHand.getFirst();
 
         opponent.send("send_card;" + new Gson().toJson(card));
         System.out.println("Sende Karte: " + card.getName());
 
-        // Bug 3 Fix: cardsLeft nach jeder gesendeten Karte mitschicken
-        opponent.send("send_cards_left;" + deck.size());
-        System.out.println("Verbleibende Karten: " + deck.size());
+        opponent.send("send_cards_left;" + clientHand.size());
+        System.out.println("Verbleibende Karten des Clients: " + clientHand.size());
     }
 
     public void initGame() {

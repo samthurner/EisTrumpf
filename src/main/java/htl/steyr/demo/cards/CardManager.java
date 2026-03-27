@@ -1,9 +1,6 @@
 package htl.steyr.demo.cards;
 
 
-import java.util.Collections;
-import java.util.List;
-
 public class CardManager {
     public static PlayingCard compare(PlayingCard card1, PlayingCard card2, int statistic) throws Exception {
         switch (statistic) {
@@ -37,12 +34,4 @@ public class CardManager {
         throw new Exception("Es werden keine Richtigen karten Überliefert.");
     }
 
-    public static void shuffleDeck(Deck deck) {
-        List<PlayingCard> cards = deck.getCards();
-        deck.getCards().clear();
-
-        Collections.shuffle(cards);
-
-        deck.setCards(cards);
-    }
 }
