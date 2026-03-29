@@ -14,7 +14,8 @@ public class SocketConnection {
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
-    GameClient gameClient;
+    private GameClient gameClient;
+    private GameServer gameServer;
 
     public SocketConnection(Socket socket) throws IOException {
         this.socket = socket;
@@ -24,8 +25,7 @@ public class SocketConnection {
     }
 
     public void sendCard(Object obj) {
-        String Json = gson.toJson(obj);
-        out.println(Json);
+        out.println(gson.toJson(obj));
     }
 
     public void send(String message) {
@@ -37,18 +37,20 @@ public class SocketConnection {
             try {
                 String msg;
                 while ((msg = in.readLine()) != null) {
-                    handleMessage(msg);
-
+                    final String finalMsg = msg;
                     if (gameClient != null) {
-                        gameClient.receivingMsg(msg);
+                        gameClient.receivingMsg(finalMsg);
                     }
-
-                    System.out.println("Empfangen: " + msg);
+                    if (gameServer != null) {
+                        gameServer.receivingMsg(finalMsg);
+                    }
+                    System.out.println("Empfangen: " + finalMsg);
                 }
             } catch (IOException e) {
                 System.out.println("Verbindung beendet.");
             }
         });
+        listenThread.setDaemon(true);
         listenThread.start();
     }
 
@@ -56,11 +58,13 @@ public class SocketConnection {
         socket.close();
     }
 
-    private void handleMessage(String msg) {
-        System.out.println("Nachricht empfangen: " + msg);
-    }
-
     public void setGameClient(GameClient client) {
         this.gameClient = client;
+        this.gameServer = null;
+    }
+
+    public void setGameServer(GameServer server) {
+        this.gameServer = server;
+        this.gameClient = null;
     }
 }

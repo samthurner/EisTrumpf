@@ -17,11 +17,13 @@
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!" styleClass="Label-darkmode"/>
+            <Label fx:id="turnLabel" style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Du bist dran!"
+                   styleClass="Label-darkmode"/>
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00" styleClass="Label-darkmode"/>
+            <Label fx:id="gameTimeLabel" style="-fx-font-size: 18px;" text="Spieldauer: 0:00"
+                   styleClass="Label-darkmode"/>
         </HBox>
     </top>
 
@@ -34,10 +36,10 @@
                 <ImageView fx:id="cardImage" fitHeight="250" preserveRatio="true"
                            style="-fx-border-color: #999;                                   -fx-border-width: 1;                                   -fx-background-color: white;                                   -fx-padding: 5;"/>
                 <VBox alignment="CENTER_LEFT" spacing="8">
-                    <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1"/>
-                    <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2"/>
-                    <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3"/>
-                    <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4"/>
+                    <Button fx:id="stat1Button" maxWidth="Infinity" text="Stat 1" onAction="#onStat1Clicked"/>
+                    <Button fx:id="stat2Button" maxWidth="Infinity" text="Stat 2" onAction="#onStat2Clicked"/>
+                    <Button fx:id="stat3Button" maxWidth="Infinity" text="Stat 3" onAction="#onStat3Clicked"/>
+                    <Button fx:id="stat4Button" maxWidth="Infinity" text="Stat 4" onAction="#onStat4Clicked"/>
                 </VBox>
                 <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
                     <children>

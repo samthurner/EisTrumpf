@@ -1,8 +1,6 @@
 package htl.steyr.demo.controller;
 
 import htl.steyr.demo.ViewSwitcher;
-import htl.steyr.demo.cards.Deck;
-import htl.steyr.demo.cards.DeckLoader;
 import htl.steyr.demo.cards.PlayingCard;
 import htl.steyr.demo.gameTimer.GameTimer;
 import htl.steyr.demo.network.GameClient;
@@ -10,9 +8,6 @@ import htl.steyr.demo.network.GameServer;
 import htl.steyr.demo.userdata.Statistik;
 import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,10 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameScreenController implements Initializable {
@@ -37,10 +30,8 @@ public class GameScreenController implements Initializable {
     public Button exitbtn;
     public Label cardsLeftLabel;
     public Label turnLabel;
-
     public VBox cardBox;
     public Label cardNameLabel;
-
     public Button stat1Button;
     public Button stat2Button;
     public Button stat3Button;
@@ -56,9 +47,6 @@ public class GameScreenController implements Initializable {
     private GameClient gameClient;
     private GameServer gameServer;
 
-    private Timeline waitForDeck;
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
@@ -70,68 +58,97 @@ public class GameScreenController implements Initializable {
 
         statistik = new Statistik(userData, gameTimer);
 
-        turnLabel.setText("Dein gegner ist dran");
+        setDisableStatButtons(true);
+        turnLabel.setText("Dein Gegner ist dran...");
 
         cardImage.setImage(new Image(getClass().getResource("/image/Schmidi.jpg").toExternalForm()));
-        if(UserSession.isClient()){
-            gameClient = GameClient.getInstance();
-        }else{
-            gameServer = GameServer.getInstance();
-        }
 
+        gameServer = UserSession.getGameServer();
+        gameClient = UserSession.getGameClient();
     }
 
+    public void setGameServer(GameServer server) {
+        this.gameServer = server;
+    }
 
     public void updateCard(PlayingCard card, String[] units) {
-        if (card != null) {
-            currentCard = card;
-            cardNameLabel.setText(card.getName());
-            stat1Button.setText(units[1] + ": " + card.getStat1());
-            stat2Button.setText(units[2] + ": " + card.getStat2());
-            stat3Button.setText(units[3] + ": " + card.getStat3());
-            stat4Button.setText(units[4] + ": " + card.getStat4());
-        }
+        if (card == null) return;
+        currentCard = card;
+        cardNameLabel.setText(card.getName());
+        stat1Button.setText(units[1] + ": " + card.getStat1());
+        stat2Button.setText(units[2] + ": " + card.getStat2());
+        stat3Button.setText(units[3] + ": " + card.getStat3());
+        stat4Button.setText(units[4] + ": " + card.getStat4());
     }
-    public void updateCardLabel(int cards){
-        cardsLeftLabel.setText("Cards: " + cards);
+
+    public void updateCardLabel(int cards) {
+        cardsLeftLabel.setText("Karten: " + cards);
     }
 
     public void yourTurn() {
-        Platform.runLater(() -> {
-            turnLabel.setText("Du bist am Zug");
-        });
+        turnLabel.setText("Du bist am Zug!");
+        setDisableStatButtons(false);
+    }
+
+    public void opponentTurn() {
+        turnLabel.setText("Dein Gegner ist dran...");
+        setDisableStatButtons(true);
+    }
+
+    public void showRoundResult(String text) {
+        turnLabel.setText(text);
+        setDisableStatButtons(true);
+    }
+
+    public void showOpponentChosenStat(int statIndex, String[] units) {
+        if (units == null || statIndex >= units.length || units[statIndex] == null) return;
+        turnLabel.setText("Gegner spielt: " + units[statIndex]);
+    }
+
+    public void onStat1Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
+        sendStatChoice(1);
+    }
+
+    public void onStat2Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
+        sendStatChoice(2);
+    }
+
+    public void onStat3Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
+        sendStatChoice(3);
+    }
+
+    public void onStat4Clicked(javafx.event.ActionEvent actionEvent) {
+        if (currentCard == null) return;
+        sendStatChoice(4);
+    }
+
+    private void sendStatChoice(int statIndex) {
+        setDisableStatButtons(true);
+        if (gameClient != null) {
+            gameClient.playStat(statIndex);
+        } else if (gameServer != null) {
+            gameServer.onHostStatChosen(statIndex);
+        }
     }
 
     public void onAufgebenClicked(javafx.event.ActionEvent actionEvent) {
         gameTimer.stop();
         statistik.gameTimeStat();
+        if (gameClient != null) {
+            try { gameClient.disconnect(); } catch (Exception ignored) {}
+        } else if (gameServer != null) {
+            try { gameServer.stop(); } catch (Exception ignored) {}
+        }
         ViewSwitcher.switchTo("menu");
     }
 
-    public void onStat1Clicked(javafx.event.ActionEvent actionEvent) {
-        if (currentCard == null) return;
-        sendStatChoice(1, currentCard.getStat1());
-    }
-
-    public void onStat2Clicked(javafx.event.ActionEvent actionEvent) {
-        if (currentCard == null) return;
-        sendStatChoice(2, currentCard.getStat2());
-    }
-
-    public void onStat3Clicked(javafx.event.ActionEvent actionEvent) {
-        if (currentCard == null) return;
-        sendStatChoice(3, currentCard.getStat3());
-    }
-
-    public void onStat4Clicked(javafx.event.ActionEvent actionEvent) {
-        if (currentCard == null) return;
-        sendStatChoice(4, currentCard.getStat4());
-    }
-
-    private void sendStatChoice(int statIndex, int value) {
-        System.out.println("Spieler hat Stat " + statIndex + " gewählt mit Wert: " + value);
-        if(gameServer == null && gameClient != null){
-            gameClient.playStat(statIndex);
-        }
+    private void setDisableStatButtons(boolean disable) {
+        stat1Button.setDisable(disable);
+        stat2Button.setDisable(disable);
+        stat3Button.setDisable(disable);
+        stat4Button.setDisable(disable);
     }
 }
