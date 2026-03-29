@@ -25,6 +25,7 @@ public class StatsScreenController implements Initializable {
     public Button okButton;
     public Label gameTimeStatLabel;
     public UserData userData;
+    private Statistik statistik;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,18 +39,11 @@ public class StatsScreenController implements Initializable {
                         return;
                     }
 
-                    int played = user.getGames_won() + user.getGames_lost();
+                    statistik = new Statistik(userData, null);
 
-                    double winrate;
-                    if (played == 0) {
-                        winrate = 0;
-                    } else {
-                        winrate = (user.getGames_won() * 100.0) / played;
-                    }
-
-                    gamesPlayedLabel.setText("gespielte Spiele: " + played);
+                    gamesPlayedLabel.setText("gespielte Spiele: " + statistik.gamePlayedStat());
                     gamesWonLabel.setText("gewonnene Spiele: " + user.getGames_won());
-                    winrateLabel.setText("Win-Rate: " + String.format("%.1f%%", winrate));
+                    winrateLabel.setText("Win-Rate: " + String.format("%.1f%%", statistik.winRateStat()));
                     winStreakLabel.setText("Längste Winstreak: " + user.getHighest_winstreak());
                     gameTimeStatLabel.setText("Gesamtspielzeit: " + GameTimer.formatToHHMMSS(user.getPlaytime()));
                 })

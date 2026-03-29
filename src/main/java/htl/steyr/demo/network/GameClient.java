@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.PlayingCard;
 import htl.steyr.demo.controller.GameScreenController;
+import htl.steyr.demo.gameTimer.GameTimer;
+import htl.steyr.demo.userdata.Statistik;
+import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.application.Platform;
 
@@ -91,7 +94,21 @@ public class GameClient {
 
         } else if (msg.startsWith("game_result;")) {
             String result = msg.replace("game_result;", "").trim();
-            setGameResult(result.equals("winner"));
+            boolean iWon = result.equals("winner");
+
+            GameTimer gameTimer = GameScreenController.getGameTimer();
+            UserData userData = UserSession.getUserData();
+            Statistik statistik = new Statistik(userData, gameTimer);
+
+            statistik.gameTimeStat();
+
+            if (iWon) {
+                statistik.gameWonStat();
+            } else {
+                statistik.gameLostStat();
+            }
+
+            setGameResult(iWon);
             Platform.runLater(() -> ViewSwitcher.switchTo("end-screen"));
 
         } else if (msg.startsWith("unit;")) {
