@@ -8,13 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 import java.io.IOException;
 
 public class ViewSwitcher {
 
+    // Referenz auf die Hauptstage der Anwendung
     private static Stage stage;
 
     public static void setStage(Stage stage) {
@@ -25,14 +25,25 @@ public class ViewSwitcher {
         return ViewSwitcher.stage;
     }
 
+
+    /**
+     * Wechselt zu einer neuen FXML-View:
+     * - lädt FXML
+     * - setzt Stylesheet je nach Dark-/Lightmode
+     * - aktiviert Button-Sounds
+     * - passt Fenstergröße an Bildschirm an
+     * - macht Fenster nicht skalierbar
+     */
     public static void switchTo(String fxmlFile) {
         try {
             String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
             Parent root = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
 
             Scene scene = new Scene(root);
-            htl.steyr.demo.audio.SoundUtil.applyButtonSound(root);
-            // THEME GLOBAL LADEN
+
+            // Fügt Klick-Sound zu Buttons hinzu
+            SoundUtil.applyButtonSound(root);
+            // Theme global setzen
             scene.getStylesheets().clear();
 
             if (UserSession.getInstance().isDarkMode()) {
@@ -45,38 +56,20 @@ public class ViewSwitcher {
                 );
             }
 
-            // stage.setFullScreen(true);
-            // stage.setFullScreenExitHint("");
+            // Scene setzen und anzeigen
             stage.setScene(scene);
             stage.show();
 
+            // Fenster auf Bildschirmgröße setzen
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
             stage.setX(bounds.getMinX());
             stage.setY(bounds.getMinY());
             stage.setWidth(bounds.getWidth());
             stage.setHeight(bounds.getHeight());
 
+            // Fenstergröße fixieren
             stage.setResizable(false);
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void addToScene(String fxmlFile) {
-        try {
-            String fxmlFilePath = "fxml/" + fxmlFile + ".fxml";
-            Parent newRoot = FXMLLoader.load(ViewSwitcher.class.getResource(fxmlFilePath));
-
-            Parent currentRoot = stage.getScene().getRoot();
-
-            if (currentRoot instanceof javafx.scene.layout.Pane pane) {
-                pane.getChildren().add(newRoot);
-                SoundUtil.applyButtonSound(newRoot);
-            } else {
-                System.out.println("Fehler");
-            }
 
         } catch (IOException e) {
             e.printStackTrace();

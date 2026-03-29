@@ -3,9 +3,16 @@ package htl.steyr.demo.userdata;
 
 import htl.steyr.demo.gameTimer.GameTimer;
 
-public class Statistik {
 
+/**
+ * Berechnet und verwaltet Statistiken des Users.
+ * Schreibt Änderungen in UserData und unterstützt Gewinn-/Verluststatistiken.
+ */
+public class Statistik {
+    // Referenz auf User-Daten
     private UserData userData;
+
+    // Referenz auf GameTimer für aktuelle Spielzeit
     private GameTimer gameTimer;
 
 
@@ -14,7 +21,13 @@ public class Statistik {
         this.gameTimer = gameTimer;
     }
 
-
+    /**
+     * Aktualisiert Statistik nach gewonnenem Spiel:
+     * - erhöht Spiele gewonnen
+     * - erhöht aktuelle Gewinnserie, wenn nötig
+     * - prüft und speichert höchste Gewinnserie
+     * - speichert in JSON
+     */
     public void gameWonStat() {
         userData.setGames_won(userData.getGames_won() + 1);
 
@@ -28,6 +41,12 @@ public class Statistik {
         userData.writeToJson();
     }
 
+    /**
+     * Aktualisiert Statistik nach verlorenem Spiel:
+     * - erhöht Spiele verloren
+     * - setzt Gewinnserie zurück
+     * - speichert in JSON
+     */
     public void gameLostStat() {
         userData.setGames_lost(userData.getGames_lost() + 1);
 
@@ -36,6 +55,9 @@ public class Statistik {
         userData.writeToJson();
     }
 
+    /**
+     * Berechnet Gewinnrate in Prozent (0-100).
+     */
     public double winRateStat() {
 
         int wins = userData.getGames_won();
@@ -51,6 +73,9 @@ public class Statistik {
 
     }
 
+    /**
+     * Gibt die Gesamtanzahl gespielter Spiele zurück.
+     */
     public int gamePlayedStat() {
         int wins = userData.getGames_won();
         int losses = userData.getGames_lost();
@@ -58,6 +83,11 @@ public class Statistik {
         return wins + losses;
     }
 
+    /**
+     * Berechnet und aktualisiert die gesamte Spielzeit:
+     * - addiert aktuelle Spielzeit vom Timer zu gespeicherter Zeit
+     * - speichert in JSON
+     */
     public int gameTimeStat() {
         if (gameTimer == null) {
             return userData.getPlaytime();
