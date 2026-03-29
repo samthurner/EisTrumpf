@@ -35,14 +35,18 @@ public class StartGameMenuController {
     }
 
     public void onHostButtonClicked(ActionEvent actionEvent) {
-
         if (hostPortField.getText().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Fehler", "Bitte geben Sie einen Port ein.");
             return;
         }
 
-        int port;
+        String selectedDeck = UserSession.getUserData().getSelectedDeck();
+        if (selectedDeck == null || selectedDeck.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION, "Kein Kartendeck ausgewählt", "Du musst zuerst ein Kartendeck auswählen.");
+            return;
+        }
 
+        int port;
         try {
             port = Integer.parseInt(hostPortField.getText());
         } catch (NumberFormatException e) {
@@ -50,15 +54,10 @@ public class StartGameMenuController {
             return;
         }
 
-        if (port < 1023 || port > 65534) {
-            String text;
-
-            if (port < 1023) {
-                text = "Der eingegebene Port muss größer als 1023 sein.";
-            } else {
-                text = "Der eingegebene Port muss kleiner als 65535 sein.";
-            }
-
+        if (port < 1024 || port > 65534) {
+            String text = port < 1024
+                    ? "Der eingegebene Port muss größer als 1023 sein."
+                    : "Der eingegebene Port muss kleiner als 65535 sein.";
             showAlert(Alert.AlertType.INFORMATION, "Wähle einen anderen Port", text);
             return;
         }
@@ -67,13 +66,12 @@ public class StartGameMenuController {
         try {
             server.start();
             UserSession.setHost(server);
-            ViewSwitcher.switchTo("loading-screen");
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Fehler", "Server konnte nicht gestartet werden.");
+            return;
         }
 
         ViewSwitcher.switchTo("loading-screen");
-
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -82,7 +80,6 @@ public class StartGameMenuController {
         alert.setHeaderText(message);
         alert.showAndWait();
     }
-
 
     public void onExitButtonClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");

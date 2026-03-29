@@ -15,7 +15,16 @@ public class DeckReader {
     public static Deck loadDeck(String path) {
         try {
             InputStream stream = DeckReader.class.getResourceAsStream(path);
-            InputStreamReader reader = new InputStreamReader(stream);
+            return loadDeck(stream);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Deck loadDeck(InputStream is) {
+        try {
+            InputStreamReader reader = new InputStreamReader(is);
             JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
 
             String deckName = json.get("deck_name").getAsString();
