@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.cards.*;
 import htl.steyr.demo.controller.GameScreenController;
+import htl.steyr.demo.gameTimer.GameTimer;
+import htl.steyr.demo.userdata.Statistik;
+import htl.steyr.demo.userdata.UserData;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -229,6 +232,20 @@ public class GameServer {
     }
 
     private void endGame(boolean hostWon) {
+
+        UserData userData = UserSession.getUserData();
+        GameTimer gameTimer = GameScreenController.getGameTimer();
+
+        Statistik statistik = new Statistik(userData, gameTimer);
+
+        statistik.gameTimeStat();
+
+        if (hostWon) {
+            statistik.gameWonStat();
+        } else {
+            statistik.gameLostStat();
+        }
+
         send("game_result;" + (hostWon ? "loser" : "winner"));
         GameClient.setGameResult(hostWon);
         Platform.runLater(() -> ViewSwitcher.switchTo("end-screen"));

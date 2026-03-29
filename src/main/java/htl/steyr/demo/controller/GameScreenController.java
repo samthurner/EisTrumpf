@@ -151,4 +151,11 @@ public class GameScreenController implements Initializable {
         stat3Button.setDisable(disable);
         stat4Button.setDisable(disable);
     }
+
+    public static GameTimer getGameTimer() {
+        if (instance == null) {
+            return null;
+        }
+        return instance.gameTimer;
+    }
 }
