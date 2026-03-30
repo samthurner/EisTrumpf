@@ -12,8 +12,7 @@ public class SoundUtil {
         root.lookupAll(".button").forEach(node -> {
             Button button = (Button) node;
 
-            // WICHTIG: MousePressed nehmen, damit der Sound SOFORT kommt,
-            // bevor die Szene gewechselt wird!
+
             button.setOnMousePressed(e -> {
                 ButtonSoundManager.getInstance().playClick();
             });
