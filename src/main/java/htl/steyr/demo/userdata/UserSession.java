@@ -3,6 +3,10 @@ package htl.steyr.demo.userdata;
 import htl.steyr.demo.network.GameClient;
 import htl.steyr.demo.network.GameServer;
 
+/**
+ * Singleton-Klasse für die aktuelle Benutzersession.
+ * Speichert UserData, Client/Server Status und Darkmode.
+ */
 public class UserSession {
 
     private static UserData userData;
@@ -12,48 +16,28 @@ public class UserSession {
     private static GameClient gameClient;
     private static boolean isClient = false;
 
-    public static void setUserData(UserData data) {
-        userData = data;
-    }
-
-    public static UserData getUserData() {
-        return userData;
-    }
-
     private boolean darkMode;
-
-
-    public static void setIsClient(boolean isClient) {
-        UserSession.isClient = isClient;
-    }
-
-    public static boolean isClient() {
-        return isClient;
-    }
-
-    public void setDarkMode(boolean darkMode) {
-        this.darkMode = darkMode;
-    }
-
-    public boolean isDarkMode() {
-        return darkMode;
-    }
 
     private static UserSession instance;
 
-
     public static UserSession getInstance() {
-        if (instance == null) {
-            instance = new UserSession();
-        }
+        if (instance == null) instance = new UserSession();
         return instance;
     }
+
+    public static void setUserData(UserData data) { userData = data; }
+    public static UserData getUserData() { return userData; }
+
+    public static void setIsClient(boolean isClient) { UserSession.isClient = isClient; }
+    public static boolean isClient() { return isClient; }
+
+    public void setDarkMode(boolean darkMode) { this.darkMode = darkMode; }
+    public boolean isDarkMode() { return darkMode; }
 
     public void setUsername(String newName) {
         userData.setUsername(newName);
         userData.writeToJson();
     }
-
 
     public static void setHost(GameServer server) {
         isHost = true;
@@ -67,22 +51,12 @@ public class UserSession {
         gameServer = null;
     }
 
-    public static boolean isHost() {
-        return isHost;
-    }
-
-    public static GameServer getGameServer() {
-        return gameServer;
-    }
-
-    public static GameClient getGameClient() {
-        return gameClient;
-    }
+    public static boolean isHost() { return isHost; }
+    public static GameServer getGameServer() { return gameServer; }
+    public static GameClient getGameClient() { return gameClient; }
 
     public static void clear() {
         userData = null;
-
-
         gameServer = null;
         gameClient = null;
         isHost = false;

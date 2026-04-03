@@ -13,16 +13,28 @@ import javafx.application.Platform;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Client-Klasse für die Verbindung zu einem GameServer.
+ * Verarbeitet eingehende Nachrichten und steuert das Spiel aus Client-Sicht.
+ */
 public class GameClient {
 
-    private String ip;
-    private int port;
-    private SocketConnection connection;
-    private GameScreenController controller;
-    private static boolean gameResult = false;
-    private static GameClient instance;
-    private String[] units = new String[5];
+    private String ip; // Server-IP
+    private int port; // Server-Port
+    private SocketConnection connection; // Netzwerkverbindung
+    private GameScreenController controller; // UI-Controller
 
+    private static boolean gameResult = false; // Ergebnis des Spiels
+    private static GameClient instance;
+
+    private String[] units = new String[5]; // Namen der Statistiken
+
+    /**
+     * Konstruktor für den Client.
+     *
+     * @param ip Server-IP
+     * @param port Server-Port
+     */
     public GameClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
@@ -41,6 +53,11 @@ public class GameClient {
         GameClient.gameResult = result;
     }
 
+    /**
+     * Baut die Verbindung zum Server auf.
+     *
+     * @throws IOException bei Verbindungsfehlern
+     */
     public void connect() throws IOException {
         Socket socket = new Socket(ip, port);
         System.out.println("Mit Server verbunden!");
@@ -52,7 +69,13 @@ public class GameClient {
         Platform.runLater(() -> ViewSwitcher.switchTo("game-screen"));
     }
 
+    /**
+     * Verarbeitet eingehende Nachrichten vom Server.
+     *
+     * @param msg empfangene Nachricht
+     */
     public void receivingMsg(String msg) {
+
         if (controller == null) {
             controller = GameScreenController.getInstance();
         }
@@ -62,7 +85,7 @@ public class GameClient {
         if (msg.startsWith("send_card;")) {
             String json = msg.substring("send_card;".length());
             PlayingCard card = new Gson().fromJson(json, PlayingCard.class);
-            System.out.println("Karte erhalten: " + card.getName());
+
             if (controller != null) {
                 final String[] u = units;
                 Platform.runLater(() -> controller.updateCard(card, u));
@@ -70,29 +93,34 @@ public class GameClient {
 
         } else if (msg.startsWith("send_cards_left;")) {
             int cardsLeft = Integer.parseInt(msg.replace("send_cards_left;", "").trim());
+
             if (controller != null) {
                 Platform.runLater(() -> controller.updateCardLabel(cardsLeft));
             }
 
         } else if (msg.startsWith("your_turn;")) {
+
             if (controller != null) {
                 Platform.runLater(() -> controller.yourTurn());
             }
 
         } else if (msg.startsWith("play_stat;")) {
             int statIndex = Integer.parseInt(msg.replace("play_stat;", "").trim());
+
             if (controller != null) {
                 Platform.runLater(() -> controller.showOpponentChosenStat(statIndex, units));
             }
 
         } else if (msg.startsWith("compare_result;")) {
             boolean iWon = Boolean.parseBoolean(msg.replace("compare_result;", "").trim());
+
             if (controller != null) {
                 String text = iWon ? "Du hast gewonnen!" : "Gegner hat gewonnen.";
                 Platform.runLater(() -> controller.showRoundResult(text));
             }
 
         } else if (msg.startsWith("game_result;")) {
+
             String result = msg.replace("game_result;", "").trim();
             boolean iWon = result.equals("winner");
 
@@ -109,6 +137,7 @@ public class GameClient {
             }
 
             setGameResult(iWon);
+
             Platform.runLater(() -> ViewSwitcher.switchTo("end-screen"));
 
         } else if (msg.startsWith("unit;")) {
@@ -121,21 +150,41 @@ public class GameClient {
         }
     }
 
+    /**
+     * Sendet die gewählte Statistik an den Server.
+     *
+     * @param index Statistik-Index
+     */
     public void playStat(int index) {
         send("play_stat;" + index);
     }
 
+    /**
+     * Sendet eine Nachricht an den Server.
+     *
+     * @param msg Nachricht
+     */
     public void send(String msg) {
         if (connection != null) {
             connection.send(msg);
         }
     }
 
+    /**
+     * Trennt die Verbindung zum Server.
+     *
+     * @throws IOException bei Fehlern
+     */
     public void disconnect() throws IOException {
         send("user_left;");
         if (connection != null) connection.close();
     }
 
+    /**
+     * Setzt den UI-Controller.
+     *
+     * @param controller GameScreenController
+     */
     public void setController(GameScreenController controller) {
         this.controller = controller;
     }

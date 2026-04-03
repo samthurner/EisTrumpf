@@ -8,15 +8,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * Verwaltet die Socket-Kommunikation zwischen Client und Server.
+ * Sendet und empfängt Nachrichten.
+ */
 public class SocketConnection {
 
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    private Socket socket; // Netzwerkverbindung
+    private BufferedReader in; // Eingabestream
+    private PrintWriter out; // Ausgabestream
     private Gson gson;
+
     private GameClient gameClient;
     private GameServer gameServer;
 
+    /**
+     * Konstruktor für die Verbindung.
+     *
+     * @param socket Socket-Verbindung
+     * @throws IOException bei Fehlern
+     */
     public SocketConnection(Socket socket) throws IOException {
         this.socket = socket;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -24,27 +35,34 @@ public class SocketConnection {
         this.gson = new Gson();
     }
 
+    /**
+     * Sendet ein Objekt als JSON.
+     *
+     * @param obj Objekt
+     */
     public void sendCard(Object obj) {
         out.println(gson.toJson(obj));
     }
 
+    /**
+     * Sendet eine Textnachricht.
+     *
+     * @param message Nachricht
+     */
     public void send(String message) {
         out.println(message);
     }
 
+    /**
+     * Startet einen Thread zum Empfangen von Nachrichten.
+     */
     public void startListening() {
         Thread listenThread = new Thread(() -> {
             try {
                 String msg;
                 while ((msg = in.readLine()) != null) {
-                    final String finalMsg = msg;
-                    if (gameClient != null) {
-                        gameClient.receivingMsg(finalMsg);
-                    }
-                    if (gameServer != null) {
-                        gameServer.receivingMsg(finalMsg);
-                    }
-                    System.out.println("Empfangen: " + finalMsg);
+                    if (gameClient != null) gameClient.receivingMsg(msg);
+                    if (gameServer != null) gameServer.receivingMsg(msg);
                 }
             } catch (IOException e) {
                 System.out.println("Verbindung beendet.");
@@ -54,6 +72,11 @@ public class SocketConnection {
         listenThread.start();
     }
 
+    /**
+     * Schließt die Verbindung.
+     *
+     * @throws IOException bei Fehlern
+     */
     public void close() throws IOException {
         socket.close();
     }

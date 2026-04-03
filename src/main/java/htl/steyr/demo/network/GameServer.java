@@ -22,29 +22,39 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Server-Klasse für das Spiel.
+ * Verwaltet Client-Verbindung, Spielablauf, Kartenverteilung und Rundenlogik.
+ */
 public class GameServer {
 
-    private int port;
-    private boolean running;
-    private ServerSocket serverSocket;
-    private SocketConnection opponent;
-    private Thread acceptThread;
+    private int port; // Port auf dem der Server läuft
+    private boolean running; // Status des Servers
+    private ServerSocket serverSocket; // Server-Socket
+    private SocketConnection opponent; // Verbindung zum Client
+    private Thread acceptThread; // Thread für eingehende Verbindungen
+
     private static GameServer instance;
 
-    private List<PlayingCard> deck;
-    private List<String> units;
-    private String[] unitsArray;
+    private List<PlayingCard> deck; // komplettes Kartendeck
+    private List<String> units; // Namen der Statistiken
+    private String[] unitsArray; // Statistik-Namen als Array
 
-    private List<PlayingCard> hostHand = new ArrayList<>();
-    private List<PlayingCard> clientHand = new ArrayList<>();
+    private List<PlayingCard> hostHand = new ArrayList<>(); // Karten des Hosts
+    private List<PlayingCard> clientHand = new ArrayList<>(); // Karten des Clients
 
-    private PlayingCard hostCurrentCard;
-    private PlayingCard clientCurrentCard;
+    private PlayingCard hostCurrentCard; // aktuelle Karte des Hosts
+    private PlayingCard clientCurrentCard; // aktuelle Karte des Clients
 
-    private boolean hostTurn = true;
+    private boolean hostTurn = true; // bestimmt wer am Zug ist
 
-    private GameScreenController gameScreenController;
+    private GameScreenController gameScreenController; // UI-Controller
 
+    /**
+     * Konstruktor für den Server.
+     *
+     * @param port Portnummer
+     */
     public GameServer(int port) {
         this.port = port;
         instance = this;
@@ -54,34 +64,40 @@ public class GameServer {
         return instance;
     }
 
+    /**
+     * Setzt den GameScreenController.
+     *
+     * @param controller UI-Controller
+     */
     public void setGameScreenController(GameScreenController controller) {
         this.gameScreenController = controller;
     }
 
+    /**
+     * Startet den Server und wartet auf Client-Verbindungen.
+     *
+     * @throws IOException bei Fehlern
+     */
     public void start() throws IOException {
         running = true;
         serverSocket = new ServerSocket(port);
-        System.out.println("Server gestartet auf Port " + port);
 
         acceptThread = new Thread(() -> {
             try {
                 Socket socket = serverSocket.accept();
+
                 opponent = new SocketConnection(socket);
                 opponent.setGameServer(this);
                 opponent.startListening();
 
-                System.out.println("Client verbunden!");
-
                 String deckName = UserSession.getUserData().getSelectedDeck();
                 Deck deckObj = loadDeck(deckName);
 
-                if (deckObj == null) {
-                    System.err.println("Deck konnte nicht geladen werden: " + deckName);
-                    return;
-                }
+                if (deckObj == null) return;
 
                 deck = new ArrayList<>(deckObj.getCards());
                 units = deckObj.getStatNames();
+
                 unitsArray = new String[5];
                 for (int i = 0; i < units.size(); i++) {
                     unitsArray[i + 1] = units.get(i);
@@ -104,6 +120,12 @@ public class GameServer {
         acceptThread.start();
     }
 
+    /**
+     * Lädt ein Deck aus Datei oder Ressourcen.
+     *
+     * @param deckName Name des Decks
+     * @return Deck-Objekt oder null
+     */
     private Deck loadDeck(String deckName) {
         if (deckName == null || deckName.isEmpty()) return null;
 
@@ -121,10 +143,12 @@ public class GameServer {
             return DeckReader.loadDeck(is);
         }
 
-        System.err.println("Deck nicht gefunden: " + deckName);
         return null;
     }
 
+    /**
+     * Wartet bis der Controller geladen ist und startet dann das Spiel.
+     */
     private void waitForControllerThenStart() {
         Timeline poll = new Timeline(new KeyFrame(Duration.millis(50), e -> {
             GameScreenController ctrl = GameScreenController.getInstance();
@@ -136,26 +160,18 @@ public class GameServer {
         }));
         poll.setCycleCount(Timeline.INDEFINITE);
         poll.play();
-
-        Timeline timeout = new Timeline(new KeyFrame(Duration.seconds(5), e -> {
-            poll.stop();
-            System.err.println("GameScreenController nie initialisiert.");
-        }));
-        timeout.play();
-
-        poll.setOnFinished(null);
-        Timeline stopWhenFound = new Timeline(new KeyFrame(Duration.millis(50), e -> {
-            if (gameScreenController != null) poll.stop();
-        }));
-        stopWhenFound.setCycleCount(Timeline.INDEFINITE);
-        stopWhenFound.play();
     }
 
+    /**
+     * Startet eine neue Runde.
+     */
     private void startRound() {
+
         if (hostHand.isEmpty()) {
             endGame(false);
             return;
         }
+
         if (clientHand.isEmpty()) {
             endGame(true);
             return;
@@ -180,11 +196,21 @@ public class GameServer {
         }
     }
 
+    /**
+     * Wird aufgerufen wenn der Host eine Statistik wählt.
+     *
+     * @param statIndex gewählte Statistik
+     */
     public void onHostStatChosen(int statIndex) {
         send("play_stat;" + statIndex);
         resolveRound(statIndex);
     }
 
+    /**
+     * Wird aufgerufen wenn der Client eine Statistik wählt.
+     *
+     * @param statIndex gewählte Statistik
+     */
     private void onClientStatChosen(int statIndex) {
         Platform.runLater(() -> {
             if (gameScreenController != null) {
@@ -194,36 +220,32 @@ public class GameServer {
         resolveRound(statIndex);
     }
 
+    /**
+     * Vergleicht Karten und bestimmt den Gewinner der Runde.
+     *
+     * @param statIndex verwendete Statistik
+     */
     private void resolveRound(int statIndex) {
+
         PlayingCard winner = CardManager.compare(hostCurrentCard, clientCurrentCard, statIndex);
+
         boolean draw = (winner == null);
         boolean hostWon = !draw && winner == hostCurrentCard;
 
         if (draw) {
-            hostHand.remove(0);
-            hostHand.add(hostCurrentCard);
-            clientHand.remove(0);
-            clientHand.add(clientCurrentCard);
+            hostHand.add(hostHand.remove(0));
+            clientHand.add(clientHand.remove(0));
         } else if (hostWon) {
-            hostHand.remove(0);
-            hostHand.add(hostCurrentCard);
-            PlayingCard won = clientHand.remove(0);
-            hostHand.add(won);
+            hostHand.add(hostHand.remove(0));
+            hostHand.add(clientHand.remove(0));
             hostTurn = !hostTurn;
         } else {
-            clientHand.remove(0);
-            clientHand.add(clientCurrentCard);
-            PlayingCard won = hostHand.remove(0);
-            clientHand.add(won);
+            clientHand.add(clientHand.remove(0));
+            clientHand.add(hostHand.remove(0));
             hostTurn = !hostTurn;
         }
 
         send("compare_result;" + (!draw && !hostWon));
-
-        String resultText = draw ? "Unentschieden!" : (hostWon ? "Du hast gewonnen!" : "Gegner hat gewonnen.");
-        Platform.runLater(() -> {
-            if (gameScreenController != null) gameScreenController.showRoundResult(resultText);
-        });
 
         new Thread(() -> {
             try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
@@ -231,6 +253,11 @@ public class GameServer {
         }).start();
     }
 
+    /**
+     * Beendet das Spiel und speichert Statistiken.
+     *
+     * @param hostWon ob der Host gewonnen hat
+     */
     private void endGame(boolean hostWon) {
 
         UserData userData = UserSession.getUserData();
@@ -240,53 +267,67 @@ public class GameServer {
 
         statistik.gameTimeStat();
 
-        if (hostWon) {
-            statistik.gameWonStat();
-        } else {
-            statistik.gameLostStat();
-        }
+        if (hostWon) statistik.gameWonStat();
+        else statistik.gameLostStat();
 
         send("game_result;" + (hostWon ? "loser" : "winner"));
+
         GameClient.setGameResult(hostWon);
+
         Platform.runLater(() -> ViewSwitcher.switchTo("end-screen"));
     }
 
+    /**
+     * Verarbeitet Nachrichten vom Client.
+     *
+     * @param msg empfangene Nachricht
+     */
     public void receivingMsg(String msg) {
-        System.out.println("[SERVER] Empfangen: " + msg);
         if (msg.startsWith("play_stat;")) {
             int statIndex = Integer.parseInt(msg.replace("play_stat;", "").trim());
             Platform.runLater(() -> onClientStatChosen(statIndex));
-        } else if (msg.equals("user_left;") || msg.equals("user_left")) {
-            GameClient.setGameResult(true);
-            Platform.runLater(() -> ViewSwitcher.switchTo("end-screen"));
         }
     }
 
+    /**
+     * Initialisiert das Spiel und verteilt Karten.
+     */
     private void initGame() {
         hostHand.clear();
         clientHand.clear();
+
         Collections.shuffle(deck);
+
         int size = deck.size();
         for (int i = 0; i < size; i++) {
-            if (i % 2 == 0) {
-                clientHand.add(deck.remove(0));
-            } else {
-                hostHand.add(deck.remove(0));
-            }
+            if (i % 2 == 0) clientHand.add(deck.remove(0));
+            else hostHand.add(deck.remove(0));
         }
-        System.out.println("Host: " + hostHand.size() + " Karten, Client: " + clientHand.size() + " Karten");
     }
 
+    /**
+     * Sendet alle Statistik-Namen an den Client.
+     */
     public void sendUnits() {
         for (int i = 0; i < units.size(); i++) {
             send("unit;" + (i + 1) + ";" + units.get(i));
         }
     }
 
+    /**
+     * Sendet eine Nachricht an den Client.
+     *
+     * @param msg Nachricht
+     */
     public void send(String msg) {
         if (opponent != null) opponent.send(msg);
     }
 
+    /**
+     * Stoppt den Server.
+     *
+     * @throws IOException bei Fehlern
+     */
     public void stop() throws IOException {
         running = false;
         if (opponent != null) opponent.close();

@@ -17,21 +17,33 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controller zum Verwalten von Karten-Decks.
+ * Lädt Standard-Decks sowie benutzerdefinierte Decks
+ * und ermöglicht das Hinzufügen neuer Decks über JSON.
+ */
 public class CardDeckManagerController implements Initializable {
+
     public Button addDeckButton;
     public TextArea jsonTextArea;
     public Label selectedDeckLabel;
     public ListView<String> deckListView;
     public Button backButton;
+
     public URL stdFolderUrl = getClass().getResource("/htl/steyr/demo/carddecks");
     public File userDecksFolder = new File("Json/decks");
 
     private final Gson gson = new Gson();
+
+    /** Map zur Zuordnung: Deckname → Dateiname */
     private final Map<String, String> deckNameToFile = new HashMap<>();
 
+    /**
+     * Initialisiert den Controller.
+     * Lädt alle verfügbaren Decks und setzt das aktuell gewählte Deck.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
         if (stdFolderUrl == null) {
             System.out.println("Deck Ordner nicht gefunden.");
@@ -89,8 +101,6 @@ public class CardDeckManagerController implements Initializable {
             }
         }
 
-
-
         String currentFile = UserSession.getUserData().getSelectedDeck();
         if (currentFile != null && !currentFile.isEmpty()) {
 
@@ -99,15 +109,21 @@ public class CardDeckManagerController implements Initializable {
                     .map(Map.Entry::getKey)
                     .findFirst()
                     .orElse(currentFile);
+
             selectedDeckLabel.setText("Ausgewählt: " + displayName);
         } else {
             selectedDeckLabel.setText("Kein Deck ausgewählt");
         }
 
-        // Doppelklick-Listener
         deckListView.setOnMouseClicked(this::onDeckViewClicked);
     }
 
+    /**
+     * Wird bei einem Doppelklick auf ein Deck ausgelöst.
+     * Speichert das gewählte Deck in der UserSession.
+     *
+     * @param mouseEvent Maus-Event der ListView
+     */
     public void onDeckViewClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             String deckName = deckListView.getSelectionModel().getSelectedItem();
@@ -119,65 +135,69 @@ public class CardDeckManagerController implements Initializable {
         }
     }
 
+    /**
+     * Fügt ein neues Deck aus dem JSON-Textfeld hinzu.
+     * Speichert das Deck lokal und aktualisiert die Liste.
+     *
+     * @param actionEvent Button-Klick
+     */
     public void onAddDeckClicked(ActionEvent actionEvent) {
         if (!jsonTextArea.getText().isEmpty()) {
             String userDeckString = jsonTextArea.getText();
 
             Deck deck = DeckReader.loadJsonDeck(userDeckString);
             if (deck != null) {
-                if (deck != null) {
-                    try {
-                        String fileName = deck.getDeckName().replaceAll("\\s+", "_").toLowerCase() + "_deck.json";
+                try {
+                    String fileName = deck.getDeckName().replaceAll("\\s+", "_").toLowerCase() + "_deck.json";
 
+                    File directory = new File("json/decks");
 
-                        File directory = new File("json/decks");
-
-                        if(Files.notExists(directory.toPath())) {
-                            Files.createDirectory(directory.toPath());
-                        }
-
-                        File newDeckFile = new File(directory, fileName);
-
-                        Files.writeString(newDeckFile.toPath(), userDeckString);
-
-                        if (!deckNameToFile.containsKey(deck.getDeckName())) {
-                            deckNameToFile.put(deck.getDeckName(), fileName);
-                            deckListView.getItems().add(deck.getDeckName());
-                        }
-
-                        jsonTextArea.clear();
-
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Erfolg!");
-                        alert.setHeaderText("Deck wurde erfolgreich hinzugefügt.");
-                        alert.setContentText("Das Deck \"" + deck.getDeckName() + "\" ist jetzt verfügbar.");
-                        alert.showAndWait();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Fehler beim Speichern");
-                        alert.setHeaderText("Das Deck konnte nicht gespeichert werden.");
-                        alert.showAndWait();
+                    if(Files.notExists(directory.toPath())) {
+                        Files.createDirectory(directory.toPath());
                     }
-                } else {
+
+                    File newDeckFile = new File(directory, fileName);
+                    Files.writeString(newDeckFile.toPath(), userDeckString);
+
+                    if (!deckNameToFile.containsKey(deck.getDeckName())) {
+                        deckNameToFile.put(deck.getDeckName(), fileName);
+                        deckListView.getItems().add(deck.getDeckName());
+                    }
+
+                    jsonTextArea.clear();
+
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Fehler.");
-                    alert.setHeaderText("Die Jsondatei zu deinem Deck funktioniert nicht.");
-                    alert.setContentText("In der ReadMe auf GitHub ist eine genauere Erklärung, wie eine Jsondatei für ein Deck aussehen muss.");
+                    alert.setTitle("Erfolg!");
+                    alert.setHeaderText("Deck wurde erfolgreich hinzugefügt.");
+                    alert.setContentText("Das Deck \"" + deck.getDeckName() + "\" ist jetzt verfügbar.");
+                    alert.showAndWait();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Fehler beim Speichern");
+                    alert.setHeaderText("Das Deck konnte nicht gespeichert werden.");
                     alert.showAndWait();
                 }
-
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Fehler: Textarea ist leer!");
-                alert.setHeaderText("Füge bitte ein Json-Deck in das Textfeld ein.");
+                alert.setTitle("Fehler.");
+                alert.setHeaderText("Die Jsondatei funktioniert nicht.");
                 alert.showAndWait();
             }
-
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Fehler: Textarea ist leer!");
+            alert.setHeaderText("Füge bitte ein Json-Deck ein.");
+            alert.showAndWait();
         }
     }
 
+    /**
+     * Navigiert zurück ins Hauptmenü.
+     *
+     * @param actionEvent Button-Klick
+     */
     public void onBackClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");
     }
