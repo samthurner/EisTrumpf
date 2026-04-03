@@ -8,7 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Repräsentiert die Daten eines Users.
+ * Speichert Statistik, Deckwahl, Darkmode und Username.
+ * Unterstützt Laden und Speichern als JSON.
+ */
 public class UserData {
+
     private String username;
     private int winstreak;
     private int highest_winstreak;
@@ -18,18 +24,25 @@ public class UserData {
     private String selectedDeck;
     private boolean darkmode;
 
-
+    /**
+     * Konstruktor.
+     *
+     * @param username Name des Users
+     */
     public UserData(String username) {
         setUsername(username);
         loadFromJson(username);
     }
 
+    /**
+     * Lädt Daten aus JSON.
+     *
+     * @param username Name des Users
+     */
     public void loadFromJson(String username) {
         try {
             File directory = new File("json/user");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
+            if (!directory.exists()) directory.mkdirs();
 
             File file = new File(directory, username + ".json");
 
@@ -40,7 +53,6 @@ public class UserData {
             }
 
             Gson gson = new Gson();
-
             try (FileReader reader = new FileReader(file)) {
                 UserData loaded = gson.fromJson(reader, UserData.class);
 
@@ -58,18 +70,17 @@ public class UserData {
         }
     }
 
+    /**
+     * Speichert UserData als JSON.
+     */
     public void writeToJson() {
         try {
             File directory = new File("json/user");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
+            if (!directory.exists()) directory.mkdirs();
 
             File file = new File(directory, username + ".json");
 
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
             try (FileWriter writer = new FileWriter(file)) {
                 gson.toJson(this, writer);
@@ -80,80 +91,41 @@ public class UserData {
         }
     }
 
+    // --- Getter und Setter ---
 
-    public int getPlaytime() {
-        return playtime;
-    }
+    public int getPlaytime() { return playtime; }
+    public void setPlaytime(int playtime) { this.playtime = playtime; writeToJson(); }
 
-    public void setPlaytime(int playtime) {
-        this.playtime = playtime;
-        writeToJson();
-    }
+    public int getGames_lost() { return games_lost; }
+    public void setGames_lost(int games_lost) { this.games_lost = games_lost; writeToJson(); }
 
-    public int getGames_lost() {
-        return games_lost;
-    }
+    public int getGames_won() { return games_won; }
+    public void setGames_won(int games_won) { this.games_won = games_won; writeToJson(); }
 
-    public void setGames_lost(int games_lost) {
-        this.games_lost = games_lost;
-        writeToJson();
-    }
+    public int getHighest_winstreak() { return highest_winstreak; }
+    public void setHighest_winstreak(int highest_winstreak) { this.highest_winstreak = highest_winstreak; writeToJson(); }
 
-    public int getGames_won() {
-        return games_won;
-    }
+    public int getWinstreak() { return winstreak; }
+    public void setWinstreak(int winstreak) { this.winstreak = winstreak; }
 
-    public void setGames_won(int games_won) {
-        this.games_won = games_won;
-        writeToJson();
-    }
-
-    public int getHighest_winstreak() {
-        return highest_winstreak;
-    }
-
-    public void setHighest_winstreak(int highest_winstreak) {
-        this.highest_winstreak = highest_winstreak;
-        writeToJson();
-    }
-
-    public int getWinstreak() {
-        return winstreak;
-    }
-
-    public void setWinstreak(int winstreak) {
-        this.winstreak = winstreak;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public boolean isDarkmode() { return darkmode; }
-
     public void setDarkmode(boolean darkmode) { this.darkmode = darkmode; }
 
+    public String getSelectedDeck() { return selectedDeck; }
+    public void setSelectedDeck(String selectedDeck) { this.selectedDeck = selectedDeck; writeToJson(); }
 
+    /**
+     * Setzt alle Statistiken auf Standard zurück.
+     */
     public void resetStats() {
         setWinstreak(0);
         setHighest_winstreak(0);
         setGames_won(0);
         setGames_lost(0);
         setPlaytime(0);
-        this.setDarkmode(false);
-    }
-
-
-    public String getSelectedDeck() {
-        return selectedDeck;
-    }
-
-    public void setSelectedDeck(String selectedDeck) {
-        this.selectedDeck = selectedDeck;
-        writeToJson();
+        setDarkmode(false);
     }
 }

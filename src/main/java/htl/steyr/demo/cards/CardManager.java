@@ -2,12 +2,16 @@ package htl.steyr.demo.cards;
 
 public class CardManager {
 
+    // Vergleicht zwei Karten anhand eines gewählten Statistik-Werts
     public static PlayingCard compare(PlayingCard card1, PlayingCard card2, int statistic) {
+        // card1, card2 = zu vergleichende Karten
+        // statistic = welcher Wert verglichen wird (1-4)
+
         switch (statistic) {
             case 1:
                 if (card1.getStat1() > card2.getStat1()) return card1;
                 if (card1.getStat1() < card2.getStat1()) return card2;
-                return null;
+                return null; // Gleichstand
 
             case 2:
                 if (card1.getStat2() > card2.getStat2()) return card1;
@@ -25,7 +29,7 @@ public class CardManager {
                 return null;
 
             default:
-                return null;
+                return null; // Ungültige Statistik
         }
     }
 }

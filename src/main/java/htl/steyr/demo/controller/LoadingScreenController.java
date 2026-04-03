@@ -4,40 +4,45 @@ import htl.steyr.demo.ViewSwitcher;
 import htl.steyr.demo.network.AddressGetter;
 import htl.steyr.demo.userdata.UserSession;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Separator;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller für den Ladebildschirm.
+ * Zeigt Ladeinformationen und die IP-Adresse an.
+ */
 public class LoadingScreenController implements Initializable {
 
     public Label loadingText;
-    public Separator redLine;
-    public ProgressIndicator loadingCircle;
-    public ImageView logoImage;
-    public Button exitButton;
     public Label ipAdressLabel;
 
+    private final String[] texts = {};
 
-    private final String[] texts = {
-    };
-
+    /**
+     * Gibt einen zufälligen Text zurück (aktuell nicht implementiert).
+     *
+     * @return leerer String
+     */
     private String randomText() {
         return "";
     }
 
+    /**
+     * Beendet den Server und kehrt zurück zum Startmenü.
+     *
+     * @throws IOException bei Fehlern
+     */
     public void onExit() throws IOException {
         UserSession.getGameServer().stop();
         ViewSwitcher.switchTo("start-game-menu");
     }
 
+    /**
+     * Initialisiert den Screen und zeigt die IP-Adresse an.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

@@ -16,17 +16,25 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller für den Statistik-Screen.
+ * Zeigt Spielstatistiken des aktuellen Benutzers an.
+ */
 public class StatsScreenController implements Initializable {
 
-    public Label gamesPlayedLabel;
-    public Label gamesWonLabel;
-    public Label winrateLabel;
-    public Label winStreakLabel;
+    public Label gamesPlayedLabel; // Anzeige gespielter Spiele
+    public Label gamesWonLabel; // Anzeige gewonnener Spiele
+    public Label winrateLabel; // Anzeige Gewinnrate
+    public Label winStreakLabel; // Anzeige längste Gewinnserie
     public Button okButton;
-    public Label gameTimeStatLabel;
-    public UserData userData;
-    private Statistik statistik;
+    public Label gameTimeStatLabel; // Anzeige Gesamtspielzeit
 
+    public UserData userData; // aktuelle Benutzerdaten
+    private Statistik statistik; // Statistik-Berechnung
+
+    /**
+     * Initialisiert den Screen und lädt die Statistiken.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userData = UserSession.getUserData();
@@ -53,6 +61,10 @@ public class StatsScreenController implements Initializable {
         waitForUserData.play();
     }
 
+    /**
+     * Wird beim Klick auf OK ausgeführt.
+     * Kehrt zurück ins Menü.
+     */
     public void onOkClicked(ActionEvent actionEvent) {
         ViewSwitcher.switchTo("menu");
     }
